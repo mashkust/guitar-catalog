@@ -3,5 +3,12 @@ export enum AppRoute {
 }
 
 export enum APIRoute {
-    Cards = '/cards',
+    Guitars = '/guitars',
 }
+
+export enum NameSpace {
+    data = 'DATA',
+    guitar = 'GUITAR',
+}
+
+export const GUITAR_CARDS_COUNT = 9;
