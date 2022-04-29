@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../const';
 import type { Guitar } from '../types/types';
 
 type GuitarCardProps = {
@@ -33,7 +35,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price}
         </p>
       </div>
-      <div className="product-card__buttons"><a className="button button--mini" href="#">Подробнее</a><a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+      <div className="product-card__buttons"><Link to={AppRoute.Main} className="button button--mini" >Подробнее</Link><Link to={AppRoute.Main} className="button button--red button--mini button--add-to-cart">Купить</Link>
       </div>
     </div>
   );
