@@ -8,9 +8,9 @@ type GuitarCardProps = {
 }
 
 function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
-  const { name, price} = guitar;
+  const { name, price, previewImg} = guitar;
   return (
-    <div className="product-card"><img src="img/content/catalog-product-8.jpg" srcSet="img/content/catalog-product-8@2x.jpg 2x" width="75" height="190" alt="СURT Z30 Plus" />
+    <div className="product-card"><img src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="75" height="190" alt={name} />
       <div className="product-card__info">
         <div className="rate product-card__rate">
           <svg width="12" height="11" aria-hidden="true">
