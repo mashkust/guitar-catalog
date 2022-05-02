@@ -1,6 +1,7 @@
 import {Route, BrowserRouter, Routes, generatePath} from 'react-router-dom';
 import {AppRoute, LIST_OF_GUITAR} from '../../const';
 import { useAppSelector } from '../../hooks/hooks';
+import GuitarPage from '../guitar-page';
 import MainCard from '../main-card';
 import NotFoundPage from '../notfound-page';
 
@@ -24,6 +25,10 @@ function App(): JSX.Element {
         <Route
           path={generatePath(AppRoute.Page3)}
           element={<MainCard guitars = {guitars.slice(LIST_OF_GUITAR[2].rangeFrom,LIST_OF_GUITAR[2].rangeTo)}/>}
+        />
+        <Route
+          path={AppRoute.Guitar}
+          element={<GuitarPage />}
         />
         <Route
           path="*"

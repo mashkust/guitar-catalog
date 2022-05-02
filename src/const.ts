@@ -5,10 +5,13 @@ export enum AppRoute {
     Page1 = '/page_1',
     Page2 = '/page_2',
     Page3 = '/page_3',
+    Guitar = '/guitars/:id',
 }
 
 export enum APIRoute {
     Guitars = '/guitars',
+    Comments = '/comments',
+    Guitar = '/guitars/',
 }
 
 export enum NameSpace {

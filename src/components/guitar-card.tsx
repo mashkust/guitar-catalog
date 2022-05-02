@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import type { Guitar } from '../types/types';
 
@@ -8,7 +8,7 @@ type GuitarCardProps = {
 }
 
 function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
-  const { name, price, previewImg} = guitar;
+  const { name, price, previewImg, id} = guitar;
   return (
     <div className="product-card"><img src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="75" height="190" alt={name} />
       <div className="product-card__info">
@@ -35,7 +35,8 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price}
         </p>
       </div>
-      <div className="product-card__buttons"><Link to={AppRoute.Main} className="button button--mini" >Подробнее</Link><Link to={AppRoute.Main} className="button button--red button--mini button--add-to-cart">Купить</Link>
+      <div className="product-card__buttons"><Link to={generatePath(AppRoute.Guitar,{id: String(id)})} className="button button--mini" >Подробнее</Link>
+        <Link to={AppRoute.Main} className="button button--red button--mini button--add-to-cart">Купить</Link>
       </div>
     </div>
   );

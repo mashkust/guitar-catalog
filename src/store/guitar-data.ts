@@ -1,10 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import { GuitarData } from '../types/types';
-import {GUITAR_CARDS_COUNT, NameSpace} from '../const';
+import {NameSpace} from '../const';
 
 const initialState: GuitarData = {
   guitars: [],
-  guitarCardsCount: GUITAR_CARDS_COUNT,
+  guitar: null,
+  comments: [],
 };
 
 
@@ -15,9 +16,17 @@ export const guitarData = createSlice({
     loadGuitars: (state, action) => {
       state.guitars = action.payload;
     },
+    loadGuitar: (state, action) => {
+      state.guitar = action.payload;
+    },
+    loadComments: (state, action) => {
+      state.comments = action.payload;
+    },
   },
 });
 
 export const {
   loadGuitars,
+  loadGuitar,
+  loadComments,
 } = guitarData.actions;
