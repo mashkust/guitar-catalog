@@ -21,4 +21,4 @@ export const guitarProcess = createSlice({
   },
 });
 
-export const {resetCountAction } = guitarProcess.actions;
+export const {resetCountAction,incCountAction  } = guitarProcess.actions;

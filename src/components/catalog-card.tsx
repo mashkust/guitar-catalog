@@ -2,6 +2,7 @@ import React from 'react';
 import GuitarCard from './guitar-card';
 import { useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
+import Pagination from './pagination';
 // import ShowMoreButtonComponent from './show-more';
 
 
@@ -76,18 +77,7 @@ function CatalogCard(): JSX.Element {
         {initialGuitars && initialGuitars.slice(0, guitarCardsCount).map((guitar: Guitar) => (
           <GuitarCard {...{ guitar }} key={guitar.id} />))}
       </div>
-      <div className="pagination page-content__pagination">
-        <ul className="pagination__list">
-          <li className="pagination__page pagination__page--active"><a className="link pagination__page-link" href="1">1</a>
-          </li>
-          <li className="pagination__page"><a className="link pagination__page-link" href="2">2</a>
-          </li>
-          <li className="pagination__page"><a className="link pagination__page-link" href="3">3</a>
-          </li>
-          <li className="pagination__page pagination__page--next" id="next"><a className="link pagination__page-link" href="2">Далее</a>
-          </li>
-        </ul>
-      </div>
+      <Pagination/>
     </div>
   );
 }
