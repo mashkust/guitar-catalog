@@ -12,3 +12,4 @@ export enum NameSpace {
 }
 
 export const GUITAR_CARDS_COUNT = 9;
+export const GUITAR_CARDS_COUNT_STEP = 9;
