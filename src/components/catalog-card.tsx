@@ -1,14 +1,17 @@
 import React from 'react';
 import GuitarCard from './guitar-card';
-import { useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
 import Pagination from './pagination';
 // import ShowMoreButtonComponent from './show-more';
 
+type CatalogCardProps = {
+  guitars:Guitar [];
+  // from:number;
+  // to:number;
+};
 
-function CatalogCard(): JSX.Element {
-  const initialGuitars = useAppSelector(({ DATA }) => DATA.guitars);
-  const { guitarCardsCount} = useAppSelector(({GUITAR}) => GUITAR);
+function CatalogCard({guitars}: CatalogCardProps): JSX.Element {
+  // const { guitarCardsCount} = useAppSelector(({GUITAR}) => GUITAR);
   return (
     <div className="catalog">
       <form className="catalog-filter">
@@ -74,7 +77,7 @@ function CatalogCard(): JSX.Element {
         </div>
       </div>
       <div className="cards catalog__cards">
-        {initialGuitars && initialGuitars.slice(0, guitarCardsCount).map((guitar: Guitar) => (
+        {guitars && guitars.map((guitar: Guitar) => (
           <GuitarCard {...{ guitar }} key={guitar.id} />))}
       </div>
       <Pagination/>

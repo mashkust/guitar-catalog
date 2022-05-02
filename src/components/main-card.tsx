@@ -4,9 +4,15 @@ import PageHeader from './page-header';
 import PageFooter from './page-footer';
 import { AppRoute } from '../const';
 import { Link } from 'react-router-dom';
+import { Guitar } from '../types/types';
 
+type MainProps = {
+  guitars:Guitar [];
+  // from : number;
+  // to: number;
+};
 
-function MainCard(): JSX.Element {
+function MainCard({guitars}: MainProps): JSX.Element {
 
   return (
     <React.Fragment>
@@ -20,7 +26,7 @@ function MainCard(): JSX.Element {
             <li className="breadcrumbs__item"><Link to={AppRoute.Main}>Каталог</Link>
             </li>
           </ul>
-          <CatalogCard />
+          <CatalogCard guitars={guitars} />
         </div>
       </main>
       <PageFooter />

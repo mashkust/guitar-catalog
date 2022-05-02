@@ -24,3 +24,10 @@ export type Guitar = {
 export type GuitarProcess = {
   guitarCardsCount: number,
 };
+
+
+export type List = {
+  page: string;
+  rangeFrom: number;
+  rangeTo: number;
+};
