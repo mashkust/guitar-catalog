@@ -1,7 +1,7 @@
-import { List } from './types/types';
+import { List, Tab } from './types/types';
 
 export enum AppRoute {
-    Main = '/',
+    Main = '/page_1',
     Page1 = '/page_1',
     Page2 = '/page_2',
     Page3 = '/page_3',
@@ -34,6 +34,17 @@ export const LIST_OF_GUITAR: List[] = [
     page: '3',
     rangeFrom: 18,
     rangeTo: 26,
+  },
+];
+
+export const movieTab: Tab[] = [
+  {
+    id: 1,
+    title: 'Overview',
+  },
+  {
+    id: 2,
+    title: 'Details',
   },
 ];
 

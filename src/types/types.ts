@@ -7,7 +7,8 @@ export type AppDispatch = typeof store.dispatch;
 export type GuitarData = {
   guitars: Guitar[],
   guitar: Guitar | null,
-  comments: Comment[]
+  comments: Comment[],
+  isDataLoaded: boolean,
 };
 
 export type Guitar = {
@@ -43,3 +44,8 @@ export type List = {
   rangeFrom: number;
   rangeTo: number;
 };
+
+export type Tab = {
+  id: number;
+  title: string;
+}

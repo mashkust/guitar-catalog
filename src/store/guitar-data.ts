@@ -6,6 +6,7 @@ const initialState: GuitarData = {
   guitars: [],
   guitar: null,
   comments: [],
+  isDataLoaded: false,
 };
 
 
@@ -15,6 +16,7 @@ export const guitarData = createSlice({
   reducers: {
     loadGuitars: (state, action) => {
       state.guitars = action.payload;
+      state.isDataLoaded = true;
     },
     loadGuitar: (state, action) => {
       state.guitar = action.payload;

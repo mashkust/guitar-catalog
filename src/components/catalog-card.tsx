@@ -11,7 +11,6 @@ type CatalogCardProps = {
 };
 
 function CatalogCard({guitars}: CatalogCardProps): JSX.Element {
-  // const { guitarCardsCount} = useAppSelector(({GUITAR}) => GUITAR);
   return (
     <div className="catalog">
       <form className="catalog-filter">
