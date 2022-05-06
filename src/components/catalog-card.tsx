@@ -6,8 +6,6 @@ import Pagination from './pagination';
 
 type CatalogCardProps = {
   guitars:Guitar [];
-  // from:number;
-  // to:number;
 };
 
 function CatalogCard({guitars}: CatalogCardProps): JSX.Element {

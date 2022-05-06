@@ -5,9 +5,8 @@ type DescriptionTabProps = {
 }
 
 function Overview({guitar}:  DescriptionTabProps): JSX.Element {
-
   return (
-    <p className="tabs__product-description hidden">
+    <p className="tabs__product-description ">
       {guitar.description}
     </p>
   );

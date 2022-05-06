@@ -5,7 +5,8 @@ export enum AppRoute {
     Page1 = '/page_1',
     Page2 = '/page_2',
     Page3 = '/page_3',
-    Guitar = '/guitars/:id',
+    Details = '/guitars/details/:id',
+    Description = '/guitars/description/:id',
 }
 
 export enum APIRoute {
@@ -37,7 +38,7 @@ export const LIST_OF_GUITAR: List[] = [
   },
 ];
 
-export const movieTab: Tab[] = [
+export const guitarTab: Tab[] = [
   {
     id: 1,
     title: 'Overview',

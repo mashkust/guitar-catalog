@@ -9,7 +9,11 @@ import PageFooter from './page-footer';
 import PageHeader from './page-header';
 import GuitarTab from './guitar-tab';
 
-function GuitarPage(): JSX.Element {
+type GuitarPageProps = {
+  tab:boolean,
+}
+
+function GuitarPage({tab}: GuitarPageProps): JSX.Element {
   const dispatch = useAppDispatch();
   const params = useParams();
   const guitarid = Number(params.id);
@@ -37,7 +41,7 @@ function GuitarPage(): JSX.Element {
               </li>
               <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Main}>Каталог</Link>
               </li>
-              <li className="breadcrumbs__item"><Link to={generatePath(AppRoute.Guitar,{id: String(id)})} className="link">Товар</Link>
+              <li className="breadcrumbs__item"><Link to={generatePath(AppRoute.Details,{id: String(id)})} className="link">Товар</Link>
               </li>
             </ul>
             <div className="product-container"><img className="product-container__img" src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="90" height="235" alt={name} />
@@ -61,7 +65,7 @@ function GuitarPage(): JSX.Element {
                   </svg>
                   <p className="visually-hidden">Оценка: Хорошо</p>
                 </div>
-                <GuitarTab guitar={guitar}/>
+                <GuitarTab tab= {tab} guitar={guitar}/>
               </div>
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
