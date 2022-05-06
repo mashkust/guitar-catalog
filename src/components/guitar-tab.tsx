@@ -3,7 +3,6 @@ import { Guitar } from '../types/types';
 import Details from './guitar-tabs/details';
 import Description from './guitar-tabs/description';
 import { AppRoute } from '../const';
-// import { guitarTab } from '../const';
 
 type GuitarTabProps = {
     guitar: Guitar,

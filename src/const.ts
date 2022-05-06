@@ -5,6 +5,8 @@ export enum AppRoute {
     Page1 = '/page_1',
     Page2 = '/page_2',
     Page3 = '/page_3',
+    Where= '/*',
+    Company = '/*',
     Details = '/guitars/details/:id',
     Description = '/guitars/description/:id',
 }

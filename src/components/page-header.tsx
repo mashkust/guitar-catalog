@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../const';
+
 function PageHeader(): JSX.Element {
   return (
     <header className="header" id="header">
@@ -6,7 +9,7 @@ function PageHeader(): JSX.Element {
           <ul className="main-nav__list">
             <li><a className="link main-nav__link link--current" href="#">Каталог</a>
             </li>
-            <li><a className="link main-nav__link" href="#">Где купить?</a>
+            <li><Link className="link main-nav__link" to={AppRoute.Where}>Где купить?</Link>
             </li>
             <li><a className="link main-nav__link" href="#">О компании</a>
             </li>
@@ -29,10 +32,12 @@ function PageHeader(): JSX.Element {
               <use xlinkHref="#icon-close"></use>
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
-        </div><a className="header__cart-link" href="#" aria-label="Корзина">
+        </div>
+        <a className="header__cart-link" href="#" aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
-          </svg><span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count">2</span></a>
+          </svg><span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count">2</span>
+        </a>
       </div>
     </header>
   );

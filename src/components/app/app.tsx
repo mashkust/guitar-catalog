@@ -40,7 +40,7 @@ function App(): JSX.Element {
           element={<GuitarPage tab = {false}/>}
         />
         <Route
-          path="*"
+          path="/*"
           element={<NotFoundPage/>}
         />
       </Routes>
