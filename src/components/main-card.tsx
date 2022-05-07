@@ -21,9 +21,9 @@ function MainCard({guitars}: MainProps): JSX.Element {
         <div className="container">
           <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
           <ul className="breadcrumbs page-content__breadcrumbs">
-            <li className="breadcrumbs__item"><Link to={AppRoute.Main} className="link" >Главная</Link>
+            <li className="breadcrumbs__item"><Link to={AppRoute.Page1} className="link" >Главная</Link>
             </li>
-            <li className="breadcrumbs__item"><Link to={AppRoute.Main}>Каталог</Link>
+            <li className="breadcrumbs__item"><Link to={AppRoute.Page1}>Каталог</Link>
             </li>
           </ul>
           <CatalogCard guitars={guitars} />

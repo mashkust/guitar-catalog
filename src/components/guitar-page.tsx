@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { generatePath, Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
@@ -8,12 +8,18 @@ import LoadingScreen from './loading-screen';
 import PageFooter from './page-footer';
 import PageHeader from './page-header';
 import GuitarTab from './guitar-tab';
+import BasketCard from './basket-card';
 
 type GuitarPageProps = {
   tab:boolean,
 }
 
 function GuitarPage({tab}: GuitarPageProps): JSX.Element {
+  const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
+  const onBookingBtnClick = () => {
+    setIsBookingModalOpened(true);
+  };
+
   const dispatch = useAppDispatch();
   const params = useParams();
   const guitarid = Number(params.id);
@@ -28,7 +34,7 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
   const { guitar } = useAppSelector(({ DATA }) => DATA);
 
   if (guitar) {
-    const { id, name, previewImg } = guitar as Guitar;
+    const { id, name, previewImg, price } = guitar as Guitar;
 
     return (
       <React.Fragment>
@@ -37,11 +43,11 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
           <div className="container">
             <h1 className="page-content__title title title--bigger">Товар</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
-              <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Main}>Главная</Link>
+              <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Page1}>Главная</Link>
               </li>
-              <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Main}>Каталог</Link>
+              <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Page1}>Каталог</Link>
               </li>
-              <li className="breadcrumbs__item"><Link to={generatePath(AppRoute.Details,{id: String(id)})} className="link">Товар</Link>
+              <li className="breadcrumbs__item"><Link to={generatePath(AppRoute.Details,{id: String(id)})} className="link">{name}</Link>
               </li>
             </ul>
             <div className="product-container"><img className="product-container__img" src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="90" height="235" alt={name} />
@@ -69,8 +75,9 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
               </div>
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
-                <p className="product-container__price-info product-container__price-info--value">52 000 ₽</p><a className="button button--red button--big product-container__button" href="#">Добавить в корзину</a>
+                <p className="product-container__price-info product-container__price-info--value">{price} ₽</p><button className="button button--red button--big product-container__button" onClick={onBookingBtnClick}>Добавить в корзину</button>
               </div>
+              {isBookingModalOpened && <BasketCard setIsBookingModalOpened={setIsBookingModalOpened} />}
             </div>
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3><a className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>

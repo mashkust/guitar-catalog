@@ -1,7 +1,6 @@
 import { List, Tab } from './types/types';
 
 export enum AppRoute {
-    Main = '/page_1',
     Page1 = '/page_1',
     Page2 = '/page_2',
     Page3 = '/page_3',
@@ -9,6 +8,7 @@ export enum AppRoute {
     Company = '/*',
     Details = '/guitars/details/:id',
     Description = '/guitars/description/:id',
+    Basket = '/guitars/basket/:id',
 }
 
 export enum APIRoute {

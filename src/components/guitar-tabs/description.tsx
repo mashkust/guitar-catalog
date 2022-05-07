@@ -4,7 +4,7 @@ type DescriptionTabProps = {
     guitar: Guitar,
 }
 
-function Overview({guitar}:  DescriptionTabProps): JSX.Element {
+function Description({guitar}:  DescriptionTabProps): JSX.Element {
   return (
     <p className="tabs__product-description ">
       {guitar.description}
@@ -12,4 +12,4 @@ function Overview({guitar}:  DescriptionTabProps): JSX.Element {
   );
 }
 
-export default Overview;
+export default Description;

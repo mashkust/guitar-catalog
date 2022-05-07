@@ -36,7 +36,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons"><Link to={generatePath(AppRoute.Details,{id: String(id)})} className="button button--mini" >Подробнее</Link>
-        <Link to={AppRoute.Main} className="button button--red button--mini button--add-to-cart">Купить</Link>
+        <Link to={AppRoute.Page1} className="button button--red button--mini button--add-to-cart">Купить</Link>
       </div>
     </div>
   );

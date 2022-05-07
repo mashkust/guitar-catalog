@@ -6,7 +6,7 @@ function NotFoundPage(): JSX.Element {
     <>
       <h1>404</h1>
       <h2>Страница не найдена</h2>
-      <p><Link to={AppRoute.Main}>Главная страница</Link></p>
+      <p><Link to={AppRoute.Page1}>Главная страница</Link></p>
     </>
   );
 }
