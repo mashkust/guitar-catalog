@@ -77,7 +77,7 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
                 <p className="product-container__price-info product-container__price-info--value">{price} ₽</p><button className="button button--red button--big product-container__button" onClick={onBookingBtnClick}>Добавить в корзину</button>
               </div>
-              {isBookingModalOpened && <BasketCard setIsBookingModalOpened={setIsBookingModalOpened} />}
+              {isBookingModalOpened && <BasketCard guitar = {guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
             </div>
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3><a className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
