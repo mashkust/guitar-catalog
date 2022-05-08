@@ -8,35 +8,35 @@
 //   const { director, starring, genre, released} = film as Film;
 
 //   return (
-//     <div className="film-card__text film-card__row">
-//       <div className="film-card__text-col">
-//         <p className="film-card__details-item">
-//           <strong className="film-card__details-name">Director</strong>
-//           <span className="film-card__details-value">{director}</span>
-//         </p>
-//         <p className="film-card__details-item">
-//           <strong className="film-card__details-name">Starring</strong>
-//           <span className="film-card__details-value">
-//             {starring.join(', ')}
-//           </span>
-//         </p>
-//       </div>
-
-//       <div className="film-card__text-col">
-//         <p className="film-card__details-item">
-//           <strong className="film-card__details-name">Run Time</strong>
-//           <span className="film-card__details-value"></span>
-//         </p>
-//         <p className="film-card__details-item">
-//           <strong className="film-card__details-name">Genre</strong>
-//           <span className="film-card__details-value">{genre}</span>
-//         </p>
-//         <p className="film-card__details-item">
-//           <strong className="film-card__details-name">Released</strong>
-//           <span className="film-card__details-value">{released}</span>
-//         </p>
-//       </div>
+//     <div className="review">
+//     <div className="review__wrapper">
+//       <h4 className="review__title review__title--author title title--lesser">Преображенская  Ксения</h4><span className="review__date">12 декабря</span>
 //     </div>
+//     <div className="rate review__rating-panel">
+//       <svg width="16" height="16" aria-hidden="true">
+//         <use xlinkHref="#icon-full-star"></use>
+//       </svg>
+//       <svg width="16" height="16" aria-hidden="true">
+//         <use xlinkHref="#icon-full-star"></use>
+//       </svg>
+//       <svg width="16" height="16" aria-hidden="true">
+//         <use xlinkHref="#icon-full-star"></use>
+//       </svg>
+//       <svg width="16" height="16" aria-hidden="true">
+//         <use xlinkHref="#icon-full-star"></use>
+//       </svg>
+//       <svg width="16" height="16" aria-hidden="true">
+//         <use xlinkHref="#icon-star"></use>
+//       </svg>
+//       <p className="visually-hidden">Оценка: Хорошо</p>
+//     </div>
+//     <h4 className="review__title title title--lesser">Достоинства:</h4>
+//     <p className="review__value">Хороший корпус, чистый звук, стурны хорошего качества</p>
+//     <h4 className="review__title title title--lesser">Недостатки:</h4>
+//     <p className="review__value">Тугие колонки</p>
+//     <h4 className="review__title title title--lesser">Комментарий:</h4>
+//     <p className="review__value">У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. У гитары отличный цвет, хороше дерево. Тяжелая, в компдлекте неть чехла и ремня. </p>
+//   </div>
 //   );
 // }
 
