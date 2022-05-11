@@ -24,16 +24,19 @@ export type Guitar = {
   stringCount: number,
 }
 
-export type Comment = {
-  comment: string;
-  guitarId: number;
-  rating: number;
-  id: string;
-  userName: string;
-  advantage: string;
-  disadvantage: string;
-  createAt: string;
+export type NewReview = {
+  guitarId: number,
+  userName: string,
+  advantage: string,
+  disadvantage: string,
+  comment: string,
+  rating: number,
 };
+
+export interface Comment extends NewReview {
+  id: string,
+  createAt: string,
+}
 
 export type CommentProcess = {
   commentCardsCount: number,
@@ -51,11 +54,3 @@ export type Tab = {
   title: string;
 };
 
-export type NewReview = {
-  guitarId: number,
-  userName: string,
-  advantage: string,
-  disadvantage: string,
-  comment: string,
-  rating: number,
-};

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import type {MouseEvent} from 'react';
 import { generatePath, Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
@@ -20,12 +21,24 @@ type GuitarPageProps = {
 function GuitarPage({tab}: GuitarPageProps): JSX.Element {
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
   const [isCommentModalOpened, setIsCommentModalOpened] = useState<boolean>(false);
+
   const onBookingBtnClick = () => {
     setIsBookingModalOpened(true);
   };
 
+  useEffect(() => {
+    window.scrollTo({top: 0});
+  },[]);
+
   const onCommentBtnClick = () => {
     setIsCommentModalOpened(true);
+  };
+
+  const onUpBtnClick = (evt:MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    if (mainRef && mainRef.current) {
+      mainRef.current.scrollIntoView({block: 'start'});
+    }
   };
 
   const dispatch = useAppDispatch();
@@ -38,6 +51,8 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
       dispatch(fetchCommentsAction(guitarid));
     }
   }, [dispatch, guitarid]);
+
+  const mainRef = useRef<HTMLElement | null>(null);
 
   const { guitar,comments } = useAppSelector(({ DATA }) => DATA);
   const { commentCardsCount} = useAppSelector(({COMMENT}) => COMMENT);
@@ -94,7 +109,7 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
               {comments && comments.slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment = {comment } key={comment.id}/>))}
               {comments && comments.length > commentCardsCount ? <ShowMore/> : ''}
-              <a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
+              <button style = {{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick = {onUpBtnClick}>Наверх</button>
             </section>
           </div>
         </main>
