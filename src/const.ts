@@ -19,7 +19,7 @@ export enum APIRoute {
 
 export enum NameSpace {
     data = 'DATA',
-    guitar = 'GUITAR',
+    comment = 'COMMENT',
 }
 
 export const LIST_OF_GUITAR: List[] = [
@@ -51,5 +51,5 @@ export const guitarTab: Tab[] = [
   },
 ];
 
-export const GUITAR_CARDS_COUNT = 9;
-export const GUITAR_CARDS_COUNT_STEP = 9;
+export const COMMENT_CARDS_COUNT = 3;
+export const COMMENT_CARDS_COUNT_STEP = 3;

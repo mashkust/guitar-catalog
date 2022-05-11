@@ -19,11 +19,11 @@ function BasketCard({setIsBookingModalOpened, guitar}: BasketCardProps): JSX.Ele
               <h3 className="modal__product-name title title--little title--uppercase">Гитара {name}</h3>
               <p className="modal__product-params modal__product-params--margin-11">Артикул: {vendorCode}</p>
               <p className="modal__product-params">{type}, {stringCount} струнная</p>
-              <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{price} ₽</span></p>
+              <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{price}₽</span></p>
             </div>
           </div>
           <div className="modal__button-container">
-            <button className="button button--red button--big modal__button modal__button--add">Добавить в корзину</button>
+            <button className="button button--red button--big modal__button modal__button--add" onClick = {() => setIsBookingModalOpened(false)}>Добавить в корзину</button>
           </div>
           <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть" onClick = {() => setIsBookingModalOpened(false) }><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
           </button>

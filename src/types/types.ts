@@ -9,6 +9,7 @@ export type GuitarData = {
   guitar: Guitar | null,
   comments: Comment[],
   isDataLoaded: boolean,
+  isDataSending: boolean,
 };
 
 export type Guitar = {
@@ -34,8 +35,8 @@ export type Comment = {
   createAt: string;
 };
 
-export type GuitarProcess = {
-  guitarCardsCount: number,
+export type CommentProcess = {
+  commentCardsCount: number,
 };
 
 
@@ -48,4 +49,13 @@ export type List = {
 export type Tab = {
   id: number;
   title: string;
-}
+};
+
+export type NewReview = {
+  guitarId: number,
+  userName: string,
+  advantage: string,
+  disadvantage: string,
+  comment: string,
+  rating: number,
+};

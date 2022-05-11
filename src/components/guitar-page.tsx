@@ -3,12 +3,15 @@ import { generatePath, Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { fetchCommentsAction, fetchGuitarAction } from '../store/api-actions';
-import { Guitar } from '../types/types';
+import { Guitar, Comment } from '../types/types';
 import LoadingScreen from './loading-screen';
 import PageFooter from './page-footer';
 import PageHeader from './page-header';
 import GuitarTab from './guitar-tab';
 import BasketCard from './basket-card';
+import Comments from './guitar-tabs/comments';
+import ShowMore from './show-more';
+import AddComments from './add-comments';
 
 type GuitarPageProps = {
   tab:boolean,
@@ -16,8 +19,13 @@ type GuitarPageProps = {
 
 function GuitarPage({tab}: GuitarPageProps): JSX.Element {
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
+  const [isCommentModalOpened, setIsCommentModalOpened] = useState<boolean>(false);
   const onBookingBtnClick = () => {
     setIsBookingModalOpened(true);
+  };
+
+  const onCommentBtnClick = () => {
+    setIsCommentModalOpened(true);
   };
 
   const dispatch = useAppDispatch();
@@ -31,7 +39,8 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
     }
   }, [dispatch, guitarid]);
 
-  const { guitar } = useAppSelector(({ DATA }) => DATA);
+  const { guitar,comments } = useAppSelector(({ DATA }) => DATA);
+  const { commentCardsCount} = useAppSelector(({COMMENT}) => COMMENT);
 
   if (guitar) {
     const { id, name, previewImg, price } = guitar as Guitar;
@@ -41,7 +50,7 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
         <PageHeader />
         <main className="page-content">
           <div className="container">
-            <h1 className="page-content__title title title--bigger">Товар</h1>
+            <h1 className="page-content__title title title--bigger">{name}</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
               <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Page1}>Главная</Link>
               </li>
@@ -80,8 +89,12 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
               {isBookingModalOpened && <BasketCard guitar = {guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
             </div>
             <section className="reviews">
-              <h3 className="reviews__title title title--bigger">Отзывы</h3><a className="button button--red-border button--big reviews__sumbit-button" href="#">Оставить отзыв</a>
-              <button className="button button--medium reviews__more-button">Показать еще отзывы</button><a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
+              <h3 className="reviews__title title title--bigger">Отзывы</h3><button className="button button--red-border button--big reviews__sumbit-button"  onClick={onCommentBtnClick}>Оставить отзыв</button>
+              {isCommentModalOpened && <AddComments guitar = {guitar} setIsCommentModalOpened={setIsCommentModalOpened} />}
+              {comments && comments.slice(0, commentCardsCount).map((comment: Comment) => (
+                <Comments someComment = {comment } key={comment.id}/>))}
+              {comments && comments.length > commentCardsCount ? <ShowMore/> : ''}
+              <a className="button button--up button--red-border button--big reviews__up-button" href="#header">Наверх</a>
             </section>
           </div>
         </main>

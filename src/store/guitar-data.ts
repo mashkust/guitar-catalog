@@ -7,6 +7,7 @@ const initialState: GuitarData = {
   guitar: null,
   comments: [],
   isDataLoaded: false,
+  isDataSending: false,
 };
 
 
@@ -24,6 +25,9 @@ export const guitarData = createSlice({
     loadComments: (state, action) => {
       state.comments = action.payload;
     },
+    sendReview: (state, action) => {
+      state.isDataSending = action.payload;
+    },
   },
 });
 
@@ -31,4 +35,5 @@ export const {
   loadGuitars,
   loadGuitar,
   loadComments,
+  sendReview,
 } = guitarData.actions;
