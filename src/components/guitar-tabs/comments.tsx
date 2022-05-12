@@ -14,19 +14,19 @@ function Comments({ someComment }: CommentsTabProps): JSX.Element {
       </div>
       <div className="rate review__rating-panel">
         <svg width="16" height="16" aria-hidden="true">
-          <use xlinkHref="#icon-full-star"></use>
+          <use href="#icon-full-star"></use>
         </svg>
         <svg width="16" height="16" aria-hidden="true">
-          <use xlinkHref="#icon-full-star"></use>
+          <use href="#icon-full-star"></use>
         </svg>
         <svg width="16" height="16" aria-hidden="true">
-          <use xlinkHref="#icon-full-star"></use>
+          <use href="#icon-full-star"></use>
         </svg>
         <svg width="16" height="16" aria-hidden="true">
-          <use xlinkHref="#icon-full-star"></use>
+          <use href="#icon-full-star"></use>
         </svg>
         <svg width="16" height="16" aria-hidden="true">
-          <use xlinkHref="#icon-star"></use>
+          <use href="#icon-star"></use>
         </svg>
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>

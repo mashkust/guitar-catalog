@@ -54,3 +54,6 @@ export type Tab = {
   title: string;
 };
 
+export type Rating = {
+  value: number;
+}

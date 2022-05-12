@@ -1,4 +1,4 @@
-import { List, Tab } from './types/types';
+import { List, Rating, Tab } from './types/types';
 
 export enum AppRoute {
     Page1 = '/page_1',
@@ -49,6 +49,14 @@ export const guitarTab: Tab[] = [
     id: 2,
     title: 'Details',
   },
+];
+
+export const RATING_VALUES: Rating[] = [
+  {'value': 5},
+  {'value': 4},
+  {'value': 3},
+  {'value': 2},
+  {'value': 1},
 ];
 
 export const COMMENT_CARDS_COUNT = 3;

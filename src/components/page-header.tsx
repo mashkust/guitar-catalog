@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
+//import Basket from 'img/sprite/icon-basket.svg';
 
 function PageHeader(): JSX.Element {
   return (
@@ -19,7 +20,7 @@ function PageHeader(): JSX.Element {
           <form className="form-search__form" id="form-search">
             <button className="form-search__submit" type="submit" disabled>
               <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
-                <use xlinkHref="#icon-search"></use>
+                <use href="#icon-search"></use>
               </svg><span className="visually-hidden">Начать поиск</span>
             </button>
             <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?"/>
@@ -29,14 +30,15 @@ function PageHeader(): JSX.Element {
           </ul>
           <button className="form-search__reset" type="reset" form="form-search">
             <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
-              <use xlinkHref="#icon-close"></use>
+              <use href="#icon-close"></use>
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
         </div>
         <Link className="header__cart-link" to={AppRoute.Company} aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
-            <use xlinkHref="#icon-basket"></use>
-          </svg><span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count"></span>
+            <use href="#icon-basket"></use>
+          </svg>
+          <span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count"></span>
         </Link>
       </div>
     </header>

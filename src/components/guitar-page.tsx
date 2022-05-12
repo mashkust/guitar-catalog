@@ -63,7 +63,7 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
     return (
       <React.Fragment>
         <PageHeader />
-        <main className="page-content">
+        <main ref= {mainRef} className="page-content">
           <div className="container">
             <h1 className="page-content__title title title--bigger">{name}</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
@@ -79,19 +79,19 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
                 <h2 className="product-container__title title title--big title--uppercase">{name}</h2>
                 <div className="rate product-container__rating">
                   <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"></use>
+                    <use href="#icon-full-star"></use>
                   </svg>
                   <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"></use>
+                    <use href="#icon-full-star"></use>
                   </svg>
                   <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"></use>
+                    <use href="#icon-full-star"></use>
                   </svg>
                   <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-full-star"></use>
+                    <use href="#icon-full-star"></use>
                   </svg>
                   <svg width="14" height="14" aria-hidden="true">
-                    <use xlinkHref="#icon-star"></use>
+                    <use href="#icon-star"></use>
                   </svg>
                   <p className="visually-hidden">Оценка: Хорошо</p>
                 </div>

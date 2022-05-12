@@ -25,7 +25,7 @@ export const guitarData = createSlice({
     loadComments: (state, action) => {
       state.comments = action.payload;
     },
-    sendReview: (state, action) => {
+    sendComment: (state, action) => {
       state.isDataSending = action.payload;
     },
   },
@@ -35,5 +35,5 @@ export const {
   loadGuitars,
   loadGuitar,
   loadComments,
-  sendReview,
+  sendComment,
 } = guitarData.actions;

@@ -8,8 +8,6 @@ import { Guitar } from '../types/types';
 
 type MainProps = {
   guitars:Guitar [];
-  // from : number;
-  // to: number;
 };
 
 function MainCard({guitars}: MainProps): JSX.Element {

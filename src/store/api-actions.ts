@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from './index';
 import { Guitar, NewReview, Comment} from '../types/types';
-import {  loadComments, loadGuitar, loadGuitars, sendReview} from './guitar-data';
+import {  loadComments, loadGuitar, loadGuitars, sendComment} from './guitar-data';
 // import { saveToken, dropToken } from '../services/token';
 import { APIRoute} from '../const';
 
@@ -35,6 +35,6 @@ export const sendCommentAction = createAsyncThunk(
   async ({ guitarId, userName, advantage, disadvantage, comment, rating}:NewReview) => {
     const data =  { guitarId, userName, advantage, disadvantage, comment, rating};
     await api.post<NewReview>(APIRoute.Comments, data);
-    store.dispatch(sendReview(false));
+    store.dispatch(sendComment(false));
   },
 );
