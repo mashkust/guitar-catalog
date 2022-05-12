@@ -57,6 +57,12 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
   const { guitar,comments } = useAppSelector(({ DATA }) => DATA);
   const { commentCardsCount} = useAppSelector(({COMMENT}) => COMMENT);
 
+  const somecomments = comments.slice().sort((a,b)=> {
+    if (a.createAt > b.createAt) {return -1;}
+    else if (a.createAt < b.createAt) {return 1;}
+    else {return 0;}
+  });
+
   if (guitar) {
     const { id, name, previewImg, price } = guitar as Guitar;
 
@@ -106,9 +112,9 @@ function GuitarPage({tab}: GuitarPageProps): JSX.Element {
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3><button className="button button--red-border button--big reviews__sumbit-button"  onClick={onCommentBtnClick}>Оставить отзыв</button>
               {isCommentModalOpened && <AddComments guitar = {guitar} setIsCommentModalOpened={setIsCommentModalOpened} />}
-              {comments && comments.slice(0, commentCardsCount).map((comment: Comment) => (
+              {somecomments && somecomments.slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment = {comment } key={comment.id}/>))}
-              {comments && comments.length > commentCardsCount ? <ShowMore/> : ''}
+              {somecomments && somecomments.length > commentCardsCount ? <ShowMore/> : ''}
               <button style = {{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick = {onUpBtnClick}>Наверх</button>
             </section>
           </div>

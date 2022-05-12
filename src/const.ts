@@ -1,4 +1,4 @@
-import { List, Rating, Tab } from './types/types';
+import { List, Rating, Tab, Types } from './types/types';
 
 export enum AppRoute {
     Page1 = '/page_1',
@@ -21,6 +21,12 @@ export enum NameSpace {
     data = 'DATA',
     comment = 'COMMENT',
 }
+
+export const TYPES : Types = {
+  electric: 'Электрогитара',
+  ukulele: 'Укулеле',
+  acoustic: 'Акустическая',
+};
 
 export const LIST_OF_GUITAR: List[] = [
   {

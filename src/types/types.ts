@@ -42,6 +42,11 @@ export type CommentProcess = {
   commentCardsCount: number,
 };
 
+export type Types = {
+  electric: string,
+  ukulele: string,
+  acoustic: string,
+};
 
 export type List = {
   page: string;

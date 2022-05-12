@@ -6,6 +6,7 @@ type CommentsTabProps = {
 }
 
 function Comments({ someComment }: CommentsTabProps): JSX.Element {
+
   const { comment, rating, userName, advantage, disadvantage, createAt } = someComment;
   const timeStr =  createAt;
   const date = new Date(timeStr);
