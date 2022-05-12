@@ -1,3 +1,4 @@
+import { MONTH } from '../../const';
 import { Comment } from '../../types/types';
 
 type CommentsTabProps = {
@@ -6,11 +7,15 @@ type CommentsTabProps = {
 
 function Comments({ someComment }: CommentsTabProps): JSX.Element {
   const { comment, rating, userName, advantage, disadvantage, createAt } = someComment;
-
+  const timeStr =  createAt;
+  const date = new Date(timeStr);
+  const day = date.getDate();
+  const month = date.getMonth()+1;
+  const dateStr = `${day}  ${MONTH[month-1]}`;
   return (
     <div className="review">
       <div className="review__wrapper">
-        <h4 className="review__title review__title--author title title--lesser">{userName}</h4><span className="review__date">{createAt}</span>
+        <h4 className="review__title review__title--author title title--lesser">{userName}</h4><span className="review__date">{dateStr}</span>
       </div>
       <div className="rate review__rating-panel">
         <svg width="16" height="16" aria-hidden="true">

@@ -59,5 +59,9 @@ export const RATING_VALUES: Rating[] = [
   {'value': 1},
 ];
 
+export const MONTH: string [] = [
+  'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
+];
+
 export const COMMENT_CARDS_COUNT = 3;
 export const COMMENT_CARDS_COUNT_STEP = 3;
