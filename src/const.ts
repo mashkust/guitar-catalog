@@ -72,3 +72,4 @@ export const MONTH: string [] = [
 export const COMMENT_CARDS_COUNT = 3;
 export const STARS_MAX = 5;
 export const COMMENT_CARDS_COUNT_STEP = 3;
+export const MAX_MISTAKE_COUNT = 10;
