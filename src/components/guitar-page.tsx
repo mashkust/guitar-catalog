@@ -14,6 +14,7 @@ import Comments from './guitar-tabs/comments';
 import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
+import { stopScroll } from '../utils';
 
 type GuitarPageProps = {
   tab: boolean,
@@ -27,10 +28,6 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
-
-  const stopScroll = () => {
-    document.body.style.overflow = 'hidden';
-  };
 
   const onBookingBtnClick = () => {
     setIsBookingModalOpened(true);
@@ -68,6 +65,19 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
     else if (a.createAt < b.createAt) { return 1; }
     else { return 0; }
   });
+
+  document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    let isEscape = false;
+    if ('key' in evt) {
+      isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
+    }
+    if (isEscape) {
+      setIsCommentModalOpened(false);
+      setIsBookingModalOpened(false);
+      setIsSuccessModalOpened(false);
+    }
+  };
 
   if (guitar) {
     const { id, name, previewImg, price, rating } = guitar as Guitar;

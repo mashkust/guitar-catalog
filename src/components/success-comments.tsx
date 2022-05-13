@@ -1,17 +1,21 @@
+import { startScroll } from '../utils';
+
 type BasketCardProps = {
   setIsSuccessModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 function BasketCard({ setIsSuccessModalOpened }: BasketCardProps): JSX.Element {
 
-  const startScroll = () => {
-    document.body.style.overflow = 'auto';
-  };
-
   return (
     <div className="modal is-active modal--success modal-for-ui-kit">
       <div className="modal__wrapper">
-        <div className="modal__overlay" data-close-modal></div>
+        <div className="modal__overlay"
+          onClick={() => {
+            setIsSuccessModalOpened(false);
+            startScroll();
+          }}
+        >
+        </div>
         <div className="modal__content">
           <svg className="modal__icon" width="26" height="20" aria-hidden="true">
             <use href="#icon-success"></use>

@@ -5,6 +5,7 @@ import { AppRoute, STARS_MAX } from '../const';
 // import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 // import { fetchCommentsAction } from '../store/api-actions';
 import type { Guitar } from '../types/types';
+import { stopScroll } from '../utils';
 import BasketCard from './basket-card';
 
 type GuitarCardProps = {
@@ -60,7 +61,13 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons"><Link to={generatePath(AppRoute.Details, { id: String(id) })} className="button button--mini" >Подробнее</Link>
-        <button className="button button--red button--mini button--add-to-cart" onClick={onBookingBtnClick}>Купить</button>
+        <button className="button button--red button--mini button--add-to-cart"
+          onClick={() => {
+            onBookingBtnClick();
+            stopScroll();
+          }}
+        >Купить
+        </button>
         {isBookingModalOpened && <BasketCard guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
       </div>
     </div>

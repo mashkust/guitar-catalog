@@ -39,7 +39,13 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
   return (
     <div className="modal is-active modal--review modal-for-ui-kit">
       <div className="modal__wrapper" >
-        <div className="modal__overlay" ></div>
+        <div className="modal__overlay"
+          onClick={() => {
+            setIsCommentModalOpened(false);
+            startScroll();
+          }}
+        >
+        </div>
         <div className="modal__content">
           <h2 className="modal__header modal__header--review title title--medium">Оставить отзыв</h2>
           <h3 className="modal__product-name title title--medium-20 title--uppercase">{name}</h3>
