@@ -51,6 +51,7 @@ export const sendCommentAction = createAsyncThunk(
       store.dispatch(sendComment(false));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(sendComment(true));
     }
   },
 );

@@ -1,12 +1,12 @@
-import { Guitar } from '../types/types';
-
 type BasketCardProps = {
-  setIsBookingModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
-  guitar: Guitar,
+  setIsSuccessModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function BasketCard({ setIsBookingModalOpened, guitar }: BasketCardProps): JSX.Element {
-  // const { name, previewImg, price, vendorCode, type, stringCount } = guitar;
+function BasketCard({ setIsSuccessModalOpened }: BasketCardProps): JSX.Element {
+
+  const startScroll = () => {
+    document.body.style.overflow = 'auto';
+  };
 
   return (
     <div className="modal is-active modal--success modal-for-ui-kit">
@@ -18,9 +18,20 @@ function BasketCard({ setIsBookingModalOpened, guitar }: BasketCardProps): JSX.E
           </svg>
           <p className="modal__message">Спасибо за ваш отзыв!</p>
           <div className="modal__button-container modal__button-container--review">
-            <button className="button button--small modal__button modal__button--review">К покупкам!</button>
+            <button className="button button--small modal__button modal__button--review"
+              onClick={() => {
+                setIsSuccessModalOpened(false);
+                startScroll();
+              }}
+            >К покупкам!
+            </button>
           </div>
-          <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
+          <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
+            onClick={() => {
+              setIsSuccessModalOpened(false);
+              startScroll();
+            }}
+          ><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
           </button>
         </div>
       </div>

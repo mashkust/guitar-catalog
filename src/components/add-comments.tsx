@@ -6,11 +6,12 @@ import { sendComment } from '../store/guitar-data';
 import type { Guitar } from '../types/types';
 
 type AddCommentsProps = {
-    guitar: Guitar;
-    setIsCommentModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
+  guitar: Guitar;
+  setIsCommentModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsSuccessModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function AddComments({ guitar, setIsCommentModalOpened }: AddCommentsProps): JSX.Element {
+function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened }: AddCommentsProps): JSX.Element {
   const { name, id } = guitar;
   const dispatch = useAppDispatch();
 
@@ -25,6 +26,14 @@ function AddComments({ guitar, setIsCommentModalOpened }: AddCommentsProps): JSX
   const ratingChangeHandler = (userRating: number) => {
     setRating(userRating);
     setIsRating(true);
+  };
+
+  const startScroll = () => {
+    document.body.style.overflow = 'auto';
+  };
+
+  const onSuccessBtnClick = () => {
+    setIsSuccessModalOpened(true);
   };
 
   return (
@@ -45,6 +54,8 @@ function AddComments({ guitar, setIsCommentModalOpened }: AddCommentsProps): JSX
               advantage: adv,
               disadvantage: disadv,
             }));
+            setIsCommentModalOpened(false);
+            onSuccessBtnClick();
           }} action="#"
           >
             <div className="form-review__wrapper">
@@ -97,7 +108,13 @@ function AddComments({ guitar, setIsCommentModalOpened }: AddCommentsProps): JSX
             {text.length>0 ? <p></p>: <p className="form-review__warning">Заполните поле</p>}
             <button className="button button--medium-20 form-review__button" type="submit" disabled = {!isRating || isReviewSending}>Отправить отзыв</button>
           </form>
-          <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть" onClick={() => setIsCommentModalOpened(false)}><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
+          <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
+            onClick={() => {
+              setIsCommentModalOpened(false);
+              startScroll();
+            }}
+          >
+            <span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
           </button>
         </div>
       </div>
@@ -106,49 +123,3 @@ function AddComments({ guitar, setIsCommentModalOpened }: AddCommentsProps): JSX
 }
 
 export default AddComments;
-
-{/* <div class="modal is-active modal--review modal-for-ui-kit">
-<div class="modal__wrapper">
-  <div class="modal__overlay" data-close-modal></div>
-  <div class="modal__content">
-    <h2 class="modal__header modal__header--review title title--medium">Оставить отзыв</h2>
-    <h3 class="modal__product-name title title--medium-20 title--uppercase">СURT Z30 Plus</h3>
-    <form class="form-review">
-      <div class="form-review__wrapper">
-        <div class="form-review__name-wrapper">
-          <label class="form-review__label form-review__label--required" for="user-name">Ваше Имя</label>
-          <input class="form-review__input form-review__input--name" id="user-name" type="text" autocomplete="off">
-          <p class="form-review__warning">Заполните поле</p>
-        </div>
-        <div><span class="form-review__label form-review__label--required">Ваша Оценка</span>
-          <div class="rate rate--reverse">
-            <input class="visually-hidden" id="star-5" name="rate" type="radio" value="5">
-            <label class="rate__label" for="star-5" title="Отлично"></label>
-            <input class="visually-hidden" id="star-4" name="rate" type="radio" value="4">
-            <label class="rate__label" for="star-4" title="Хорошо"></label>
-            <input class="visually-hidden" id="star-3" name="rate" type="radio" value="3">
-            <label class="rate__label" for="star-3" title="Нормально"></label>
-            <input class="visually-hidden" id="star-2" name="rate" type="radio" value="2">
-            <label class="rate__label" for="star-2" title="Плохо"></label>
-            <input class="visually-hidden" id="star-1" name="rate" type="radio" value="1">
-            <label class="rate__label" for="star-1" title="Ужасно"></label>
-            <p class="rate__message">Поставьте оценку</p>
-          </div>
-        </div>
-      </div>
-      <label class="form-review__label form-review__label--required" for="adv">Достоинства</label>
-      <input class="form-review__input" id="adv" type="text" autocomplete="off">
-      <p class="form-review__warning">Заполните поле</p>
-      <label class="form-review__label form-review__label--required" for="disadv">Недостатки</label>
-      <input class="form-review__input" id="disadv" type="text" autocomplete="off">
-      <p class="form-review__warning">Заполните поле</p>
-      <label class="form-review__label form-review__label--required" for="comment">Комментарий</label>
-      <textarea class="form-review__input form-review__input--textarea" id="comment" rows="10" autocomplete="off"></textarea>
-      <p class="form-review__warning">Заполните поле</p>
-      <button class="button button--medium-20 form-review__button" type="submit">Отправить отзыв</button>
-    </form>
-    <button class="modal__close-btn button-cross" type="button" aria-label="Закрыть"><span class="button-cross__icon"></span><span class="modal__close-btn-interactive-area"></span>
-    </button>
-  </div>
-</div>
-</div> */}

@@ -13,6 +13,7 @@ import BasketCard from './basket-card';
 import Comments from './guitar-tabs/comments';
 import ShowMore from './show-more';
 import AddComments from './add-comments';
+import SuccessComments from './success-comments';
 
 type GuitarPageProps = {
   tab: boolean,
@@ -21,14 +22,19 @@ type GuitarPageProps = {
 function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
   const [isCommentModalOpened, setIsCommentModalOpened] = useState<boolean>(false);
-
-  const onBookingBtnClick = () => {
-    setIsBookingModalOpened(true);
-  };
+  const [isSuccessModalOpened, setIsSuccessModalOpened] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
+
+  const stopScroll = () => {
+    document.body.style.overflow = 'hidden';
+  };
+
+  const onBookingBtnClick = () => {
+    setIsBookingModalOpened(true);
+  };
 
   const onCommentBtnClick = () => {
     setIsCommentModalOpened(true);
@@ -64,13 +70,13 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   });
 
   if (guitar) {
-    const { id, name, previewImg, price, rating} = guitar as Guitar;
+    const { id, name, previewImg, price, rating } = guitar as Guitar;
     const STARS = Math.ceil(rating);
     const NULL_STARS = STARS_MAX - STARS;
     return (
       <React.Fragment>
         <PageHeader />
-        <main ref={mainRef} className="page-content">
+        <main ref={mainRef} className={isCommentModalOpened === true ? 'page-content overflow-hidden' : 'page-content'} >
           <div className="container">
             <h1 className="page-content__title title title--bigger">{name}</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
@@ -109,13 +115,29 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
               </div>
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
-                <p className="product-container__price-info product-container__price-info--value">{price} ₽</p><button className="button button--red button--big product-container__button" onClick={onBookingBtnClick}>Добавить в корзину</button>
+                <p className="product-container__price-info product-container__price-info--value">{price} ₽</p>
+                <button className="button button--red button--big product-container__button"
+                  onClick={() => {
+                    onBookingBtnClick();
+                    stopScroll();
+                  }}
+                >
+                  Добавить в корзину
+                </button>
               </div>
               {isBookingModalOpened && <BasketCard guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
             </div>
             <section className="reviews">
-              <h3 className="reviews__title title title--bigger">Отзывы</h3><button className="button button--red-border button--big reviews__sumbit-button" onClick={onCommentBtnClick}>Оставить отзыв</button>
-              {isCommentModalOpened && <AddComments guitar={guitar} setIsCommentModalOpened={setIsCommentModalOpened} />}
+              <h3 className="reviews__title title title--bigger">Отзывы</h3>
+              <button className="button button--red-border button--big reviews__sumbit-button"
+                onClick={() => {
+                  onCommentBtnClick();
+                  stopScroll();
+                }}
+              >Оставить отзыв
+              </button>
+              {isCommentModalOpened && <AddComments guitar={guitar} setIsSuccessModalOpened={setIsSuccessModalOpened} setIsCommentModalOpened={setIsCommentModalOpened} />}
+              {isSuccessModalOpened && <SuccessComments setIsSuccessModalOpened={setIsSuccessModalOpened} />}
               {somecomments && somecomments.slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment={comment} key={comment.id} />))}
               {somecomments && somecomments.length > commentCardsCount ? <ShowMore /> : ''}
