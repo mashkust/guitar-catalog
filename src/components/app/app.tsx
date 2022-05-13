@@ -5,7 +5,6 @@ import GuitarPage from '../guitar-page';
 import MainCard from '../main-card';
 import NotFoundPage from '../notfound-page';
 import LoadingScreen from '../loading-screen';
-import { makeFakeGuitar } from '../../mock';
 
 function App(): JSX.Element {
   const guitars= useAppSelector(({DATA}) => DATA.guitars);
