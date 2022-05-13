@@ -11,7 +11,6 @@ type MainProps = {
 };
 
 function MainCard({guitars}: MainProps): JSX.Element {
-
   return (
     <React.Fragment>
       <PageHeader />

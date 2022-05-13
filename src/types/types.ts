@@ -42,11 +42,9 @@ export type CommentProcess = {
   commentCardsCount: number,
 };
 
-export type Types = {
-  electric: string,
-  ukulele: string,
-  acoustic: string,
-};
+export interface Types {
+  [index: string]: string;
+}
 
 export type List = {
   page: string;
@@ -62,3 +60,5 @@ export type Tab = {
 export type Rating = {
   value: number;
 }
+
+export type ErrorType = unknown;

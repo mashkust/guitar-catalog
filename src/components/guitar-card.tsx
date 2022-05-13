@@ -1,6 +1,7 @@
-import {useState } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import { generatePath, Link } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute, STARS_MAX } from '../const';
 // import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 // import { fetchCommentsAction } from '../store/api-actions';
 import type { Guitar } from '../types/types';
@@ -11,7 +12,10 @@ type GuitarCardProps = {
 }
 
 function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
-  const { name, price, previewImg, id} = guitar;
+  const { name, price, previewImg, id, rating } = guitar;
+
+  const STARS = Math.ceil(rating);
+  const NULL_STARS = STARS_MAX - STARS;
 
   // const dispatch = useAppDispatch();
   // useEffect(() => {
@@ -30,31 +34,34 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
     <div className="product-card"><img src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="75" height="190" alt={name} />
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <svg width="12" height="11" aria-hidden="true">
-            <use href="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use href="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use href="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use href="#icon-full-star"></use>
-          </svg>
-          <svg width="12" height="11" aria-hidden="true">
-            <use href="#icon-star"></use>
-          </svg>
-          <p className="visually-hidden">Рейтинг: Хорошо</p>
+          {
+            [...Array(STARS)].map(() => (
+              <React.Fragment key={Math.random()}>
+                <svg width="12" height="11" aria-hidden="true">
+                  <use href="#icon-full-star"></use>
+                </svg>
+              </React.Fragment>
+            ))
+          }
+          {
+            [...Array(NULL_STARS)].map(() => (
+              <React.Fragment key={Math.random()}>
+                <svg width="12" height="11" aria-hidden="true">
+                  <use href="#icon-star"></use>
+                </svg>
+              </React.Fragment>
+            ))
+          }
+          <p className="visually-hidden">Рейтинг {rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span></p>
         </div>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price}
         </p>
       </div>
-      <div className="product-card__buttons"><Link to={generatePath(AppRoute.Details,{id: String(id)})} className="button button--mini" >Подробнее</Link>
-        <button className="button button--red button--mini button--add-to-cart"  onClick={onBookingBtnClick}>Купить</button>
-        {isBookingModalOpened && <BasketCard guitar = {guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
+      <div className="product-card__buttons"><Link to={generatePath(AppRoute.Details, { id: String(id) })} className="button button--mini" >Подробнее</Link>
+        <button className="button button--red button--mini button--add-to-cart" onClick={onBookingBtnClick}>Купить</button>
+        {isBookingModalOpened && <BasketCard guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
       </div>
     </div>
   );
