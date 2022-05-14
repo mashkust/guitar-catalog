@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { fetchCommentsAction } from '../store/api-actions';
 // import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 // import { fetchCommentsAction } from '../store/api-actions';
 import type { Guitar } from '../types/types';
@@ -25,7 +27,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
   //   }
   // }, [dispatch, guitar.id]);
   // const {comments } = useAppSelector(({ DATA }) => DATA);
-  // console.log(comments)
+  // console.log(comments);
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
   const onBookingBtnClick = () => {
     setIsBookingModalOpened(true);

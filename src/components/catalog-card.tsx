@@ -1,14 +1,13 @@
-import React from 'react';
 import GuitarCard from './guitar-card';
 import { Guitar } from '../types/types';
 import Pagination from './pagination';
-// import ShowMoreButtonComponent from './show-more';
 
 type CatalogCardProps = {
   guitars:Guitar [];
 };
 
 function CatalogCard({guitars}: CatalogCardProps): JSX.Element {
+
   return (
     <div className="catalog">
       <form className="catalog-filter">

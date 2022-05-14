@@ -12,7 +12,7 @@ export enum AppRoute {
 }
 
 export enum APIRoute {
-    Guitars = '/guitars',
+    Guitars = '/guitars/?_limit=27',
     Comments = '/comments',
     Guitar = '/guitars/',
 }

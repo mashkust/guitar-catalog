@@ -14,7 +14,7 @@ import Comments from './guitar-tabs/comments';
 import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
-import { stopScroll } from '../utils';
+import { startScroll, stopScroll } from '../utils';
 
 type GuitarPageProps = {
   tab: boolean,
@@ -76,6 +76,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
       setIsCommentModalOpened(false);
       setIsBookingModalOpened(false);
       setIsSuccessModalOpened(false);
+      startScroll();
     }
   };
 
