@@ -20,14 +20,14 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
   const STARS = Math.ceil(rating);
   const NULL_STARS = STARS_MAX - STARS;
 
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   if (guitar.id) {
-  //     dispatch(fetchCommentsAction(guitar.id));
-  //   }
-  // }, [dispatch, guitar.id]);
-  // const {comments } = useAppSelector(({ DATA }) => DATA);
-  // console.log(comments);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (guitar.id) {
+      dispatch(fetchCommentsAction(guitar.id));
+    }
+  }, [dispatch, guitar.id]);
+
+  const comments  = useAppSelector(({ DATA }) => DATA.comments);
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
   const onBookingBtnClick = () => {
     setIsBookingModalOpened(true);
@@ -56,7 +56,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
             ))
           }
           <p className="visually-hidden">Рейтинг {rating}</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span></p>
+          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{comments.length}</p>
         </div>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{price}

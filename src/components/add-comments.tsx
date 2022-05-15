@@ -72,7 +72,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
                     setUserName(evt.currentTarget.value);
                   }} required
                 />
-                {userName.length>0 ? <p></p>: <p className="form-review__warning">Заполните поле</p>}
+                <p className={userName.length>0 ? 'form-review__war' : 'form-review__warning' } > {userName.length>0 ? '' : 'Заполните поле'}</p>
               </div>
               <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
                 <div className="rate rate--reverse">
@@ -86,7 +86,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
                       </label>
                     </React.Fragment>
                   ))}
-                  {rating >0 ? <p></p>: <p className="rate__message">Поставьте оценку</p>}
+                  {rating >0 ? '': <p className="rate__message">Поставьте оценку</p>}
                 </div>
               </div>
             </div>
@@ -96,14 +96,14 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
                 setAdv(evt.currentTarget.value);
               }} required
             />
-            {adv.length>0 ? <p></p>: <p className="form-review__warning">Заполните поле</p>}
+            <p className={adv.length>0 ? 'form-review__war' : 'form-review__warning' } > {adv.length>0 ? '' : 'Заполните поле'}</p>
             <label className="form-review__label form-review__label--required" htmlFor="disadv">Недостатки</label>
             <input className="form-review__input" id="disadv" type="text" autoComplete="off" value={disadv} disabled = {isReviewSending}
               onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                 setDisadv(evt.currentTarget.value);
               }} required
             />
-            {disadv.length>0 ? <p></p>: <p className="form-review__warning">Заполните поле</p>}
+            <p className={disadv.length>0 ? 'form-review__war' : 'form-review__warning' } > {disadv.length>0 ? '' : 'Заполните поле'}</p>
             <label className="form-review__label form-review__label--required" htmlFor="comment">Комментарий</label>
             <textarea value={text} disabled = {isReviewSending}
               onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -111,7 +111,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
               }} className="form-review__input form-review__input--textarea" id="comment" autoComplete="off" required
             >
             </textarea>
-            {text.length>0 ? <p></p>: <p className="form-review__warning">Заполните поле</p>}
+            <p className={text.length>0 ? 'form-review__war' : 'form-review__warning' } > {text.length>0 ? '' : 'Заполните поле'}</p>
             <button className="button button--medium-20 form-review__button" type="submit" disabled = {!isRating || isReviewSending}>Отправить отзыв</button>
           </form>
           <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"

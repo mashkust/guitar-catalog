@@ -1,31 +1,18 @@
 import {render} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
-import {configureMockStore} from '@jedmao/redux-mock-store';
-import { AppRoute, COMMENT_CARDS_COUNT} from '../../const';
+import { AppRoute} from '../../const';
 import App from './app';
-import { makeFakeComment, makeFakeGuitar } from '../../mock';
-
-const mockStore = configureMockStore();
-
-const store = mockStore({
-  DATA: {
-    guitars: [makeFakeGuitar(),makeFakeGuitar()],
-    guitar: makeFakeGuitar(),
-    comments: makeFakeComment(),
-    isDataLoaded: true,
-    isDataSending: false},
-  COMMENT: {commentCardsCount: COMMENT_CARDS_COUNT},
-});
+import { fakeStore } from '../../mock';
 
 const history = createMemoryHistory();
 const fakeApp = (
-  <Provider store={store}>
+  <Provider store={fakeStore}>
     <App />
   </Provider>
 );
 
-describe('Application Routing', () => {
+describe('Application Routes was mounted', () => {
   it('should render "MainCard" when user navigate to "/page1"', () => {
     history.push(AppRoute.Page1);
     render(fakeApp);
@@ -45,5 +32,5 @@ describe('Application Routing', () => {
     history.push('/non-existent-route');
     render(fakeApp);
   });
-});
 
+});
