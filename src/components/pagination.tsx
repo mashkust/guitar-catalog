@@ -4,7 +4,7 @@ import { AppRoute } from '../const';
 
 function Pagination(): JSX.Element {
   return (
-    <div className="pagination page-content__pagination">
+    <div className="pagination page-content__pagination" data-testid="pagination">
       <ul className="pagination__list">
         {document.location.pathname.includes(AppRoute.Page2) ?
           <><li className="pagination__page pagination__page--prev" id="prev"><Link className="link pagination__page-link" to={AppRoute.Page1}>Назад</Link></li>

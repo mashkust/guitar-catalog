@@ -10,6 +10,9 @@ export type GuitarData = {
   comments: Comment[],
   isDataLoaded: boolean,
   isDataSending: boolean,
+  isSuccessModalOpened: boolean,
+  isCommentModalOpened: boolean,
+  isBookingModalOpened: boolean,
 };
 
 export type Guitar = {

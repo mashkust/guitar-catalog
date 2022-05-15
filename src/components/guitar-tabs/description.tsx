@@ -6,7 +6,7 @@ type DescriptionTabProps = {
 
 function Description({guitar}:  DescriptionTabProps): JSX.Element {
   return (
-    <p className="tabs__product-description ">
+    <p data-testid="description" className="tabs__product-description ">
       {guitar.description}
     </p>
   );

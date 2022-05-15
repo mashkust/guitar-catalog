@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { RATING_VALUES } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { sendCommentAction } from '../store/api-actions';
-import { sendComment } from '../store/guitar-data';
+import { sendComment, setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
 import type { Guitar } from '../types/types';
 
 type AddCommentsProps = {
   guitar: Guitar;
-  setIsCommentModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
-  setIsSuccessModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened }: AddCommentsProps): JSX.Element {
+function AddComments({ guitar}: AddCommentsProps): JSX.Element {
   const { name, id } = guitar;
   const dispatch = useAppDispatch();
 
@@ -33,7 +31,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
   };
 
   const onSuccessBtnClick = () => {
-    setIsSuccessModalOpened(true);
+    dispatch(setIsSuccessModalOpened(true));
   };
 
   return (
@@ -41,7 +39,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
       <div className="modal__wrapper" >
         <div className="modal__overlay"
           onClick={() => {
-            setIsCommentModalOpened(false);
+            dispatch(setIsCommentModalOpened(false));
             startScroll();
           }}
         >
@@ -60,7 +58,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
               advantage: adv,
               disadvantage: disadv,
             }));
-            setIsCommentModalOpened(false);
+            dispatch(setIsCommentModalOpened(false));
             onSuccessBtnClick();
           }} action="#"
           >
@@ -116,7 +114,7 @@ function AddComments({ guitar, setIsCommentModalOpened,  setIsSuccessModalOpened
           </form>
           <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
             onClick={() => {
-              setIsCommentModalOpened(false);
+              dispatch(setIsCommentModalOpened(false));
               startScroll();
             }}
           >

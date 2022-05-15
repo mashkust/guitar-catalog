@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import type { MouseEvent } from 'react';
 import { generatePath, Link, useParams } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
@@ -15,6 +15,7 @@ import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
 import { startScroll, stopScroll } from '../utils';
+import {setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
 
 type GuitarPageProps = {
   tab: boolean,
@@ -22,8 +23,6 @@ type GuitarPageProps = {
 
 function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
-  const [isCommentModalOpened, setIsCommentModalOpened] = useState<boolean>(false);
-  const [isSuccessModalOpened, setIsSuccessModalOpened] = useState<boolean>(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -34,7 +33,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   };
 
   const onCommentBtnClick = () => {
-    setIsCommentModalOpened(true);
+    dispatch(setIsCommentModalOpened(true));
   };
 
   const onUpBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
@@ -57,14 +56,9 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
 
   const mainRef = useRef<HTMLElement | null>(null);
 
-  const { guitar, comments } = useAppSelector(({ DATA }) => DATA);
+  const { guitar, comments, isSuccessModalOpened, isCommentModalOpened} = useAppSelector(({ DATA }) => DATA);
   const { commentCardsCount } = useAppSelector(({ COMMENT }) => COMMENT);
 
-  const somecomments = comments.slice().sort((a, b) => {
-    if (a.createAt > b.createAt) { return -1; }
-    else if (a.createAt < b.createAt) { return 1; }
-    else { return 0; }
-  });
 
   document.onkeydown = function(evt) {
     evt = evt || window.event;
@@ -73,9 +67,9 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
       isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
     }
     if (isEscape) {
-      setIsCommentModalOpened(false);
+      dispatch(setIsCommentModalOpened(false));
       setIsBookingModalOpened(false);
-      setIsSuccessModalOpened(false);
+      dispatch(setIsSuccessModalOpened(false));
       startScroll();
     }
   };
@@ -87,7 +81,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
     return (
       <React.Fragment>
         <PageHeader />
-        <main ref={mainRef} className={isCommentModalOpened === true ? 'page-content overflow-hidden' : 'page-content'} >
+        <main ref={mainRef} className={isCommentModalOpened  ? 'page-content overflow-hidden' : 'page-content'} >
           <div className="container">
             <h1 className="page-content__title title title--bigger">{name}</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
@@ -147,11 +141,11 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                 }}
               >Оставить отзыв
               </button>
-              {isCommentModalOpened && <AddComments guitar={guitar} setIsSuccessModalOpened={setIsSuccessModalOpened} setIsCommentModalOpened={setIsCommentModalOpened} />}
-              {isSuccessModalOpened && <SuccessComments setIsSuccessModalOpened={setIsSuccessModalOpened} />}
-              {somecomments && somecomments.slice(0, commentCardsCount).map((comment: Comment) => (
+              {isCommentModalOpened && <AddComments guitar={guitar} />}
+              {isSuccessModalOpened && <SuccessComments />}
+              {Array.from(comments).slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment={comment} key={comment.id} />))}
-              {somecomments && somecomments.length > commentCardsCount ? <ShowMore /> : ''}
+              {comments.length > commentCardsCount ? <ShowMore /> : ''}
               <button style={{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick={onUpBtnClick}>Наверх</button>
             </section>
           </div>

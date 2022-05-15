@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../const';
 import {  fakeStore, makeFakeGuitar } from '../mock';
 import GuitarCard from './guitar-card';
+import HistoryRouter from './history-route';
 
 const history = createMemoryHistory();
 
@@ -13,9 +13,9 @@ describe('Component: GuitarCard', () => {
     history.push(AppRoute.Page1);
     render(
       <Provider store={fakeStore}>
-        <BrowserRouter>
+        <HistoryRouter history={history}>
           <GuitarCard guitar = {makeFakeGuitar({})} />
-        </BrowserRouter>
+        </HistoryRouter>
       </Provider>,
     );
     expect(screen.getByText(/Купить/)).toBeInTheDocument();

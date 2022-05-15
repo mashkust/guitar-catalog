@@ -4,8 +4,7 @@ import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { fetchCommentsAction } from '../store/api-actions';
-// import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-// import { fetchCommentsAction } from '../store/api-actions';
+
 import type { Guitar } from '../types/types';
 import { stopScroll } from '../utils';
 import BasketCard from './basket-card';

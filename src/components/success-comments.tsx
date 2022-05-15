@@ -1,17 +1,15 @@
+import { useDispatch } from 'react-redux';
+import { setIsSuccessModalOpened } from '../store/guitar-data';
 import { startScroll } from '../utils';
 
-type BasketCardProps = {
-  setIsSuccessModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
-}
-
-function BasketCard({ setIsSuccessModalOpened }: BasketCardProps): JSX.Element {
-
+function SuccessComments (): JSX.Element {
+  const dispatch = useDispatch();
   return (
-    <div className="modal is-active modal--success modal-for-ui-kit">
+    <div data-testid = 'successed-modal'  className="modal is-active modal--success modal-for-ui-kit">
       <div className="modal__wrapper">
         <div className="modal__overlay"
           onClick={() => {
-            setIsSuccessModalOpened(false);
+            dispatch(setIsSuccessModalOpened(false));
             startScroll();
           }}
         >
@@ -24,7 +22,7 @@ function BasketCard({ setIsSuccessModalOpened }: BasketCardProps): JSX.Element {
           <div className="modal__button-container modal__button-container--review">
             <button className="button button--small modal__button modal__button--review"
               onClick={() => {
-                setIsSuccessModalOpened(false);
+                dispatch(setIsSuccessModalOpened(false));
                 startScroll();
               }}
             >К покупкам!
@@ -32,7 +30,8 @@ function BasketCard({ setIsSuccessModalOpened }: BasketCardProps): JSX.Element {
           </div>
           <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
             onClick={() => {
-              setIsSuccessModalOpened(false);
+              dispatch(setIsSuccessModalOpened(false));
+
               startScroll();
             }}
           ><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
@@ -43,4 +42,4 @@ function BasketCard({ setIsSuccessModalOpened }: BasketCardProps): JSX.Element {
   );
 }
 
-export default BasketCard;
+export default SuccessComments ;
