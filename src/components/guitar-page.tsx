@@ -46,14 +46,14 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
 
   const dispatch = useAppDispatch();
   const params = useParams();
-  const guitarid = Number(params.id);
 
   useEffect(() => {
+    const guitarid = Number(params.id);
     if (guitarid) {
       dispatch(fetchGuitarAction(guitarid));
       dispatch(fetchCommentsAction(guitarid));
     }
-  }, [dispatch, guitarid]);
+  }, [dispatch, params]);
 
   const mainRef = useRef<HTMLElement | null>(null);
 

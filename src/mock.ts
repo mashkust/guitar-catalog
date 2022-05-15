@@ -2,6 +2,7 @@ import {name, random } from 'faker';
 import { COMMENT_CARDS_COUNT, TYPES } from './const';
 import { Guitar, NewReview } from './types/types';
 import {configureMockStore} from '@jedmao/redux-mock-store';
+import thunk from 'redux-thunk';
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
@@ -34,8 +35,8 @@ export const makeFakeGuitar = ({testName}:makeFakeGuitarProps):Guitar => ({
   stringCount: getRandomInt(0,8),
 });
 
-const mockStore = configureMockStore();
-
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 export const fakeStore = mockStore({
   DATA: {
     guitars: [makeFakeGuitar({}),makeFakeGuitar({})],

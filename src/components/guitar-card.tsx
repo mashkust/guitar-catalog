@@ -17,15 +17,19 @@ type GuitarCardProps = {
 function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
   const { name, price, previewImg, id, rating } = guitar;
 
+  const [ mount, setMount ] = useState(false);
+
   const STARS = Math.ceil(rating);
   const NULL_STARS = STARS_MAX - STARS;
-
   const dispatch = useAppDispatch();
-  useEffect(() => {
+
+  if (!mount) {
     if (guitar.id) {
       dispatch(fetchCommentsAction(guitar.id));
     }
-  }, [dispatch, guitar.id]);
+  }
+
+  useEffect(() =>  setMount(true), []);
 
   const comments  = useAppSelector(({ DATA }) => DATA.comments);
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);

@@ -1,57 +1,73 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { api, store } from './index';
-import { Guitar, NewReview, Comment } from '../types/types';
+import { Guitar, NewReview, Comment, AppDispatch, State } from '../types/types';
 import { loadComments, loadGuitar, loadGuitars, sendComment } from './guitar-data';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../const';
+import { AxiosInstance } from 'axios';
 
 
-export const fetchGuitarsAction = createAsyncThunk(
+export const fetchGuitarsAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'data/fetchGuitars',
-  async () => {
+  async (_arg, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<Guitar[]>(APIRoute.Guitars);
-      store.dispatch(loadGuitars(data));
+      dispatch(loadGuitars(data));
     } catch (error) {
       errorHandle(error);
     }
   },
 );
 
-export const fetchGuitarAction = createAsyncThunk(
+export const fetchGuitarAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'data/fetchGuitar',
-  async (guitarId: number) => {
+  async (guitarId, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<Guitar>(`${APIRoute.Guitar}${guitarId}`);
-      store.dispatch(loadGuitar(data));
+      dispatch(loadGuitar(data));
     } catch (error) {
       errorHandle(error);
     }
   },
 );
 
-export const fetchCommentsAction = createAsyncThunk(
+export const fetchCommentsAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'data/fetchComments',
-  async (guitarId: number) => {
+  async (guitarId, {dispatch, extra: api}) => {
     try {
       const { data } = await api.get<Comment[]>(`${APIRoute.Guitar}${guitarId}${APIRoute.Comments}`);
-      store.dispatch(loadComments(data));
+      dispatch(loadComments(data));
     } catch (error) {
       errorHandle(error);
     }
   },
 );
 
-export const sendCommentAction = createAsyncThunk(
+export const sendCommentAction = createAsyncThunk<void, NewReview, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
   'data/sendComment',
-  async ({ guitarId, userName, advantage, disadvantage, comment, rating }: NewReview) => {
+  async ({ guitarId, userName, advantage, disadvantage, comment, rating }, {dispatch, extra: api} ) => {
     try {
       const data = { guitarId, userName, advantage, disadvantage, comment, rating };
       await api.post<NewReview>(APIRoute.Comments, data);
-      store.dispatch(sendComment(false));
+      dispatch(sendComment(false));
     } catch (error) {
       errorHandle(error);
-      store.dispatch(sendComment(true));
+      dispatch(sendComment(true));
     }
   },
 );

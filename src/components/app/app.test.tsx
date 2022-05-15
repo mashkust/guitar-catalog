@@ -4,11 +4,15 @@ import {Provider} from 'react-redux';
 import { AppRoute} from '../../const';
 import App from './app';
 import { fakeStore } from '../../mock';
+import HistoryRouter from '../history-route';
+import browserHistory from '../../browser-history';
 
 const history = createMemoryHistory();
 const fakeApp = (
   <Provider store={fakeStore}>
-    <App />
+    <HistoryRouter history={browserHistory}>
+      <App />
+    </HistoryRouter>
   </Provider>
 );
 
@@ -18,12 +22,12 @@ describe('Application Routes was mounted', () => {
     render(fakeApp);
   });
 
-  it('should render "AuthScreen" when user navigate to "/guitars/details/"', () => {
+  it('should render "Details)" when user navigate to "/guitars/details/"', () => {
     history.push(AppRoute.Details);
     render(fakeApp);
   });
 
-  it('should render "WinScreen" when user navigate to "/guitars/descriprions/"', () => {
+  it('should render "Description" when user navigate to "/guitars/descriprions/"', () => {
     history.push(AppRoute.Description);
     render(fakeApp);
   });
