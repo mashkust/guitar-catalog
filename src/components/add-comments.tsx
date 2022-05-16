@@ -68,7 +68,7 @@ function AddComments({ guitar}: AddCommentsProps): JSX.Element {
                 <input className="form-review__input form-review__input--name" id="user-name" type="text" autoComplete="off" value={userName} disabled = {isReviewSending}
                   onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                     setUserName(evt.currentTarget.value);
-                  }} required
+                  }} required autoFocus
                 />
                 <p className={userName.length>0 ? 'form-review__war' : 'form-review__warning' } > {userName.length>0 ? '' : 'Заполните поле'}</p>
               </div>
@@ -78,7 +78,7 @@ function AddComments({ guitar}: AddCommentsProps): JSX.Element {
                     <React.Fragment key={el.value}>
                       <input className = "visually-hidden"  key = {el.value} id = {`star-${el.value}`} type = "radio"
                         name = "rate" value = {el.value} checked = {rating === el.value}
-                        onChange = {(evt) => ratingChangeHandler(Number(evt.target.value))} disabled = {isReviewSending}
+                        onChange = {(evt) => ratingChangeHandler(Number(evt.target.value))} disabled = {isReviewSending} required
                       />
                       <label className = "rate__label" htmlFor = {`star-${el.value}`}>
                       </label>

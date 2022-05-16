@@ -11,6 +11,7 @@ function SuccessComments (): JSX.Element {
           onClick={() => {
             dispatch(setIsSuccessModalOpened(false));
             startScroll();
+            document.location.reload();
           }}
         >
         </div>
@@ -24,6 +25,7 @@ function SuccessComments (): JSX.Element {
               onClick={() => {
                 dispatch(setIsSuccessModalOpened(false));
                 startScroll();
+                document.location.reload();
               }}
             >К покупкам!
             </button>
@@ -31,7 +33,7 @@ function SuccessComments (): JSX.Element {
           <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
             onClick={() => {
               dispatch(setIsSuccessModalOpened(false));
-
+              document.location.reload();
               startScroll();
             }}
           ><span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>

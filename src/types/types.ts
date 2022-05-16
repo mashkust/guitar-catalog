@@ -12,7 +12,6 @@ export type GuitarData = {
   isDataSending: boolean,
   isSuccessModalOpened: boolean,
   isCommentModalOpened: boolean,
-  isBookingModalOpened: boolean,
 };
 
 export type Guitar = {

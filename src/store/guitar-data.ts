@@ -10,7 +10,6 @@ const initialState: GuitarData = {
   isDataSending: false,
   isSuccessModalOpened: false,
   isCommentModalOpened: false,
-  isBookingModalOpened: false,
 };
 
 
@@ -20,9 +19,6 @@ export const guitarData = createSlice({
   reducers: {
     setIsSuccessModalOpened: (state, action: { payload: boolean }) => {
       state.isSuccessModalOpened = action.payload;
-    },
-    setIsBookingModalOpened: (state, action: { payload: boolean }) => {
-      state.isBookingModalOpened= action.payload;
     },
     setIsCommentModalOpened: (state, action: { payload: boolean }) => {
       state.isCommentModalOpened = action.payload;
@@ -50,5 +46,4 @@ export const {
   sendComment,
   setIsSuccessModalOpened,
   setIsCommentModalOpened,
-  setIsBookingModalOpened,
 } = guitarData.actions;

@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { AppRoute } from '../const';
-import { fakeStore, makeFakeGuitar } from '../mock';
+import { fakeGuitar, fakeStore } from '../mock';
 import AddComments from './add-comments';
 import HistoryRouter from './history-route';
 
@@ -14,7 +14,7 @@ describe('Component: AddComments', () => {
     render(
       <Provider store={fakeStore}>
         <HistoryRouter history={history}>
-          <AddComments guitar={makeFakeGuitar({})} />
+          <AddComments guitar={fakeGuitar} />
         </HistoryRouter>
       </Provider>,
     );

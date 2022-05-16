@@ -1,8 +1,10 @@
-import {name, random } from 'faker';
+import {name, random, datatype, date } from 'faker';
 import { COMMENT_CARDS_COUNT, TYPES } from './const';
-import { Guitar, NewReview } from './types/types';
+import { Guitar, NewReview,Comment } from './types/types';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
+
+const today = new Date('16 May 2022 14:48 UTC');
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
@@ -10,13 +12,26 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export const makeFakeComment = ():NewReview => ({
-  guitarId: getRandomInt(0,27),
+console.log(today.toISOString());
+
+export const makeFakeNewComment = ():NewReview => ({
+  guitarId: datatype.float(27),
   userName: name.title(),
   advantage: random.words(),
   disadvantage: random.words(),
   comment: random.words(),
-  rating: getRandomInt(0,6),
+  rating: datatype.float(6),
+});
+
+export const makeFakeComment = ():Comment => ({
+  guitarId: datatype.float(27),
+  userName: name.title(),
+  advantage: random.words(),
+  disadvantage: random.words(),
+  comment: random.words(),
+  rating: datatype.float(6),
+  id:String(datatype.float(100)),
+  createAt:String(date.past),
 });
 
 export interface makeFakeGuitarProps {
@@ -48,3 +63,7 @@ export const fakeStore = mockStore({
 });
 
 export const fakeGuitars = [makeFakeGuitar({ testName: 'Test guitar' }),makeFakeGuitar({}),makeFakeGuitar({})];
+export const fakeGuitar = makeFakeGuitar({ testName: 'Test guitar' });
+export const fakeComment = makeFakeComment();
+export const fakeNewComment = makeFakeNewComment();
+export const fakeComments = [makeFakeComment(),makeFakeComment(),makeFakeComment()];
