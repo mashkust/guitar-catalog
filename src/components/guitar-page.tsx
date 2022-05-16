@@ -115,7 +115,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                     ))
                   }
                   <p className="visually-hidden">Оценка {rating}</p>
-                  <p className="rate__count">{comments[0] ? comments.length : ''}</p>
+                  <p className="rate__count">{comments[0] ? comments.length : '-'}</p>
                 </div>
                 <GuitarTab tab={tab} guitar={guitar} />
               </div>

@@ -24,6 +24,7 @@ export type Guitar = {
   description: string,
   rating: number,
   stringCount: number,
+  commentsCount?: number
 }
 
 export type NewReview = {

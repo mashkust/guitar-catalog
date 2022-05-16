@@ -32,6 +32,15 @@ export const guitarData = createSlice({
     },
     loadComments: (state, action: { payload: Comment[] }) => {
       state.comments = action.payload.sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
+      if (action.payload[0]) {
+        const first = action.payload[0];
+        if (action.payload.every((el) => Number(el.guitarId) === Number(first.guitarId))) {
+          const guitar = state.guitars.find((el) => el.id === first.guitarId);
+          if (guitar) {
+            guitar.commentsCount = action.payload.length;
+          }
+        }
+      }
     },
     sendComment: (state, action) => {
       state.isDataSending = action.payload;

@@ -2124,13 +2124,13 @@ button,
 
 .form-review__warning {
   display: block;
-
+  min-height:15px;
   margin: 0;
   padding-right: 5px;
 
   font-size: 10px;
   line-height: 15px;
-
+  height: 16px;
   color: #eb5555;
 
   text-align: end;
@@ -2138,18 +2138,8 @@ button,
 }
 
 .form-review__war {
-  display: block;
-
+  min-height:15px;
   margin: 0;
-  padding-right: -5px;
-
-  font-size: 0px;
-  line-height: 0px;
-
-  color: #ffffff;
-
-  text-align: end;
-  letter-spacing: 0.0em;
 }
 
 .form-review__button {

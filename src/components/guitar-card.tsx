@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useAppDispatch} from '../hooks/hooks';
 import { fetchCommentsAction } from '../store/api-actions';
-import type { Guitar,Comment} from '../types/types';
+import type { Guitar} from '../types/types';
 import { pasrePrice, stopScroll } from '../utils';
 import BasketCard from './basket-card';
 
@@ -28,16 +28,6 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
   }
 
   useEffect(() =>  setMount(true), []);
-
-  const comments  = useAppSelector(({ DATA }) => DATA.comments);
-  const lengthComments = (com: Comment []) => {
-    // console.log(com);
-    if(com[0] && id && id === com[0].guitarId ) {
-      const dlina= com.length;
-      return dlina;
-    }
-  };
-
 
   const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
   const onBookingBtnClick = () => {
@@ -67,7 +57,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
             ))
           }
           <p className="visually-hidden">Рейтинг {rating}</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{lengthComments(comments)}</p>
+          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{guitar.commentsCount || '-'}</p>
         </div>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{pasrePrice(price)} ₽
