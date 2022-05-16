@@ -1,5 +1,6 @@
 import { TYPES } from '../const';
 import { Guitar } from '../types/types';
+import { pasrePrice } from '../utils';
 
 type BasketCardProps = {
   setIsBookingModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
@@ -28,9 +29,9 @@ function BasketCard({ setIsBookingModalOpened, guitar }: BasketCardProps): JSX.E
           <div className="modal__info"><img className="modal__img" src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="67" height="137" alt={name} />
             <div className="modal__info-wrapper">
               <h3 className="modal__product-name title title--little title--uppercase">Гитара {name}</h3>
-              <p className="modal__product-params modal__product-params--margin-11">Артикул: {vendorCode}</p>
-              <p className="modal__product-params">{type ? TYPES[type] : ''}, {stringCount} струнная</p>
-              <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{price}₽</span></p>
+              <p className="modal__product-params modal__product-params--margin-11">Артикул:{vendorCode}</p>
+              <p className="modal__product-params">{type ? TYPES[type] : ''},{stringCount} струнная</p>
+              <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{pasrePrice(price)} ₽</span></p>
             </div>
           </div>
           <div className="modal__button-container">

@@ -14,7 +14,7 @@ import Comments from './guitar-tabs/comments';
 import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
-import { startScroll, stopScroll } from '../utils';
+import { pasrePrice, startScroll, stopScroll } from '../utils';
 import {setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
 
 type GuitarPageProps = {
@@ -75,7 +75,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   };
 
   if (guitar) {
-    const { id, name, previewImg, price, rating } = guitar as Guitar;
+    const { id, name, previewImg, price, rating} = guitar as Guitar;
     const STARS = Math.ceil(rating);
     const NULL_STARS = STARS_MAX - STARS;
     return (
@@ -115,12 +115,13 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                     ))
                   }
                   <p className="visually-hidden">Оценка {rating}</p>
+                  <p className="rate__count">{comments[0] ? comments.length : ''}</p>
                 </div>
                 <GuitarTab tab={tab} guitar={guitar} />
               </div>
               <div className="product-container__price-wrapper">
                 <p className="product-container__price-info product-container__price-info--title">Цена:</p>
-                <p className="product-container__price-info product-container__price-info--value">{price} ₽</p>
+                <p className="product-container__price-info product-container__price-info--value">{pasrePrice(price)} ₽</p>
                 <button className="button button--red button--big product-container__button"
                   onClick={() => {
                     onBookingBtnClick();
