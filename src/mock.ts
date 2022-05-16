@@ -1,10 +1,8 @@
-import {name, random, datatype, date } from 'faker';
+import {name, random, date } from 'faker';
 import { COMMENT_CARDS_COUNT, TYPES } from './const';
 import { Guitar, NewReview,Comment } from './types/types';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
-
-const today = new Date('16 May 2022 14:48 UTC');
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
@@ -12,25 +10,23 @@ function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-console.log(today.toISOString());
-
 export const makeFakeNewComment = ():NewReview => ({
-  guitarId: datatype.float(27),
+  guitarId: getRandomInt(0,27),
   userName: name.title(),
   advantage: random.words(),
   disadvantage: random.words(),
   comment: random.words(),
-  rating: datatype.float(6),
+  rating: getRandomInt(0,6),
 });
 
 export const makeFakeComment = ():Comment => ({
-  guitarId: datatype.float(27),
+  guitarId: getRandomInt(0,27),
   userName: name.title(),
   advantage: random.words(),
   disadvantage: random.words(),
   comment: random.words(),
-  rating: datatype.float(6),
-  id:String(datatype.float(100)),
+  rating: getRandomInt(0,6),
+  id:String(getRandomInt(0,100)),
   createAt:String(date.past),
 });
 
