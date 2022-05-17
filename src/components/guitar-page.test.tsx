@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import browserHistory from '../browser-history';
+import browserHistory from '../hash-history';
 import { fakeStore} from '../mock';
 import GuitarPage from './guitar-page';
 import HistoryRouter from './history-router';

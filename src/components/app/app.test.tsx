@@ -5,7 +5,7 @@ import { AppRoute} from '../../const';
 import App from './app';
 import { fakeStore } from '../../mock';
 import HistoryRouter from '../history-router';
-import browserHistory from '../../browser-history';
+import browserHistory from '../../hash-history';
 
 const history = createMemoryHistory();
 const fakeApp = (

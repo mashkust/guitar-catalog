@@ -5,14 +5,14 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { fetchGuitarsAction } from './store/api-actions';
 import HistoryRouter from './components/history-router';
-import browserHistory from './browser-history';
+import hashHistory from './hash-history';
 
 store.dispatch(fetchGuitarsAction());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HistoryRouter history={browserHistory}>
+      <HistoryRouter history={hashHistory}>
         <App />
       </HistoryRouter>
     </Provider>
