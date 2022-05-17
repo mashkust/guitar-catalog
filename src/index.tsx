@@ -12,7 +12,7 @@ store.dispatch(fetchGuitarsAction());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HistoryRouter history={browserHistory} basename = {`/${process.env.PUBLIC_URL}`}>
+      <HistoryRouter history={browserHistory}>
         <App />
       </HistoryRouter>
     </Provider>

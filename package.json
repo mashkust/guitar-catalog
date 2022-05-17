@@ -1,6 +1,6 @@
 {
   "private": true,
-  "homepage": "https://mashkust.github.io/react-starter-pack-main/", 
+  "homepage": "https://mashkust.github.io/", 
   "dependencies": {
     "@reduxjs/toolkit": "1.5.0",
     "axios": "0.21.1",
