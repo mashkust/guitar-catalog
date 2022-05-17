@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import { AppRoute} from '../../const';
 import App from './app';
 import { fakeStore } from '../../mock';
-import HistoryRouter from '../history-route';
+import HistoryRouter from '../history-router';
 import browserHistory from '../../browser-history';
 
 const history = createMemoryHistory();

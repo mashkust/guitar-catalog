@@ -60,6 +60,5 @@ export const fakeStore = mockStore({
 
 export const fakeGuitars = [makeFakeGuitar({ testName: 'Test guitar' }),makeFakeGuitar({}),makeFakeGuitar({})];
 export const fakeGuitar = makeFakeGuitar({ testName: 'Test guitar' });
-export const fakeComment = makeFakeComment();
 export const fakeNewComment = makeFakeNewComment();
 export const fakeComments = [makeFakeComment(),makeFakeComment(),makeFakeComment()];

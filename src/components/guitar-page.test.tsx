@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../browser-history';
 import { fakeStore} from '../mock';
 import GuitarPage from './guitar-page';
-import HistoryRouter from './history-route';
+import HistoryRouter from './history-router';
 
 describe('Component:GuitarPage', () => {
   it('should render GuitarPage Details', () => {

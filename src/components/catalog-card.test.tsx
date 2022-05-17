@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { AppRoute } from '../const';
 import { fakeGuitars, fakeStore } from '../mock';
 import CatalogCard from './catalog-card';
-import HistoryRouter from './history-route';
+import HistoryRouter from './history-router';
 
 const history = createMemoryHistory();
 

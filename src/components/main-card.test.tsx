@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../browser-history';
 import { fakeStore, fakeGuitars } from '../mock';
-import HistoryRouter from './history-route';
+import HistoryRouter from './history-router';
 import MainCard from './main-card';
 
 describe('Component:MainCard', () => {
