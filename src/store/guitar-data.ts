@@ -35,7 +35,7 @@ export const guitarData = createSlice({
       if (action.payload[0]) {
         const first = action.payload[0];
         if (action.payload.every((el) => Number(el.guitarId) === Number(first.guitarId))) {
-          const guitar = state.guitars.find((el) => el.id === first.guitarId);
+          const guitar = state.guitars.find((el) =>  Number(el.id) === Number(first.guitarId));
           if (guitar) {
             guitar.commentsCount = action.payload.length;
           }
