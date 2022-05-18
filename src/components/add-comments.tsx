@@ -89,7 +89,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                   <p className={isValidationName && userName.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationName && userName.length === 0  ? 'Заполните поле' : ''}</p>
                 </div>
                 <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
-                  <div className="rate rate--reverse">
+                  <div className="rate rate--reverse" >
                     {RATING_VALUES.map((el) => (
                       <React.Fragment key={el.value}>
                         <input className="visually-hidden" key={el.value} id={`star-${el.value}`} type="radio"
