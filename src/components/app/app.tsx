@@ -7,8 +7,8 @@ import NotFoundPage from '../notfound-page';
 import LoadingScreen from '../loading-screen';
 
 function App(): JSX.Element {
-
-  const {guitars, isDataLoaded} = useAppSelector(({ DATA }) => DATA);
+  const guitars = useAppSelector(({ DATA }) => DATA.guitars);
+  const isDataLoaded = useAppSelector(({ DATA }) => DATA.isDataLoaded);
 
   if (!isDataLoaded) {
     return (

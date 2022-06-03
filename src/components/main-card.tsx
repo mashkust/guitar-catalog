@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import CatalogCard from './catalog-card';
 import PageHeader from './page-header';
 import PageFooter from './page-footer';
@@ -11,11 +11,6 @@ type MainProps = {
 };
 
 function MainCard({guitars}: MainProps): JSX.Element {
-
-
-  useEffect(() => {
-  console.log('guitars change');
-  },[guitars]);
 
   return (
     <React.Fragment>
