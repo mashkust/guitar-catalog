@@ -57,7 +57,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
             ))
           }
           <p className="visually-hidden">Рейтинг {rating}</p>
-          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{guitar.commentsCount || '-'}</p>
+          <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{guitar.commentsCount || '0'}</p>
         </div>
         <p className="product-card__title">{name}</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{pasrePrice(price)} ₽

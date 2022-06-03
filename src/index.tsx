@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { fetchGuitarsAction } from './store/api-actions';
+import { fetchGuitarsAction} from './store/api-actions';
 import HistoryRouter from './components/history-router';
 import hashHistory from './hash-history';
 

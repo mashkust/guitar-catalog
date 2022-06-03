@@ -48,6 +48,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
 
   useEffect(() => {
     const guitarid = Number(params.id);
+
     if (guitarid) {
       dispatch(fetchGuitarAction(guitarid));
       dispatch(fetchCommentsAction(guitarid));
@@ -115,7 +116,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                     ))
                   }
                   <p className="visually-hidden">Оценка {rating}</p>
-                  <p className="rate__count">{comments[0] ? comments.length : '-'}</p>
+                  <p className="rate__count">{ comments && comments[0] ? comments.length : '0'}</p>
                 </div>
                 <GuitarTab tab={tab} guitar={guitar} />
               </div>
@@ -144,9 +145,9 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
               </button>
               {isCommentModalOpened && <AddComments guitar={guitar} />}
               {isSuccessModalOpened && <SuccessComments />}
-              {Array.from(comments).slice(0, commentCardsCount).map((comment: Comment) => (
+              { comments && Array.from(comments).slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment={comment} key={comment.id} />))}
-              {comments.length > commentCardsCount ? <ShowMore /> : ''}
+              {comments && comments.length > commentCardsCount ? <ShowMore /> : ''}
               <button style={{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick={onUpBtnClick}>Наверх</button>
             </section>
           </div>

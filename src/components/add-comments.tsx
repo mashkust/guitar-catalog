@@ -27,7 +27,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
   const [isValidationAdv, setIsValidationAdv] = useState<boolean>(false);
   const [isValidationDisadv, setIsValidationDisadv] = useState<boolean>(false);
 
-  const getValidation = (val) => {
+  const getValidation = (val: boolean | ((prevState: boolean) => boolean)) => {
     setIsValidationText(val);
     setIsValidationName(val);
     setIsValidationRating(val);
@@ -46,7 +46,6 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
   const onSuccessBtnClick = () => {
     dispatch(setIsSuccessModalOpened(true));
   };
-
 
   return (
     <Pentoville>
@@ -86,7 +85,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                       setIsValidationName(false);
                     }} required autoFocus tabIndex={1}
                   />
-                  <p className={isValidationName && userName.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationName && userName.length === 0  ? 'Заполните поле' : ''}</p>
+                  <p className={isValidationName && userName.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationName && userName.length === 0 ? 'Заполните поле' : ''}</p>
                 </div>
                 <div><span className="form-review__label form-review__label--required">Ваша Оценка</span>
                   <div className="rate rate--reverse" >
@@ -114,7 +113,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                   setIsValidationAdv(false);
                 }} required tabIndex={3}
               />
-              <p className={isValidationAdv && adv.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationAdv && adv.length === 0  ? 'Заполните поле' : ''}</p>
+              <p className={isValidationAdv && adv.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationAdv && adv.length === 0 ? 'Заполните поле' : ''}</p>
               <label className="form-review__label form-review__label--required" htmlFor="disadv">Недостатки</label>
               <input className="form-review__input" id="disadv" type="text" autoComplete="off" value={disadv} disabled={isReviewSending}
                 onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,7 +121,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                   setIsValidationDisadv(false);
                 }} required tabIndex={4}
               />
-              <p className={isValidationDisadv && disadv.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationDisadv && disadv.length === 0  ? 'Заполните поле' : ''}</p>
+              <p className={isValidationDisadv && disadv.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationDisadv && disadv.length === 0 ? 'Заполните поле' : ''}</p>
               <label className="form-review__label form-review__label--required" htmlFor="comment">Комментарий</label>
               <textarea value={text} disabled={isReviewSending}
                 onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -131,8 +130,8 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                 }} className="form-review__input form-review__input--textarea" id="comment" autoComplete="off" required tabIndex={5}
               >
               </textarea>
-              <p className={isValidationText && text.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationText && text.length === 0  ? 'Заполните поле' : ''}</p>
-              <button className="button button--medium-20 form-review__button" type="submit" disabled={isReviewSending}  onClick = {()=> getValidation(true)}>Отправить отзыв</button>
+              <p className={isValidationText && text.length === 0 ? 'form-review__warning' : 'form-review__war'} > {isValidationText && text.length === 0 ? 'Заполните поле' : ''}</p>
+              <button className="button button--medium-20 form-review__button" type="submit" disabled={isReviewSending} onClick={() => getValidation(true)}>Отправить отзыв</button>
             </form>
             <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
               onClick={() => {

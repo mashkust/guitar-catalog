@@ -4,14 +4,18 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
+export type SortType = 'price' | 'rating';
+
 export type GuitarData = {
   guitars: Guitar[],
   guitar: Guitar | null,
-  comments: Comment[],
+  comments: Comment[] | null,
   isDataLoaded: boolean,
   isDataSending: boolean,
   isSuccessModalOpened: boolean,
   isCommentModalOpened: boolean,
+  isSorting: SortType | null,
+  isSortInc: boolean | null
 };
 
 export type Guitar = {
@@ -25,6 +29,12 @@ export type Guitar = {
   rating: number,
   stringCount: number,
   commentsCount?: number
+}
+
+export type SortByParamsProps = {
+  guitars: Guitar[],
+  isSorting: SortType,
+  isSortInc: boolean
 }
 
 export type NewReview = {

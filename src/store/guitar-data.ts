@@ -1,17 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { GuitarData } from '../types/types';
+import { GuitarData, SortType } from '../types/types';
 import { NameSpace } from '../const';
 import type { Comment } from './../types/types';
+import { sortByParams } from '../utils';
 const initialState: GuitarData = {
   guitars: [],
   guitar: null,
-  comments: [],
+  comments: null,
   isDataLoaded: false,
   isDataSending: false,
   isSuccessModalOpened: false,
   isCommentModalOpened: false,
+  isSorting: null,
+  isSortInc: null,
 };
-
 
 export const guitarData = createSlice({
   name: NameSpace.data,
@@ -23,6 +25,38 @@ export const guitarData = createSlice({
     setIsCommentModalOpened: (state, action: { payload: boolean }) => {
       state.isCommentModalOpened = action.payload;
     },
+
+    // setSortParams: (state, action: { payload: { isSorting : SortType, isSortInc: boolean } }) => {
+    //   const { isSortInc, isSorting } = action.payload;
+    //   hashHistory.push({
+    //     search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+    //   });
+    // },
+
+    setIsSorting: (state, action: { payload: SortType }) => {
+      state.isSorting = action.payload;
+      if (state.isSortInc === null) {
+        state.isSortInc = true;
+      }
+      const { guitars, isSortInc, isSorting } = state;
+      state.guitars = sortByParams({ guitars, isSortInc, isSorting });
+      // hashHistory.push({
+      //   search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+      // });
+    },
+
+    setIsSortInc: (state, action: { payload: boolean }) => {
+      state.isSortInc = action.payload;
+      if (state.isSorting === null) {
+        state.isSorting = 'price';
+      }
+      const { guitars, isSortInc, isSorting } = state;
+      state.guitars = sortByParams({ guitars, isSortInc, isSorting });
+      // hashHistory.push({
+      //   search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+      // });
+    },
+
     loadGuitars: (state, action) => {
       state.guitars = action.payload;
       state.isDataLoaded = true;
@@ -55,4 +89,6 @@ export const {
   sendComment,
   setIsSuccessModalOpened,
   setIsCommentModalOpened,
+  setIsSorting,
+  setIsSortInc,
 } = guitarData.actions;
