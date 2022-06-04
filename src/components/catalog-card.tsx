@@ -27,7 +27,7 @@ function CatalogCard({ guitars }: CatalogCardProps): JSX.Element {
 
   return (
     <div className="catalog">
-      <FilterCard guitars={guitars} />
+      <FilterCard />
       <div className="catalog-sort">
         <h2 className="catalog-sort__title">Сортировать:</h2>
         <div className="catalog-sort__type">

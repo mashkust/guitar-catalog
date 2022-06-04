@@ -69,6 +69,12 @@ export const RATING_VALUES: Rating[] = [
   {'value': 1},
 ];
 
+export const STRING_VALUES: StringValue = {
+  electric: [4,6,7],
+  ukulele: [4],
+  acoustic: [6,7,12],
+};
+
 export const MONTH: string [] = [
   'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
 ];
