@@ -15,7 +15,9 @@ export type GuitarData = {
   isSuccessModalOpened: boolean,
   isCommentModalOpened: boolean,
   isSorting: SortType | null,
-  isSortInc: boolean | null
+  isSortInc: boolean | null,
+  minPrice: string | null,
+  maxPrice:string | null,
 };
 
 export type Guitar = {

@@ -148,7 +148,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
               { comments && Array.from(comments).slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment={comment} key={comment.id} />))}
               {comments && comments.length > commentCardsCount ? <ShowMore /> : ''}
-              <button style={{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick={onUpBtnClick}>Наверх</button>
+              {comments?.length !== 0 ? <button style={{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick={onUpBtnClick}>Наверх</button> : ''}
             </section>
           </div>
         </main>

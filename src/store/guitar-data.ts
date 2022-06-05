@@ -13,6 +13,8 @@ const initialState: GuitarData = {
   isCommentModalOpened: false,
   isSorting: null,
   isSortInc: null,
+  minPrice: null,
+  maxPrice: null,
 };
 
 export const guitarData = createSlice({
@@ -79,6 +81,12 @@ export const guitarData = createSlice({
     sendComment: (state, action) => {
       state.isDataSending = action.payload;
     },
+    setMinPrice: (state, action) => {
+      state.minPrice = action.payload;
+    },
+    setMaxPrice: (state, action) => {
+      state.minPrice = action.payload;
+    },
   },
 });
 
@@ -91,4 +99,6 @@ export const {
   setIsCommentModalOpened,
   setIsSorting,
   setIsSortInc,
+  setMinPrice,
+  setMaxPrice,
 } = guitarData.actions;

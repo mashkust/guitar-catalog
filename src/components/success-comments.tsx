@@ -4,6 +4,7 @@ import { startScroll } from '../utils';
 
 function SuccessComments (): JSX.Element {
   const dispatch = useDispatch();
+
   return (
     <div data-testid = 'successed-modal'  className="modal is-active modal--success modal-for-ui-kit">
       <div className="modal__wrapper">

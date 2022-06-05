@@ -9,8 +9,8 @@ export enum AppRoute {
     Details = '/guitars/details/:id',
     Description = '/guitars/description/:id',
     Basket = '/guitars/basket/:id',
-    SortPrice = 'price',
-    SortRating = 'rating',
+    // SortPrice = 'price',
+    // SortRating = 'rating',
 }
 
 export enum APIRoute {

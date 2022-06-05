@@ -1,34 +1,27 @@
 import { useState } from 'react';
 import { useAppSelector } from '../hooks/hooks';
-import { Guitar } from '../types/types';
-
-
 
 function FilterCard(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-//   const [minPrice, setMinPrice] = useState('');
-//   const [maxPrice, setMaxPrice] = useState('');
 
-
-  const findPrice = (arr: Guitar[], maxOrMin: string) => {
-    const arrPrice = arr.slice().map((el)=> el.price);
-    let al = arrPrice.length;
-    let extremum = arrPrice[al-1];
-    while (al--){
-      if (maxOrMin === 'max') {
-        if(arrPrice[al] > extremum){
-          extremum = arrPrice[al];
-        }
+  const arrPrice = guitars.slice().map((el)=> el.price);
+  const max = Math.max.apply(null, arrPrice);
+  const min = Math.min.apply(null, arrPrice);
+  const compareValues = () => {
+    if (Number(maxPrice) < Number(minPrice) && maxPrice !== '' && minPrice !== '') {
+      if (Number(maxPrice) < min) {
+        setMaxPrice(String(min));
+      }
+      else if (Number(minPrice) > max) {
+        setMinPrice(String(max));
       }
       else {
-        if(arrPrice[al] < extremum){
-          extremum = arrPrice[al];
-        }
+        setMaxPrice(minPrice);
+        setMinPrice(maxPrice);
       }
     }
-    return extremum;
   };
 
   return (
@@ -39,18 +32,27 @@ function FilterCard(): JSX.Element {
         <div className="catalog-filter__price-range">
           <div className="form-input">
             <label className="visually-hidden">Минимальная цена</label>
-            <input type="number" placeholder={String(findPrice(guitars, 'min'))} id="priceMin" name="от" min="0" value={minPrice}
+            <input type="number" placeholder={String(min)} id="priceMin" name="от" min="0" value={minPrice}
               onKeyPress={(evt) => {
                 const {key} = evt;
                 if (key === '-' || key === '.'|| key === 'e' || key === ',') {
                   evt.preventDefault();
                 }}}
               onChange={(evt) =>  setMinPrice(evt.currentTarget.value)}
+              onBlur = {()=> {
+                if (Number(minPrice) < min) {
+                  setMinPrice(String(min));
+                }
+                if (Number(minPrice) > max ) {
+                  setMinPrice(String(max));
+                }
+                compareValues();
+              }}
             />
           </div>
           <div className="form-input">
             <label className="visually-hidden">Максимальная цена</label>
-            <input type="number" placeholder={String(findPrice(guitars, 'max'))} id="priceMax" name="до" min="0" value={maxPrice}
+            <input type="number" placeholder={String(max)} id="priceMax" name="до" min="0" value={maxPrice}
               onKeyPress={(evt) => {
                 const {key} = evt;
                 if (key === '-' || key === '.' || key === 'e' || key === ',') {
@@ -58,6 +60,15 @@ function FilterCard(): JSX.Element {
                 }}}
               onChange={(evt) => {
                 setMaxPrice(evt.currentTarget.value);
+              }}
+              onBlur = {()=> {
+                if (Number(maxPrice) > max ) {
+                  setMaxPrice(String(max));
+                }
+                if (Number(maxPrice) < min ) {
+                  setMaxPrice(String(min));
+                }
+                compareValues();
               }}
             />
           </div>
@@ -97,7 +108,13 @@ function FilterCard(): JSX.Element {
           <label htmlFor="12-strings">12</label>
         </div>
       </fieldset>
-      <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset">Очистить</button>
+      <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset"
+        onClick={()=>{
+          setMinPrice('');
+          setMaxPrice('');
+        }}
+      >Очистить
+      </button>
     </form>
   );
 }
