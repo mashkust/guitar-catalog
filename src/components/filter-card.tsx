@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '../store/guitar-data';
 
@@ -23,6 +24,11 @@ function FilterCard(): JSX.Element {
       }
     }
   };
+
+  useEffect(()=> {
+   console.log('s')
+  },[minPrice, maxPrice,selectedTypes,selectedStrings],
+  )
 
   return (
     <form className="catalog-filter">
@@ -98,25 +104,25 @@ function FilterCard(): JSX.Element {
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Количество струн</legend>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" checked={selectedStrings.includes(4)} disabled={!selectedTypes.includes('ukulele') && !selectedTypes.includes('electric')}
+          <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" checked={selectedStrings.includes(4)} disabled={selectedTypes.length !==0 && !selectedTypes.includes('ukulele') && !selectedTypes.includes('electric')}
             onChange = {()=>dispatch(setSelectedStrings(4))}
           />
           <label htmlFor="4-strings">4</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" checked={selectedStrings.includes(6)} disabled={!selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
+          <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" checked={selectedStrings.includes(6)} disabled={selectedTypes.length !==0 && !selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
             onChange = {()=>dispatch(setSelectedStrings(6))}
           />
           <label htmlFor="6-strings">6</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings" checked={selectedStrings.includes(7)} disabled={!selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
+          <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings" checked={selectedStrings.includes(7)} disabled={selectedTypes.length !==0 && !selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
             onChange = {()=>dispatch(setSelectedStrings(7))}
           />
           <label htmlFor="7-strings">7</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" checked={selectedStrings.includes(12)} disabled={!selectedTypes.includes('acoustic')}
+          <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" checked={selectedStrings.includes(12)} disabled={selectedTypes.length !==0 && !selectedTypes.includes('acoustic')}
             onChange = {()=>dispatch(setSelectedStrings(12))}
           />
           <label htmlFor="12-strings">12</label>

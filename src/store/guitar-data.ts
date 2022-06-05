@@ -14,7 +14,7 @@ const initialState: GuitarData = {
   isSorting: null,
   isSortInc: null,
   minPrice: '',
-  maxPrice:'',
+  maxPrice: '',
   selectedTypes: [],
   selectedStrings: [],
 };
@@ -73,7 +73,7 @@ export const guitarData = createSlice({
       if (action.payload[0]) {
         const first = action.payload[0];
         if (action.payload.every((el) => Number(el.guitarId) === Number(first.guitarId))) {
-          const guitar = state.guitars.find((el) =>  Number(el.id) === Number(first.guitarId));
+          const guitar = state.guitars.find((el) => Number(el.id) === Number(first.guitarId));
           if (guitar) {
             guitar.commentsCount = action.payload.length;
           }
@@ -90,20 +90,35 @@ export const guitarData = createSlice({
       state.maxPrice = action.payload;
     },
     setSelectedTypes: (state, action: { payload: GuitarTypes }) => {
-      const {selectedTypes} = state;
-      const {payload} = action;
+      const { selectedTypes } = state;
+      const { payload } = action;
       if (selectedTypes.includes(payload)) {
-        state.selectedTypes = selectedTypes.filter((el)=> el !== payload);
+        state.selectedTypes = selectedTypes.filter((el) => el !== payload);
       }
       else {
         selectedTypes.push(payload);
       }
+      let fUkulele: number[] = [];
+      let fElectric: number[] = [];
+      let fAcoustc: number[] = [];
+      if (state.selectedTypes.length > 0) {
+        if (state.selectedTypes.includes('electric')) {
+          fElectric = state.selectedStrings.filter((el) => el < 12);
+        }
+        if (state.selectedTypes.includes('ukulele')) {
+          fUkulele = state.selectedStrings.filter((el) => el < 6);
+        }
+        if (state.selectedTypes.includes('acoustic')) {
+          fAcoustc = state.selectedStrings.filter((el) => el > 4);
+        }
+        state.selectedStrings = Array.from(new Set([...fElectric, ...fUkulele, ...fAcoustc]));
+      }
     },
-    setSelectedStrings: (state, action: { payload: number}) => {
-      const {selectedStrings} = state;
-      const {payload} = action;
+    setSelectedStrings: (state, action: { payload: number }) => {
+      const { selectedStrings } = state;
+      const { payload } = action;
       if (selectedStrings.includes(payload)) {
-        state.selectedStrings = selectedStrings.filter((el)=> el !== payload);
+        state.selectedStrings = selectedStrings.filter((el) => el !== payload);
       }
       else {
         selectedStrings.push(payload);
