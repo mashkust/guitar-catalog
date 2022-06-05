@@ -16,8 +16,10 @@ export type GuitarData = {
   isCommentModalOpened: boolean,
   isSorting: SortType | null,
   isSortInc: boolean | null,
-  minPrice: string | null,
-  maxPrice:string | null,
+  minPrice: string ,
+  maxPrice:string,
+  selectedTypes: GuitarTypes[],
+  selectedStrings: number[],
 };
 
 export type Guitar = {
@@ -74,6 +76,8 @@ export type Tab = {
 
 export type Rating = {
   value: number;
-}
+};
+
+export type GuitarTypes = 'electric' | 'ukulele' | 'acoustic';
 
 export type ErrorType = unknown;

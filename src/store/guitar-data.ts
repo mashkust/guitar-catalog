@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { GuitarData, SortType } from '../types/types';
+import { GuitarData, GuitarTypes, SortType } from '../types/types';
 import { NameSpace } from '../const';
 import type { Comment } from './../types/types';
 import { sortByParams } from '../utils';
@@ -13,8 +13,10 @@ const initialState: GuitarData = {
   isCommentModalOpened: false,
   isSorting: null,
   isSortInc: null,
-  minPrice: null,
-  maxPrice: null,
+  minPrice: '',
+  maxPrice:'',
+  selectedTypes: [],
+  selectedStrings: [],
 };
 
 export const guitarData = createSlice({
@@ -85,7 +87,27 @@ export const guitarData = createSlice({
       state.minPrice = action.payload;
     },
     setMaxPrice: (state, action) => {
-      state.minPrice = action.payload;
+      state.maxPrice = action.payload;
+    },
+    setSelectedTypes: (state, action: { payload: GuitarTypes }) => {
+      const {selectedTypes} = state;
+      const {payload} = action;
+      if (selectedTypes.includes(payload)) {
+        state.selectedTypes = selectedTypes.filter((el)=> el !== payload);
+      }
+      else {
+        selectedTypes.push(payload);
+      }
+    },
+    setSelectedStrings: (state, action: { payload: number}) => {
+      const {selectedStrings} = state;
+      const {payload} = action;
+      if (selectedStrings.includes(payload)) {
+        state.selectedStrings = selectedStrings.filter((el)=> el !== payload);
+      }
+      else {
+        selectedStrings.push(payload);
+      }
     },
   },
 });
@@ -101,4 +123,6 @@ export const {
   setIsSortInc,
   setMinPrice,
   setMaxPrice,
+  setSelectedTypes,
+  setSelectedStrings,
 } = guitarData.actions;

@@ -2,22 +2,22 @@ import { useState } from 'react';
 import { generatePath, Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppSelector } from '../hooks/hooks';
-//import Basket from 'img/sprite/icon-basket.svg';
+import Pentoville from 'pentonville';
 
 function PageHeader(): JSX.Element {
   const navigate = useNavigate();
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
 
-  const {guitars} = useAppSelector(({ DATA }) => DATA);
-  const onFormClickHandler = (evt:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const { guitars } = useAppSelector(({ DATA }) => DATA);
+  const onFormClickHandler = (evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     evt.stopPropagation();
     setIsSearch(true);
   };
 
-  const onFormBlurHandler = (evt:React.FocusEvent<HTMLDivElement>) => {
+  const onFormBlurHandler = (evt: React.FocusEvent<HTMLDivElement>) => {
     const elementClass = String(evt.relatedTarget?.getAttribute('class'));
-    if(!(elementClass.includes('form-search__select-item')  || elementClass.includes('form-search__select-list')) ) {
+    if (!(elementClass.includes('form-search__select-item') || elementClass.includes('form-search__select-list'))) {
       setIsSearch(false);
     } else {
       evt.preventDefault();
@@ -48,20 +48,20 @@ function PageHeader(): JSX.Element {
         </nav>
         <div className="form-search" onClick={onFormClickHandler} onBlur={onFormBlurHandler}>
           <form className="form-search__form" id="form-search">
-            <button className="form-search__submit" type="submit" >
+            <button className="form-search__submit" type="submit" disabled>
               <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
                 <use href="#icon-search"></use>
               </svg><span className="visually-hidden">Начать поиск</span>
             </button>
-            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler}/>
+            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} />
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul className={`form-search__select-list ${isSearch ? '' : 'hidden'}`}>
             {guitars
-              .filter((el)=>el.name.toLowerCase().includes(text.toLowerCase()))
-              .map((el,index) =>  <li key={el.id} className="form-search__select-item" tabIndex={index} onClick = {()=> navigate(generatePath(AppRoute.Details, { id: String(el.id) }))}> {el.name}</li>)}
+              .filter((el) => el.name.toLowerCase().includes(text.toLowerCase()))
+              .map((el, index) => <li key={el.id} className="form-search__select-item" tabIndex={index++} onClick={() => navigate(generatePath(AppRoute.Details, { id: String(el.id) }))}> {el.name}</li>)}
           </ul>
-          <button className="form-search__reset" type="reset" form="form-search" onClick={()=>setText('')}>
+          <button className="form-search__reset" type="reset" form="form-search" onClick={() => setText('')}>
             <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
               <use href="#icon-close"></use>
             </svg><span className="visually-hidden">Сбросить поиск</span>

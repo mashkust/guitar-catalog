@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { useAppSelector } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '../store/guitar-data';
 
 function FilterCard(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const {maxPrice, minPrice, selectedTypes, selectedStrings} = useAppSelector(({ DATA }) => DATA);
+  const dispatch = useAppDispatch();
 
   const arrPrice = guitars.slice().map((el)=> el.price);
-  const max = Math.max.apply(null, arrPrice);
-  const min = Math.min.apply(null, arrPrice);
+  const max = Math.max(...arrPrice);
+  const min = Math.min(...arrPrice);
   const compareValues = () => {
     if (Number(maxPrice) < Number(minPrice) && maxPrice !== '' && minPrice !== '') {
       if (Number(maxPrice) < min) {
-        setMaxPrice(String(min));
+        dispatch(setMaxPrice(String(min)));
       }
       else if (Number(minPrice) > max) {
-        setMinPrice(String(max));
+        dispatch(setMinPrice(String(max)));
       }
       else {
-        setMaxPrice(minPrice);
-        setMinPrice(maxPrice);
+        dispatch(setMaxPrice(minPrice));
+        dispatch(setMinPrice(maxPrice));
       }
     }
   };
@@ -38,13 +38,13 @@ function FilterCard(): JSX.Element {
                 if (key === '-' || key === '.'|| key === 'e' || key === ',') {
                   evt.preventDefault();
                 }}}
-              onChange={(evt) =>  setMinPrice(evt.currentTarget.value)}
+              onChange={(evt) =>  dispatch(setMinPrice(evt.currentTarget.value))}
               onBlur = {()=> {
                 if (Number(minPrice) < min) {
-                  setMinPrice(String(min));
+                  dispatch(setMinPrice(String(min)));
                 }
                 if (Number(minPrice) > max ) {
-                  setMinPrice(String(max));
+                  dispatch(setMinPrice(String(max)));
                 }
                 compareValues();
               }}
@@ -59,14 +59,14 @@ function FilterCard(): JSX.Element {
                   evt.preventDefault();
                 }}}
               onChange={(evt) => {
-                setMaxPrice(evt.currentTarget.value);
+                dispatch(setMaxPrice(evt.currentTarget.value));
               }}
               onBlur = {()=> {
                 if (Number(maxPrice) > max ) {
-                  setMaxPrice(String(max));
+                  dispatch(setMaxPrice(String(max)));
                 }
                 if (Number(maxPrice) < min ) {
-                  setMaxPrice(String(min));
+                  dispatch(setMaxPrice(String(min)));
                 }
                 compareValues();
               }}
@@ -77,41 +77,55 @@ function FilterCard(): JSX.Element {
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Тип гитар</legend>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" />
+          <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" checked={selectedTypes.includes('acoustic')}
+            onChange = {()=>dispatch(setSelectedTypes('acoustic'))}
+          />
           <label htmlFor="acoustic">Акустические гитары</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="electric" name="electric" />
+          <input className="visually-hidden" type="checkbox" id="electric" name="electric" checked={selectedTypes.includes('electric')}
+            onChange = {()=>dispatch(setSelectedTypes('electric'))}
+          />
           <label htmlFor="electric">Электрогитары</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" />
+          <input className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" checked={selectedTypes.includes('ukulele')}
+            onChange = {()=>dispatch(setSelectedTypes('ukulele'))}
+          />
           <label htmlFor="ukulele">Укулеле</label>
         </div>
       </fieldset>
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Количество струн</legend>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" />
+          <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" checked={selectedStrings.includes(4)} disabled={!selectedTypes.includes('ukulele') && !selectedTypes.includes('electric')}
+            onChange = {()=>dispatch(setSelectedStrings(4))}
+          />
           <label htmlFor="4-strings">4</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" />
+          <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" checked={selectedStrings.includes(6)} disabled={!selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
+            onChange = {()=>dispatch(setSelectedStrings(6))}
+          />
           <label htmlFor="6-strings">6</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings" />
+          <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings" checked={selectedStrings.includes(7)} disabled={!selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
+            onChange = {()=>dispatch(setSelectedStrings(7))}
+          />
           <label htmlFor="7-strings">7</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
-          <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" disabled />
+          <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" checked={selectedStrings.includes(12)} disabled={!selectedTypes.includes('acoustic')}
+            onChange = {()=>dispatch(setSelectedStrings(12))}
+          />
           <label htmlFor="12-strings">12</label>
         </div>
       </fieldset>
       <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset"
         onClick={()=>{
-          setMinPrice('');
-          setMaxPrice('');
+          dispatch(setMinPrice(''));
+          dispatch(setMaxPrice(''));
         }}
       >Очистить
       </button>
