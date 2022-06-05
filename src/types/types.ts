@@ -20,13 +20,14 @@ export type GuitarData = {
   maxPrice:string,
   selectedTypes: GuitarTypes[],
   selectedStrings: number[],
+  filteredGuitars: Guitar[],
 };
 
 export type Guitar = {
   id: number,
   name: string,
   vendorCode: string,
-  type: string,
+  type: GuitarTypes,
   previewImg: string,
   price: number,
   description: string,

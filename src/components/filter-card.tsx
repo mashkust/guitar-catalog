@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '../store/guitar-data';
+import { setFilteredGuitars, setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '../store/guitar-data';
 
 function FilterCard(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
@@ -25,10 +25,10 @@ function FilterCard(): JSX.Element {
     }
   };
 
-  useEffect(()=> {
-   console.log('s')
-  },[minPrice, maxPrice,selectedTypes,selectedStrings],
-  )
+//   useEffect(()=> {
+//     dispatch(setFilteredGuitars({ maxPrice, minPrice, selectedStrings, selectedTypes }));
+//   },[minPrice, maxPrice,selectedTypes,selectedStrings],
+//   );
 
   return (
     <form className="catalog-filter">

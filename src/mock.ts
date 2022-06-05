@@ -1,5 +1,5 @@
 import {name, random, date } from 'faker';
-import { COMMENT_CARDS_COUNT, TYPES } from './const';
+import { COMMENT_CARDS_COUNT} from './const';
 import { Guitar, NewReview,Comment } from './types/types';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
@@ -38,7 +38,7 @@ export const makeFakeGuitar = ({testName}:makeFakeGuitarProps):Guitar => ({
   id:  getRandomInt(0,27),
   name: testName ?? random.word(),
   vendorCode: random.word(),
-  type: TYPES.electric,
+  type: 'electric',
   previewImg: '',
   price: getRandomInt(0,100000),
   description: random.words(),

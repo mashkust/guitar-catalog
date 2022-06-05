@@ -17,6 +17,7 @@ const initialState: GuitarData = {
   maxPrice: '',
   selectedTypes: [],
   selectedStrings: [],
+  filteredGuitars: [],
 };
 
 export const guitarData = createSlice({
@@ -29,14 +30,12 @@ export const guitarData = createSlice({
     setIsCommentModalOpened: (state, action: { payload: boolean }) => {
       state.isCommentModalOpened = action.payload;
     },
-
     // setSortParams: (state, action: { payload: { isSorting : SortType, isSortInc: boolean } }) => {
     //   const { isSortInc, isSorting } = action.payload;
     //   hashHistory.push({
     //     search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
     //   });
     // },
-
     setIsSorting: (state, action: { payload: SortType }) => {
       state.isSorting = action.payload;
       if (state.isSortInc === null) {
@@ -48,7 +47,6 @@ export const guitarData = createSlice({
       //   search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
       // });
     },
-
     setIsSortInc: (state, action: { payload: boolean }) => {
       state.isSortInc = action.payload;
       if (state.isSorting === null) {
@@ -60,7 +58,6 @@ export const guitarData = createSlice({
       //   search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
       // });
     },
-
     loadGuitars: (state, action) => {
       state.guitars = action.payload;
       state.isDataLoaded = true;
@@ -124,6 +121,10 @@ export const guitarData = createSlice({
         selectedStrings.push(payload);
       }
     },
+    // setFilteredGuitars: (state, action: { payload: {maxPrice : string, minPrice : string, selectedTypes:GuitarTypes[], selectedStrings: number[]}}) => {
+    //   state.guitars = state.guitars.slice().filter((el)=> el.price < Number(action.payload.maxPrice) && el.price > Number(action.payload.maxPrice) && action.payload.selectedTypes.includes(el.type) && action.payload.selectedStrings.includes(el.stringCount));
+    //   console.log(' state.filteredGuitars',  state.filteredGuitars);
+    // },
   },
 });
 
@@ -140,4 +141,5 @@ export const {
   setMaxPrice,
   setSelectedTypes,
   setSelectedStrings,
+  setFilteredGuitars,
 } = guitarData.actions;
