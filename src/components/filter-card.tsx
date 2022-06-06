@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '../store/guitar-data';
 
@@ -5,6 +7,7 @@ function FilterCard(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
   const {maxPrice, minPrice, selectedTypes, selectedStrings} = useAppSelector(({ DATA }) => DATA);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const arrPrice = guitars.slice().map((el)=> el.price);
   const max = Math.max(...arrPrice);
@@ -47,6 +50,7 @@ function FilterCard(): JSX.Element {
                   dispatch(setMinPrice(String(max)));
                 }
                 compareValues();
+                navigate(AppRoute.Page1);
               }}
             />
           </div>
@@ -69,6 +73,7 @@ function FilterCard(): JSX.Element {
                   dispatch(setMaxPrice(String(min)));
                 }
                 compareValues();
+                navigate(AppRoute.Page1);
               }}
             />
           </div>
@@ -80,6 +85,7 @@ function FilterCard(): JSX.Element {
           <input className="visually-hidden" type="checkbox" id="acoustic" name="acoustic" checked={selectedTypes && selectedTypes.includes('acoustic')}
             onChange = {()=> {
               dispatch(setSelectedTypes('acoustic'));
+              navigate(AppRoute.Page1);
             }}
           />
           <label htmlFor="acoustic">Акустические гитары</label>
@@ -88,6 +94,7 @@ function FilterCard(): JSX.Element {
           <input className="visually-hidden" type="checkbox" id="electric" name="electric" checked={selectedTypes && selectedTypes.includes('electric')}
             onChange = {()=> {
               dispatch(setSelectedTypes('electric'));
+              navigate(AppRoute.Page1);
             }}
           />
           <label htmlFor="electric">Электрогитары</label>
@@ -96,6 +103,7 @@ function FilterCard(): JSX.Element {
           <input className="visually-hidden" type="checkbox" id="ukulele" name="ukulele" checked={selectedTypes && selectedTypes.includes('ukulele')}
             onChange = {()=> {
               dispatch(setSelectedTypes('ukulele'));
+              navigate(AppRoute.Page1);
             }}
           />
           <label htmlFor="ukulele">Укулеле</label>
@@ -105,33 +113,48 @@ function FilterCard(): JSX.Element {
         <legend className="catalog-filter__block-title">Количество струн</legend>
         <div className="form-checkbox catalog-filter__block-item">
           <input className="visually-hidden" type="checkbox" id="4-strings" name="4-strings" checked={selectedStrings && selectedStrings.includes(4)}  disabled={ selectedTypes && selectedTypes.length !==0 && !selectedTypes.includes('ukulele') && !selectedTypes.includes('electric')}
-            onChange = {()=>dispatch(setSelectedStrings(4))}
+            onChange = {()=> {
+              dispatch(setSelectedStrings(4));
+              navigate(AppRoute.Page1);
+            }}
           />
           <label htmlFor="4-strings">4</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
           <input className="visually-hidden" type="checkbox" id="6-strings" name="6-strings" checked={selectedStrings && selectedStrings.includes(6)} disabled={ selectedTypes && selectedTypes.length !==0 && !selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
-            onChange = {()=>dispatch(setSelectedStrings(6))}
+            onChange = {()=> {
+              dispatch(setSelectedStrings(6));
+              navigate(AppRoute.Page1);
+            }}
           />
           <label htmlFor="6-strings">6</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
           <input className="visually-hidden" type="checkbox" id="7-strings" name="7-strings" checked={selectedStrings && selectedStrings.includes(7)} disabled={ selectedTypes && selectedTypes.length !==0 && !selectedTypes.includes('acoustic') && !selectedTypes.includes('electric')}
-            onChange = {()=>dispatch(setSelectedStrings(7))}
+            onChange = {()=> {
+              dispatch(setSelectedStrings(7));
+              navigate(AppRoute.Page1);
+            }}
           />
           <label htmlFor="7-strings">7</label>
         </div>
         <div className="form-checkbox catalog-filter__block-item">
           <input className="visually-hidden" type="checkbox" id="12-strings" name="12-strings" checked={selectedStrings && selectedStrings.includes(12)} disabled={ selectedTypes && selectedTypes.length !==0 && !selectedTypes.includes('acoustic')}
-            onChange = {()=>dispatch(setSelectedStrings(12))}
+            onChange = {()=> {
+              dispatch(setSelectedStrings(12));
+              navigate(AppRoute.Page1);
+            }}
           />
           <label htmlFor="12-strings">12</label>
         </div>
       </fieldset>
       <button className="catalog-filter__reset-btn button button--black-border button--medium" type="reset"
         onClick={()=>{
+          navigate(AppRoute.Page1);
           dispatch(setMinPrice(null));
           dispatch(setMaxPrice(null));
+          dispatch(setSelectedStrings(null));
+          dispatch(setSelectedTypes(null));
         }}
       >Очистить
       </button>

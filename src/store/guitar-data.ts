@@ -3,6 +3,7 @@ import { GuitarData, GuitarTypes, SortType } from '../types/types';
 import { NameSpace } from '../const';
 import type { Comment } from './../types/types';
 import { sortByParams } from '../utils';
+import hashHistory from '../hash-history';
 const initialState: GuitarData = {
   guitars: [],
   guitar: null,
@@ -30,12 +31,6 @@ export const guitarData = createSlice({
     setIsCommentModalOpened: (state, action: { payload: boolean }) => {
       state.isCommentModalOpened = action.payload;
     },
-    // setSortParams: (state, action: { payload: { isSorting : SortType, isSortInc: boolean } }) => {
-    //   const { isSortInc, isSorting } = action.payload;
-    //   hashHistory.push({
-    //     search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
-    //   });
-    // },
     setIsSorting: (state, action: { payload: SortType }) => {
       state.isSorting = action.payload;
       if (state.isSortInc === null) {
@@ -43,9 +38,11 @@ export const guitarData = createSlice({
       }
       const { guitars, isSortInc, isSorting } = state;
       state.guitars = sortByParams({ guitars, isSortInc, isSorting });
-      // hashHistory.push({
-      //   search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
-      // });
+      window.localStorage.setItem('sortType',String(isSorting));
+      window.localStorage.setItem('sortDirection',String(isSortInc));
+      hashHistory.push({
+        search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+      });
     },
     setIsSortInc: (state, action: { payload: boolean }) => {
       state.isSortInc = action.payload;
@@ -54,9 +51,11 @@ export const guitarData = createSlice({
       }
       const { guitars, isSortInc, isSorting } = state;
       state.guitars = sortByParams({ guitars, isSortInc, isSorting });
-      // hashHistory.push({
-      //   search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
-      // });
+      window.localStorage.setItem('sortType',String(isSorting));
+      window.localStorage.setItem('sortDirection',String(isSortInc));
+      hashHistory.push({
+        search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+      });
     },
     loadGuitars: (state, action) => {
       state.guitars = action.payload;
@@ -86,39 +85,47 @@ export const guitarData = createSlice({
     setMaxPrice: (state, action) => {
       state.maxPrice = action.payload;
     },
-    setSelectedTypes: (state, action: { payload: GuitarTypes }) => {
+    setSelectedTypes: (state, action: { payload: GuitarTypes | null }) => {
       const { selectedTypes } = state;
       const { payload } = action;
-      if (selectedTypes.includes(payload)) {
-        state.selectedTypes = selectedTypes.filter((el) => el !== payload);
-      }
-      else {
-        selectedTypes.push(payload);
-      }
-      let fUkulele: number[] = [];
-      let fElectric: number[] = [];
-      let fAcoustc: number[] = [];
-      if (state.selectedTypes.length > 0) {
-        if (state.selectedTypes.includes('electric')) {
-          fElectric = state.selectedStrings.filter((el) => el < 12);
+      if (!payload) {
+        state.selectedTypes = [];
+      } else {
+        if (selectedTypes.includes(payload)) {
+          state.selectedTypes = selectedTypes.filter((el) => el !== payload);
         }
-        if (state.selectedTypes.includes('ukulele')) {
-          fUkulele = state.selectedStrings.filter((el) => el < 6);
+        else {
+          selectedTypes.push(payload);
         }
-        if (state.selectedTypes.includes('acoustic')) {
-          fAcoustc = state.selectedStrings.filter((el) => el > 4);
+        let fUkulele: number[] = [];
+        let fElectric: number[] = [];
+        let fAcoustc: number[] = [];
+        if (state.selectedTypes.length > 0) {
+          if (state.selectedTypes.includes('electric')) {
+            fElectric = state.selectedStrings.filter((el) => el < 12);
+          }
+          if (state.selectedTypes.includes('ukulele')) {
+            fUkulele = state.selectedStrings.filter((el) => el < 6);
+          }
+          if (state.selectedTypes.includes('acoustic')) {
+            fAcoustc = state.selectedStrings.filter((el) => el > 4);
+          }
+          state.selectedStrings = Array.from(new Set([...fElectric, ...fUkulele, ...fAcoustc]));
         }
-        state.selectedStrings = Array.from(new Set([...fElectric, ...fUkulele, ...fAcoustc]));
       }
     },
-    setSelectedStrings: (state, action: { payload: number }) => {
+    setSelectedStrings: (state, action: { payload: number | null }) => {
       const { selectedStrings } = state;
       const { payload } = action;
-      if (selectedStrings.includes(payload)) {
-        state.selectedStrings = selectedStrings.filter((el) => el !== payload);
-      }
-      else {
-        selectedStrings.push(payload);
+      if (!payload) {
+        state.selectedStrings = [];
+      } else {
+        if (selectedStrings.includes(payload)) {
+          state.selectedStrings = selectedStrings.filter((el) => el !== payload);
+        }
+        else {
+          selectedStrings.push(payload);
+        }
       }
     },
     setFilteredGuitarsLength: (state, action) => {

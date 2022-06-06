@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { generatePath, Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppSelector } from '../hooks/hooks';
-// import Pentoville from 'pentonville';
 
 function PageHeader(): JSX.Element {
   const navigate = useNavigate();
@@ -28,10 +27,6 @@ function PageHeader(): JSX.Element {
   const onInputChangeHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setText(evt.currentTarget.value);
   };
-
-  // const onItemClickHandler = (evt: React.ChangeEvent<HTMLInputElement>) => {
-  //   console.log('nen');
-  // };
 
   return (
     <header className="header" id="header">

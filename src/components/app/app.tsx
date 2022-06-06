@@ -26,7 +26,9 @@ function App(): JSX.Element {
         && (selectedTypes.length === 0 ? true : selectedTypes.includes(el.type))));
   }, [maxPrice, minPrice, selectedTypes, selectedStrings, guitars]);
 
-  dispatch(setFilteredGuitarsLength(filteredGuitars.length));
+  useEffect(() => {
+    dispatch(setFilteredGuitarsLength(filteredGuitars.length));
+  }, [filteredGuitars.length]);
 
   if (!isDataLoaded) {
     return (

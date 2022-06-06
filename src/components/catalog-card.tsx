@@ -25,7 +25,6 @@ function CatalogCard({ guitars }: CatalogCardProps): JSX.Element {
     dispatch(setIsSortInc(bool));
   };
 
-
   return (
     <div className="catalog">
       <FilterCard />
