@@ -13,11 +13,11 @@ const initialState: GuitarData = {
   isCommentModalOpened: false,
   isSorting: null,
   isSortInc: null,
-  minPrice: '',
-  maxPrice: '',
+  minPrice: null,
+  maxPrice: null,
   selectedTypes: [],
   selectedStrings: [],
-  filteredGuitars: [],
+  filteredGuitarsLength: null,
 };
 
 export const guitarData = createSlice({
@@ -121,10 +121,9 @@ export const guitarData = createSlice({
         selectedStrings.push(payload);
       }
     },
-    // setFilteredGuitars: (state, action: { payload: {maxPrice : string, minPrice : string, selectedTypes:GuitarTypes[], selectedStrings: number[]}}) => {
-    //   state.guitars = state.guitars.slice().filter((el)=> el.price < Number(action.payload.maxPrice) && el.price > Number(action.payload.maxPrice) && action.payload.selectedTypes.includes(el.type) && action.payload.selectedStrings.includes(el.stringCount));
-    //   console.log(' state.filteredGuitars',  state.filteredGuitars);
-    // },
+    setFilteredGuitarsLength: (state, action) => {
+      state.filteredGuitarsLength = action.payload;
+    },
   },
 });
 
@@ -141,5 +140,5 @@ export const {
   setMaxPrice,
   setSelectedTypes,
   setSelectedStrings,
-  setFilteredGuitars,
+  setFilteredGuitarsLength
 } = guitarData.actions;

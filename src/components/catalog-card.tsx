@@ -25,6 +25,7 @@ function CatalogCard({ guitars }: CatalogCardProps): JSX.Element {
     dispatch(setIsSortInc(bool));
   };
 
+
   return (
     <div className="catalog">
       <FilterCard />
@@ -46,10 +47,10 @@ function CatalogCard({ guitars }: CatalogCardProps): JSX.Element {
         </div>
       </div>
       <div className="cards catalog__cards">
-        {guitars && guitars.map((guitar: Guitar) => (
+        {guitars.map((guitar: Guitar) => (
           <GuitarCard {...{ guitar }} key={guitar.id} />))}
       </div>
-      <Pagination />
+      <Pagination/>
     </div>
   );
 }

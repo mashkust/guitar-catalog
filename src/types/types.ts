@@ -16,11 +16,11 @@ export type GuitarData = {
   isCommentModalOpened: boolean,
   isSorting: SortType | null,
   isSortInc: boolean | null,
-  minPrice: string ,
-  maxPrice:string,
+  minPrice: string | null,
+  maxPrice:string | null,
   selectedTypes: GuitarTypes[],
   selectedStrings: number[],
-  filteredGuitars: Guitar[],
+  filteredGuitarsLength: number | null,
 };
 
 export type Guitar = {

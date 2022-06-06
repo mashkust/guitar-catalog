@@ -1,14 +1,28 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, LIST_OF_GUITAR } from '../../const';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import GuitarPage from '../guitar-page';
 import MainCard from '../main-card';
 import NotFoundPage from '../notfound-page';
 import LoadingScreen from '../loading-screen';
+import { useEffect, useState } from 'react';
+import { setFilteredGuitarsLength } from '../../store/guitar-data';
 
 function App(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
   const isDataLoaded = useAppSelector(({ DATA }) => DATA.isDataLoaded);
+  const { maxPrice, minPrice, selectedTypes, selectedStrings } = useAppSelector(({ DATA }) => DATA);
+  const dispatch = useAppDispatch();
+  const [filteredGuitars, setFilteredGuitars] = useState(guitars);
+
+  useEffect(() => {
+    setFilteredGuitars(guitars.slice(0).filter((el) => (maxPrice === null || el.price <= Number(maxPrice))
+        && (minPrice === null || el.price >= Number(minPrice))
+        && (selectedStrings.length === 0 ? true : selectedStrings.includes(el.stringCount))
+        && (selectedTypes.length === 0 ? true : selectedTypes.includes(el.type))));
+  }, [maxPrice, minPrice, selectedTypes, selectedStrings, guitars]);
+
+  dispatch(setFilteredGuitarsLength(filteredGuitars.length));
 
   if (!isDataLoaded) {
     return (
@@ -20,15 +34,15 @@ function App(): JSX.Element {
     <Routes>
       <Route
         path={AppRoute.Page1}
-        element={<MainCard guitars={guitars.slice(LIST_OF_GUITAR[0].rangeFrom, LIST_OF_GUITAR[0].rangeTo)} />}
+        element={<MainCard guitars={filteredGuitars.slice(LIST_OF_GUITAR[0].rangeFrom, LIST_OF_GUITAR[0].rangeTo)} />}
       />
       <Route
         path={AppRoute.Page2}
-        element={<MainCard guitars={guitars.slice(LIST_OF_GUITAR[1].rangeFrom, LIST_OF_GUITAR[1].rangeTo)} />}
+        element={<MainCard guitars={filteredGuitars.slice(LIST_OF_GUITAR[1].rangeFrom, LIST_OF_GUITAR[1].rangeTo)} />}
       />
       <Route
         path={AppRoute.Page3}
-        element={<MainCard guitars={guitars.slice(LIST_OF_GUITAR[2].rangeFrom, LIST_OF_GUITAR[2].rangeTo)} />}
+        element={<MainCard guitars={filteredGuitars.slice(LIST_OF_GUITAR[2].rangeFrom, LIST_OF_GUITAR[2].rangeTo)} />}
       />
       <Route
         path={AppRoute.Details}
