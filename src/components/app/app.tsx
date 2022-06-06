@@ -11,7 +11,11 @@ import { setFilteredGuitarsLength } from '../../store/guitar-data';
 function App(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
   const isDataLoaded = useAppSelector(({ DATA }) => DATA.isDataLoaded);
-  const { maxPrice, minPrice, selectedTypes, selectedStrings } = useAppSelector(({ DATA }) => DATA);
+  const maxPrice = useAppSelector(({ DATA }) => DATA.maxPrice);
+  const minPrice = useAppSelector(({ DATA }) => DATA.minPrice);
+  const selectedTypes = useAppSelector(({ DATA }) => DATA.selectedTypes);
+  const selectedStrings = useAppSelector(({ DATA }) => DATA.selectedStrings);
+
   const dispatch = useAppDispatch();
   const [filteredGuitars, setFilteredGuitars] = useState(guitars);
 

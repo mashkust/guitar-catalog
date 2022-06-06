@@ -140,5 +140,5 @@ export const {
   setMaxPrice,
   setSelectedTypes,
   setSelectedStrings,
-  setFilteredGuitarsLength
+  setFilteredGuitarsLength,
 } = guitarData.actions;
