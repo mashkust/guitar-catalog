@@ -7,6 +7,7 @@ import NotFoundPage from '../notfound-page';
 import LoadingScreen from '../loading-screen';
 import { useEffect, useState } from 'react';
 import { setFilteredGuitarsLength } from '../../store/guitar-data';
+import hashHistory from '../../hash-history';
 
 function App(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
@@ -19,15 +20,55 @@ function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const [filteredGuitars, setFilteredGuitars] = useState(guitars);
 
+
+  
+
   useEffect(() => {
     setFilteredGuitars(guitars.slice(0).filter((el) => (maxPrice === null || el.price <= Number(maxPrice))
-        && (minPrice === null || el.price >= Number(minPrice))
-        && (selectedStrings.length === 0 ? true : selectedStrings.includes(el.stringCount))
-        && (selectedTypes.length === 0 ? true : selectedTypes.includes(el.type))));
+      && (minPrice === null || el.price >= Number(minPrice))
+      && (selectedStrings.length === 0 ? true : selectedStrings.includes(el.stringCount))
+      && (selectedTypes.length === 0 ? true : selectedTypes.includes(el.type))));
+
+    let filterSearch = '?filters=false';
+
+    if ( selectedStrings.length > 0 || selectedTypes.length > 0 ||  minPrice !== null  || maxPrice !== null ) {
+      filterSearch = '?filters=true';
+    }
+
+    if (selectedStrings.length > 0) {
+      const param1 = selectedStrings.map((el, i, arr) => el + (i === arr.length - 1 ? '' : '&')).join('');
+      filterSearch += `?strings=${param1}`;
+      window.localStorage.setItem('strings',String(param1));
+    }
+    if ( selectedTypes.length > 0 ) {
+      const param2 = selectedTypes.map((el, i, arr) => el + (i === arr.length - 1 ? '' : '&')).join('');
+      filterSearch += `?types=${param2}`;
+      window.localStorage.setItem('types',String(param2));
+    }
+
+    if ( minPrice !== null ) {
+      const param3 = minPrice;
+      filterSearch += `?minPrice=${param3}`;
+      window.localStorage.setItem('minPrice',String(param3));
+    }
+
+    if (maxPrice !== null) {
+      const param4 = maxPrice;
+      filterSearch += `?maxPrice=${param4}`;
+      window.localStorage.setItem('maxPrice',String(param4));
+    }
+
+    const startIndex = hashHistory.location.search.indexOf('?filters');
+    hashHistory.push({
+      search: (startIndex !== -1 ?  hashHistory.location.search.slice(0, startIndex) : hashHistory.location.search) + filterSearch,
+    });
+
+
   }, [maxPrice, minPrice, selectedTypes, selectedStrings, guitars]);
 
   useEffect(() => {
     dispatch(setFilteredGuitarsLength(filteredGuitars.length));
+    // dispatch(setFilteredGuitarsPrice(filteredGuitars));
   }, [filteredGuitars.length]);
 
   if (!isDataLoaded) {

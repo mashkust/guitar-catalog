@@ -19,6 +19,8 @@ const initialState: GuitarData = {
   selectedTypes: [],
   selectedStrings: [],
   filteredGuitarsLength: null,
+  filteredPriceMin:null,
+  filteredPriceMax:null,
 };
 
 export const guitarData = createSlice({
@@ -41,7 +43,7 @@ export const guitarData = createSlice({
       window.localStorage.setItem('sortType',String(isSorting));
       window.localStorage.setItem('sortDirection',String(isSortInc));
       hashHistory.push({
-        search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+        search: `sortType=${state.isSorting}?sortDirection=${state.isSortInc}`,
       });
     },
     setIsSortInc: (state, action: { payload: boolean }) => {
@@ -54,7 +56,7 @@ export const guitarData = createSlice({
       window.localStorage.setItem('sortType',String(isSorting));
       window.localStorage.setItem('sortDirection',String(isSortInc));
       hashHistory.push({
-        search: `sortType=${isSorting}&sortDirection=${isSortInc}`,
+        search: `sortType=${isSorting}?sortDirection=${isSortInc}`,
       });
     },
     loadGuitars: (state, action) => {
@@ -79,10 +81,16 @@ export const guitarData = createSlice({
     sendComment: (state, action) => {
       state.isDataSending = action.payload;
     },
-    setMinPrice: (state, action) => {
+    setMinPrice: (state, action:{ payload: string | null}) => {
+      if (action.payload === null || action.payload==='') {
+        window.localStorage.removeItem('minPrice');
+      }
       state.minPrice = action.payload;
     },
-    setMaxPrice: (state, action) => {
+    setMaxPrice: (state, action:{ payload: string | null}) => {
+      if (action.payload === null || action.payload==='') {
+        window.localStorage.removeItem('maxPrice');
+      }
       state.maxPrice = action.payload;
     },
     setSelectedTypes: (state, action: { payload: GuitarTypes | null }) => {
@@ -111,6 +119,12 @@ export const guitarData = createSlice({
             fAcoustc = state.selectedStrings.filter((el) => el > 4);
           }
           state.selectedStrings = Array.from(new Set([...fElectric, ...fUkulele, ...fAcoustc]));
+          if (state.selectedTypes.length === 0) {
+            window.localStorage.removeItem('types');
+          }
+          if (state.selectedStrings.length === 0) {
+            window.localStorage.removeItem('strings');
+          }
         }
       }
     },
@@ -127,9 +141,21 @@ export const guitarData = createSlice({
           selectedStrings.push(payload);
         }
       }
+      if (  state.selectedStrings.length === 0) {
+        window.localStorage.removeItem('strings');
+      }
+      // } else {
+      //   state.selectedStrings = action.payload;
+      // }
     },
     setFilteredGuitarsLength: (state, action) => {
       state.filteredGuitarsLength = action.payload;
+    },
+    setFilteredPriceMin: (state, action) => {
+      state.filteredPriceMin = action.payload;
+    },
+    setFilteredPriceMax: (state, action) => {
+      state.filteredPriceMax = action.payload;
     },
   },
 });
@@ -148,4 +174,6 @@ export const {
   setSelectedTypes,
   setSelectedStrings,
   setFilteredGuitarsLength,
+  filteredPriceMin,
+  filteredPriceMax,
 } = guitarData.actions;

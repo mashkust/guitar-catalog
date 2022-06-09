@@ -21,6 +21,8 @@ export type GuitarData = {
   selectedTypes: GuitarTypes[],
   selectedStrings: number[],
   filteredGuitarsLength: number | null,
+  filteredPriceMax: number | null,
+  filteredPriceMin:number | null,
 };
 
 export type Guitar = {
