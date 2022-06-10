@@ -2,19 +2,20 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { setIsSortInc, setIsSorting, setMaxPrice, setMinPrice} from '../store/guitar-data';
-import { SortType } from '../types/types';
+import { setIsSortInc, setIsSorting, setMaxPrice, setMinPrice, setStringsGroup, setTypesGroup} from '../store/guitar-data';
+import { GuitarTypes, SortType } from '../types/types';
 
 function Pagination(): JSX.Element {
   const filteredGuitarsLength = useAppSelector(({ DATA }) => DATA.filteredGuitarsLength);
-  const {isSorting, isSortInc, maxPrice, minPrice} = useAppSelector(({ DATA }) => DATA);
+  const {isSorting, isSortInc, maxPrice, minPrice, selectedStrings, selectedTypes } = useAppSelector(({ DATA }) => DATA);
   const dispatch = useAppDispatch();
   const sortType = localStorage.getItem('sortType');
   const sortDirection = localStorage.getItem('sortDirection');
 
   const priceMax = localStorage.getItem('maxPrice');
   const priceMin = localStorage.getItem('minPrice');
-
+  const strings = localStorage.getItem('strings');
+  const types = localStorage.getItem('types');
   useEffect(()=>{
     if (sortType && sortDirection) {
       if (!isSortInc && ! isSorting) {
@@ -30,6 +31,16 @@ function Pagination(): JSX.Element {
     if ( !minPrice && priceMin) {
       dispatch(setMinPrice(priceMin));
     }
+
+    if (selectedStrings.length === 0 && strings) {
+      dispatch(setStringsGroup(strings.split('&').map((el) => Number(el))));
+    }
+
+    if (selectedTypes.length === 0 && types ) {
+      dispatch(setTypesGroup(types.split('&').map((el) => (el as GuitarTypes))));
+    }
+
+
   },[]);
 
   return (

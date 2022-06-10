@@ -6,13 +6,20 @@ import { setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '
 
 function FilterCard(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
-  const { maxPrice, minPrice, selectedTypes, selectedStrings } = useAppSelector(({ DATA }) => DATA);
+  const { maxPrice, minPrice, selectedTypes, selectedStrings,filteredPriceMax,filteredPriceMin } = useAppSelector(({ DATA }) => DATA);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const arrPrice = guitars.slice().map((el) => el.price);
-  const max = Math.max(...arrPrice);
-  const min = Math.min(...arrPrice);
+  let max=Math.max(...arrPrice);
+  let min=Math.min(...arrPrice);
+
+  if (filteredPriceMax!== null && filteredPriceMax!== undefined)
+  {max=filteredPriceMax;}
+
+  if (filteredPriceMin!== null && filteredPriceMin!== undefined)
+  {min=filteredPriceMin;}
+
   const compareValues = () => {
     if (Number(maxPrice) < Number(minPrice) && maxPrice !== null && minPrice !== null) {
       if (Number(maxPrice) < min) {
@@ -45,8 +52,9 @@ function FilterCard(): JSX.Element {
               }}
               onChange={(evt) => dispatch(setMinPrice(evt.currentTarget.value))}
               onBlur={() => {
-                if (Number(minPrice) < min) {
-                  dispatch(setMinPrice(String(min)));
+                if (Number(minPrice) < min ) {
+                  minPrice !== '' ? dispatch(setMinPrice(String(min))) : dispatch(setMinPrice(''));
+                  minPrice !== null && minPrice !== '' ? dispatch(setMinPrice(String(min))) : dispatch(setMinPrice(''));
                 }
                 if (Number(minPrice) > max) {
                   if (minPrice !== '' && maxPrice !== null) { dispatch(setMinPrice(maxPrice));}
@@ -191,8 +199,8 @@ function FilterCard(): JSX.Element {
           });
           dispatch(setMinPrice(null));
           dispatch(setMaxPrice(null));
-          dispatch(setSelectedStrings(null));
           dispatch(setSelectedTypes(null));
+          dispatch(setSelectedStrings(null));
         }}
       >Очистить
       </button>

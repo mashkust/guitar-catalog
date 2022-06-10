@@ -82,13 +82,13 @@ export const guitarData = createSlice({
       state.isDataSending = action.payload;
     },
     setMinPrice: (state, action:{ payload: string | null}) => {
-      if (action.payload === null || action.payload==='') {
+      if (action.payload === null || action.payload==='' || action.payload===undefined ) {
         window.localStorage.removeItem('minPrice');
       }
       state.minPrice = action.payload;
     },
     setMaxPrice: (state, action:{ payload: string | null}) => {
-      if (action.payload === null || action.payload==='') {
+      if (action.payload === null || action.payload==='' || action.payload===undefined) {
         window.localStorage.removeItem('maxPrice');
       }
       state.maxPrice = action.payload;
@@ -119,15 +119,24 @@ export const guitarData = createSlice({
             fAcoustc = state.selectedStrings.filter((el) => el > 4);
           }
           state.selectedStrings = Array.from(new Set([...fElectric, ...fUkulele, ...fAcoustc]));
-          if (state.selectedTypes.length === 0) {
-            window.localStorage.removeItem('types');
-          }
-          if (state.selectedStrings.length === 0) {
-            window.localStorage.removeItem('strings');
-          }
+        }
+        if (state.selectedTypes.length === 0) {
+          window.localStorage.removeItem('types');
+        }
+        if (state.selectedStrings.length === 0) {
+          window.localStorage.removeItem('strings');
         }
       }
     },
+
+    setTypesGroup: (state, action: { payload: GuitarTypes[] }) => {
+      state.selectedTypes = action.payload;
+    },
+
+    setStringsGroup: (state, action: { payload: number[] }) => {
+      state.selectedStrings = action.payload;
+    },
+
     setSelectedStrings: (state, action: { payload: number | null }) => {
       const { selectedStrings } = state;
       const { payload } = action;
@@ -144,9 +153,6 @@ export const guitarData = createSlice({
       if (  state.selectedStrings.length === 0) {
         window.localStorage.removeItem('strings');
       }
-      // } else {
-      //   state.selectedStrings = action.payload;
-      // }
     },
     setFilteredGuitarsLength: (state, action) => {
       state.filteredGuitarsLength = action.payload;
@@ -174,6 +180,8 @@ export const {
   setSelectedTypes,
   setSelectedStrings,
   setFilteredGuitarsLength,
-  filteredPriceMin,
-  filteredPriceMax,
+  setFilteredPriceMin,
+  setFilteredPriceMax,
+  setStringsGroup,
+  setTypesGroup,
 } = guitarData.actions;

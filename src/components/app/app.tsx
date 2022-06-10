@@ -6,7 +6,7 @@ import MainCard from '../main-card';
 import NotFoundPage from '../notfound-page';
 import LoadingScreen from '../loading-screen';
 import { useEffect, useState } from 'react';
-import { setFilteredGuitarsLength } from '../../store/guitar-data';
+import { setFilteredGuitarsLength, setFilteredPriceMax, setFilteredPriceMin } from '../../store/guitar-data';
 import hashHistory from '../../hash-history';
 
 function App(): JSX.Element {
@@ -19,9 +19,6 @@ function App(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const [filteredGuitars, setFilteredGuitars] = useState(guitars);
-
-
-  
 
   useEffect(() => {
     setFilteredGuitars(guitars.slice(0).filter((el) => (maxPrice === null || el.price <= Number(maxPrice))
@@ -68,8 +65,9 @@ function App(): JSX.Element {
 
   useEffect(() => {
     dispatch(setFilteredGuitarsLength(filteredGuitars.length));
-    // dispatch(setFilteredGuitarsPrice(filteredGuitars));
-  }, [filteredGuitars.length]);
+    dispatch(setFilteredPriceMax(filteredGuitars.slice().map((el)=>el.price).sort((a,b) => b - a)[0] && filteredGuitars.slice().map((el)=>el.price).sort((a,b) => b - a)[0]));
+    dispatch(setFilteredPriceMin(filteredGuitars.slice().map((el)=>el.price).sort((a,b) => b - a)[0] && filteredGuitars.slice().map((el)=>el.price).sort((a,b) => b - a)[filteredGuitars.length-1] ));
+  }, [filteredGuitars]);
 
   if (!isDataLoaded) {
     return (

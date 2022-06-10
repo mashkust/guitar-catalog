@@ -28,12 +28,13 @@ function PageHeader(): JSX.Element {
     setText(evt.currentTarget.value);
   };
 
+  let index = 100;
   return (
     <header className="header" id="header">
       <div className="container header__wrapper"><a className="header__logo logo"><img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип" /></a>
         <nav className="main-nav">
           <ul className="main-nav__list">
-            <li><Link className="link main-nav__link" to={AppRoute.Page1}>Каталог</Link>
+            <li><Link className="link main-nav__link" to={AppRoute.Page1} >Каталог</Link>
             </li>
             <li><Link className="link main-nav__link" to={AppRoute.Where}>Где купить?</Link>
             </li>
@@ -41,20 +42,28 @@ function PageHeader(): JSX.Element {
             </li>
           </ul>
         </nav>
-        <div className="form-search" onClick={onFormClickHandler} onBlur={onFormBlurHandler}>
+        <div className="form-search" onClick={onFormClickHandler} onBlur={onFormBlurHandler} >
           <form className="form-search__form" id="form-search">
             <button className="form-search__submit" type="submit" disabled>
               <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
                 <use href="#icon-search"></use>
               </svg><span className="visually-hidden">Начать поиск</span>
             </button>
-            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} />
+            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} tabIndex={index - 1} />
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul className={`form-search__select-list ${isSearch ? '' : 'hidden'}`}>
             {guitars
               .filter((el) => el.name.toLowerCase().includes(text.toLowerCase()))
-              .map((el, index) => <li key={el.id} className="form-search__select-item" tabIndex={index++} onClick={() => navigate(generatePath(AppRoute.Details, { id: String(el.id) }))}> {el.name}</li>)}
+              .map((el) => (
+                <li key={el.id} className="form-search__select-item" tabIndex={index} onBlur={() => index++} onKeyPress={(evt) => {
+                  if (evt.key === 'Enter') {
+                    navigate(generatePath(AppRoute.Details, { id: String(el.id) }));
+                  }
+                }}
+                onClick={() => navigate(generatePath(AppRoute.Details, { id: String(el.id) }))}
+                > {el.name}
+                </li>))}
           </ul>
           <button className="form-search__reset" type="reset" form="form-search" onClick={() => setText('')}>
             <svg className="form-search__icon" width="14" height="15" aria-hidden="true">
