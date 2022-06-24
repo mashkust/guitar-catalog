@@ -6,7 +6,7 @@ import { useAppDispatch} from '../hooks/hooks';
 import { fetchCommentsAction } from '../store/api-actions';
 import type { Guitar} from '../types/types';
 import { pasrePrice, stopScroll } from '../utils';
-import BasketCard from './basket-card';
+import BasketAdiing from './basket-adding';
 
 type GuitarCardProps = {
   guitar: Guitar;
@@ -71,7 +71,7 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
           }}
         >Купить
         </button>
-        {isBookingModalOpened && <BasketCard guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
+        {isBookingModalOpened && <BasketAdiing guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
       </div>
     </div>
   );

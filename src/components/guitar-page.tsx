@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState} from 'react';
 import type { MouseEvent } from 'react';
-import { generatePath, Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { fetchCommentsAction, fetchGuitarAction } from '../store/api-actions';
@@ -9,7 +9,7 @@ import LoadingScreen from './loading-screen';
 import PageFooter from './page-footer';
 import PageHeader from './page-header';
 import GuitarTab from './guitar-tab';
-import BasketCard from './basket-card';
+import BasketAdiing from './basket-adding';
 import Comments from './guitar-tabs/comments';
 import ShowMore from './show-more';
 import AddComments from './add-comments';
@@ -76,7 +76,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   };
 
   if (guitar) {
-    const { id, name, previewImg, price, rating} = guitar as Guitar;
+    const { name, previewImg, price, rating} = guitar as Guitar;
     const STARS = Math.ceil(rating);
     const NULL_STARS = STARS_MAX - STARS;
     return (
@@ -90,7 +90,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
               </li>
               <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Page1}>Каталог</Link>
               </li>
-              <li className="breadcrumbs__item"><Link to={generatePath(AppRoute.Details, { id: String(id) })} className="link">{name}</Link>
+              <li className="breadcrumbs__item"><a className="link">{name}</a>
               </li>
             </ul>
             <div className="product-container"><img className="product-container__img" src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="90" height="235" alt={name} />
@@ -132,7 +132,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                   Добавить в корзину
                 </button>
               </div>
-              {isBookingModalOpened && <BasketCard guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
+              {isBookingModalOpened && <BasketAdiing guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
             </div>
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3>

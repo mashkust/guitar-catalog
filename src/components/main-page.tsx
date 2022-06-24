@@ -10,7 +10,7 @@ type MainProps = {
   guitars:Guitar [];
 };
 
-function MainCard({guitars}: MainProps): JSX.Element {
+function MainPage({guitars}: MainProps): JSX.Element {
 
 
   return (
@@ -20,9 +20,9 @@ function MainCard({guitars}: MainProps): JSX.Element {
         <div className="container">
           <h1 className="page-content__title title title--bigger" >Каталог гитар</h1>
           <ul className="breadcrumbs page-content__breadcrumbs">
-            <li className="breadcrumbs__item"><Link to={AppRoute.Page1} className="link" >Главная</Link>
+            <li className="breadcrumbs__item"><Link className="link" to={AppRoute.Page1}>Главная</Link>
             </li>
-            <li className="breadcrumbs__item"><Link to={AppRoute.Page1}>Каталог</Link>
+            <li className="breadcrumbs__item"><a className="link">Каталог</a>
             </li>
           </ul>
           <CatalogCard guitars={guitars} />
@@ -33,4 +33,4 @@ function MainCard({guitars}: MainProps): JSX.Element {
   );
 }
 
-export default MainCard;
+export default MainPage;

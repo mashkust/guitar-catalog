@@ -2,12 +2,13 @@ import { Route, Routes } from 'react-router-dom';
 import { AppRoute, LIST_OF_GUITAR } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import GuitarPage from '../guitar-page';
-import MainCard from '../main-card';
+import MainPage from '../main-page';
 import NotFoundPage from '../notfound-page';
 import LoadingScreen from '../loading-screen';
 import { useEffect, useState } from 'react';
 import { setFilteredGuitarsLength, setFilteredPriceMax, setFilteredPriceMin } from '../../store/guitar-data';
 import hashHistory from '../../hash-history';
+import BasketPage from '../basket-page';
 
 function App(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
@@ -79,15 +80,15 @@ function App(): JSX.Element {
     <Routes>
       <Route
         path={AppRoute.Page1}
-        element={<MainCard guitars={filteredGuitars.slice(LIST_OF_GUITAR[0].rangeFrom, LIST_OF_GUITAR[0].rangeTo)} />}
+        element={<MainPage guitars={filteredGuitars.slice(LIST_OF_GUITAR[0].rangeFrom, LIST_OF_GUITAR[0].rangeTo)} />}
       />
       <Route
         path={AppRoute.Page2}
-        element={<MainCard guitars={filteredGuitars.slice(LIST_OF_GUITAR[1].rangeFrom, LIST_OF_GUITAR[1].rangeTo)} />}
+        element={<MainPage guitars={filteredGuitars.slice(LIST_OF_GUITAR[1].rangeFrom, LIST_OF_GUITAR[1].rangeTo)} />}
       />
       <Route
         path={AppRoute.Page3}
-        element={<MainCard guitars={filteredGuitars.slice(LIST_OF_GUITAR[2].rangeFrom, LIST_OF_GUITAR[2].rangeTo)} />}
+        element={<MainPage guitars={filteredGuitars.slice(LIST_OF_GUITAR[2].rangeFrom, LIST_OF_GUITAR[2].rangeTo)} />}
       />
       <Route
         path={AppRoute.Details}
@@ -100,6 +101,10 @@ function App(): JSX.Element {
       <Route
         path="/*"
         element={<NotFoundPage />}
+      />
+      <Route
+        path={AppRoute.Basket}
+        element={<BasketPage />}
       />
     </Routes>
   );

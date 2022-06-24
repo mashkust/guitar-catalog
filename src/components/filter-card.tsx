@@ -87,11 +87,11 @@ function FilterCard(): JSX.Element {
                   if (minPrice !== '' && minPrice !== null) {
                     maxPrice !== '' ? dispatch(setMaxPrice(minPrice)) : dispatch(setMaxPrice(null));
                   }
-                  else if (minPrice !== '' && minPrice === null) {
+                  else if (minPrice === '' || minPrice === null) {
                     maxPrice !== '' ? dispatch(setMaxPrice(String(min))) : dispatch(setMaxPrice(null));
                   }
                 }
-                else { compareValues(); }
+                else {compareValues(); }
                 navigate({
                   pathname: AppRoute.Page1,
                   search: hashHistory.location.search,

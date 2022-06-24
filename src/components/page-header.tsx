@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { generatePath, Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute, indexSelect } from '../const';
 import { useAppSelector } from '../hooks/hooks';
 
 function PageHeader(): JSX.Element {
@@ -28,7 +28,6 @@ function PageHeader(): JSX.Element {
     setText(evt.currentTarget.value);
   };
 
-  let index = 100;
   return (
     <header className="header" id="header">
       <div className="container header__wrapper"><a className="header__logo logo"><img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип" /></a>
@@ -49,19 +48,20 @@ function PageHeader(): JSX.Element {
                 <use href="#icon-search"></use>
               </svg><span className="visually-hidden">Начать поиск</span>
             </button>
-            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} tabIndex={index - 1} />
+            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} tabIndex={indexSelect-1} />
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul className={`form-search__select-list ${isSearch ? '' : 'hidden'}`}>
             {guitars
               .filter((el) => el.name.toLowerCase().includes(text.toLowerCase()))
               .map((el) => (
-                <li key={el.id} className="form-search__select-item" tabIndex={index} onBlur={() => index++} onKeyPress={(evt) => {
-                  if (evt.key === 'Enter') {
-                    navigate(generatePath(AppRoute.Details, { id: String(el.id) }));
-                  }
-                }}
-                onClick={() => navigate(generatePath(AppRoute.Details, { id: String(el.id) }))}
+                <li key={el.id} className="form-search__select-item" tabIndex={indexSelect}
+                  onKeyPress={(evt) => {
+                    if (evt.key === 'Enter') {
+                      navigate(generatePath(AppRoute.Details, { id: String(el.id) }));
+                    }
+                  }}
+                  onClick={() => navigate(generatePath(AppRoute.Details, { id: String(el.id) }))}
                 > {el.name}
                 </li>))}
           </ul>
@@ -71,7 +71,7 @@ function PageHeader(): JSX.Element {
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
         </div>
-        <Link className="header__cart-link" to={AppRoute.Company} aria-label="Корзина">
+        <Link className="header__cart-link" to={AppRoute.Basket} aria-label="Корзина">
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use href="#icon-basket"></use>
           </svg>

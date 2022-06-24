@@ -4,17 +4,17 @@ import { Route, Routes } from 'react-router-dom';
 import browserHistory from '../hash-history';
 import { fakeStore, fakeGuitars } from '../mock';
 import HistoryRouter from './history-router';
-import MainCard from './main-card';
+import MainPage from './main-page';
 
-describe('Component:MainCard', () => {
-  it('should render MainCard', () => {
+describe('Component:MainPage', () => {
+  it('should render MainPage', () => {
     render(
       <Provider store={fakeStore}>
         <HistoryRouter history={browserHistory} >
           <Routes>
             <Route
               path={'/'}
-              element={<MainCard guitars ={fakeGuitars} />}
+              element={<MainPage guitars ={fakeGuitars} />}
             />
           </Routes>
         </HistoryRouter>

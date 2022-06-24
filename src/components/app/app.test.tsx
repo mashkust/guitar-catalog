@@ -17,7 +17,7 @@ const fakeApp = (
 );
 
 describe('Application Routes was mounted', () => {
-  it('should render "MainCard" when user navigate to "/page1"', () => {
+  it('should render "MainPage" when user navigate to "/page1"', () => {
     history.push(AppRoute.Page1);
     render(fakeApp);
   });

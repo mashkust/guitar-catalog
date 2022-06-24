@@ -1,59 +1,36 @@
-import { TYPES } from '../const';
 import { Guitar } from '../types/types';
-import { pasrePrice } from '../utils';
 
 type BasketCardProps = {
-  setIsBookingModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
-  guitar: Guitar,
+    guitar: Guitar;
 }
 
-function BasketCard({ setIsBookingModalOpened, guitar }: BasketCardProps): JSX.Element {
-  const { name, previewImg, price, vendorCode, type, stringCount } = guitar;
-
-  const startScroll = () => {
-    document.body.style.overflow = 'auto';
-  };
-
+function BasketCard(): JSX.Element {
   return (
-    <div className="modal is-active modal-for-ui-kit">
-      <div className="modal__wrapper">
-        <div className="modal__overlay"
-          onClick={() => {
-            setIsBookingModalOpened(false);
-            startScroll();
-          }}
-        >
-        </div>
-        <div className="modal__content">
-          <h2 className="modal__header title title--medium">Добавить товар в корзину</h2>
-          <div className="modal__info"><img className="modal__img" src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="67" height="137" alt={name} />
-            <div className="modal__info-wrapper">
-              <h3 className="modal__product-name title title--little title--uppercase">Гитара {name}</h3>
-              <p className="modal__product-params modal__product-params--margin-11">Артикул:{vendorCode}</p>
-              <p className="modal__product-params">{type ? TYPES[type] : ''},{stringCount} струнная</p>
-              <p className="modal__price-wrapper"><span className="modal__price">Цена:</span><span className="modal__price">{pasrePrice(price)} ₽</span></p>
-            </div>
-          </div>
-          <div className="modal__button-container">
-            <button className="button button--red button--big modal__button modal__button--add"
-              onClick={() => {
-                setIsBookingModalOpened(false);
-                startScroll();
-              }}
-            >
-              Добавить в корзину
-            </button>
-          </div>
-          <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
-            onClick={() => {
-              setIsBookingModalOpened(false);
-              startScroll();
-            }}
-          >
-            <span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
-          </button>
-        </div>
+    <div className="cart-item">
+      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить"><span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
+      </button>
+      <div className="cart-item__image"><img src="img/content/guitar-2.jpg" srcSet="img/content/guitar-2@2x.jpg 2x" width="55" height="130" alt="ЭлектроГитара Честер bass"/>
       </div>
+      <div className="product-info cart-item__info">
+        <p className="product-info__title">ЭлектроГитара Честер bass</p>
+        <p className="product-info__info">Артикул: SO757575</p>
+        <p className="product-info__info">Электрогитара, 6 струнная</p>
+      </div>
+      <div className="cart-item__price">17 500 ₽</div>
+      <div className="quantity cart-item__quantity">
+        <button className="quantity__button" aria-label="Уменьшить количество">
+          <svg width="8" height="8" aria-hidden="true">
+            <use xlinkHref="#icon-minus"></use>
+          </svg>
+        </button>
+        <input className="quantity__input" type="number" placeholder="1" id="2-count" name="2-count" max="99"/>
+        <button className="quantity__button" aria-label="Увеличить количество">
+          <svg width="8" height="8" aria-hidden="true">
+            <use xlinkHref="#icon-plus"></use>
+          </svg>
+        </button>
+      </div>
+      <div className="cart-item__price-total">17 500 ₽</div>
     </div>
   );
 }
