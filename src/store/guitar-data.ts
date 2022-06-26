@@ -21,6 +21,8 @@ const initialState: GuitarData = {
   filteredGuitarsLength: null,
   filteredPriceMin:null,
   filteredPriceMax:null,
+  boughtGuitars: [],
+  quantity: 1,
 };
 
 export const guitarData = createSlice({
@@ -163,6 +165,28 @@ export const guitarData = createSlice({
     setFilteredPriceMax: (state, action) => {
       state.filteredPriceMax = action.payload;
     },
+    buyGuitar: (state, action) => {
+      const { boughtGuitars } = state;
+      const { payload } = action;
+      boughtGuitars.push(payload);
+    },
+    deleteGuitar: (state, action) => {
+      const { boughtGuitars } = state;
+      const { payload } = action;
+      state.boughtGuitars = boughtGuitars.filter((el) => el.id !== payload.id);
+    },
+    setId: (state, action) => {
+      state.id = action.payload;
+    },
+    setQuantity: (state, action) => {
+      if (action.payload > 0) {
+        state.quantity = action.payload;
+        const guitar = state.boughtGuitars.find((el) => el.id === Number(first.guitarId));
+      }
+      else {
+        deleteGuitar(action.payload);
+      }
+    },
   },
 });
 
@@ -184,4 +208,7 @@ export const {
   setFilteredPriceMax,
   setStringsGroup,
   setTypesGroup,
+  buyGuitar,
+  setQuantity,
+  deleteGuitar,
 } = guitarData.actions;

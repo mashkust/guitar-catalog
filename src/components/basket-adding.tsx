@@ -1,4 +1,6 @@
+import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
+import { buyGuitar } from '../store/guitar-data';
 import { Guitar } from '../types/types';
 import { pasrePrice } from '../utils';
 
@@ -9,7 +11,7 @@ type BasketAdiingProps = {
 
 function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): JSX.Element {
   const { name, previewImg, price, vendorCode, type, stringCount } = guitar;
-
+  const dispatch = useDispatch();
   const startScroll = () => {
     document.body.style.overflow = 'auto';
   };
@@ -39,6 +41,7 @@ function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): J
               onClick={() => {
                 setIsBookingModalOpened(false);
                 startScroll();
+                dispatch(buyGuitar(guitar));
               }}
             >
               Добавить в корзину

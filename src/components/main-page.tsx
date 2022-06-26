@@ -12,7 +12,6 @@ type MainProps = {
 
 function MainPage({guitars}: MainProps): JSX.Element {
 
-
   return (
     <React.Fragment>
       <PageHeader />

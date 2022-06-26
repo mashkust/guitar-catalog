@@ -22,7 +22,9 @@ export type GuitarData = {
   selectedStrings: number[],
   filteredGuitarsLength: number | null,
   filteredPriceMax: number | null,
-  filteredPriceMin:number | null,
+  filteredPriceMin: number | null,
+  boughtGuitars: Guitar[],
+  quantity: number,
 };
 
 export type Guitar = {
@@ -35,7 +37,8 @@ export type Guitar = {
   description: string,
   rating: number,
   stringCount: number,
-  commentsCount?: number
+  commentsCount?: number,
+  quantity?: number
 }
 
 export type SortByParamsProps = {
