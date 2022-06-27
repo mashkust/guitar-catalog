@@ -25,6 +25,7 @@ export type GuitarData = {
   filteredPriceMin: number | null,
   boughtGuitars: Guitar[],
   quantity: number,
+  id: number | null,
 };
 
 export type Guitar = {

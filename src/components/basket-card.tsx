@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
 import { useAppSelector } from '../hooks/hooks';
-import { deleteGuitar, setQuantity } from '../store/guitar-data';
+import { deleteGuitar, setId, setQuantity } from '../store/guitar-data';
 import { Guitar } from '../types/types';
 
 type BasketCardProps = {
@@ -9,7 +9,7 @@ type BasketCardProps = {
 }
 
 function BasketCard({ guitar }: BasketCardProps): JSX.Element {
-  const { name, vendorCode, type, stringCount, price } = guitar;
+  const { id, name, vendorCode, type, stringCount, price } = guitar;
   const dispatch = useDispatch();
   const quantity = useAppSelector(({ DATA }) => DATA.quantity);
 
@@ -26,17 +26,24 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
       </div>
       <div className="cart-item__price">{price} ₽</div>
       <div className="quantity cart-item__quantity">
-        <button className="quantity__button" aria-label="Уменьшить количество" onClick={() => dispatch(setQuantity(quantity - 1))}>
+        <button className="quantity__button" aria-label="Уменьшить количество" onClick={() => {
+          dispatch(setId(id));
+          dispatch(setQuantity(quantity - 1));}}
+        >
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-minus"></use>
           </svg>
         </button>
-        <input className="quantity__input" type="number" value={String(quantity)} id="2-count" name="2-count" min="1" max="99"
+        <input className="quantity__input" type="number" value={String(guitar.quantity)} id="2-count" name="2-count" min="1" max="99"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+            dispatch(setId(id));
             dispatch(setQuantity(Number(evt.currentTarget.value)));
           }}
         />
-        <button className="quantity__button" aria-label="Увеличить количество" onClick={() => dispatch(setQuantity(quantity + 1))}>
+        <button className="quantity__button" aria-label="Увеличить количество" onClick={() => {
+          dispatch(setId(id));
+          dispatch(setQuantity(quantity + 1));}}
+        >
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-plus"></use>
           </svg>
@@ -48,3 +55,4 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
 }
 
 export default BasketCard;
+

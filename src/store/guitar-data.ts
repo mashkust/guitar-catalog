@@ -23,6 +23,7 @@ const initialState: GuitarData = {
   filteredPriceMax:null,
   boughtGuitars: [],
   quantity: 1,
+  id: null,
 };
 
 export const guitarData = createSlice({
@@ -181,7 +182,9 @@ export const guitarData = createSlice({
     setQuantity: (state, action) => {
       if (action.payload > 0) {
         state.quantity = action.payload;
-        const guitar = state.boughtGuitars.find((el) => el.id === Number(first.guitarId));
+        const boughtGuitar = state.boughtGuitars.find((el) => el.id === state.id);
+        if (boughtGuitar) {
+          boughtGuitar.quantity = state.quantity ;}
       }
       else {
         deleteGuitar(action.payload);
@@ -211,4 +214,5 @@ export const {
   buyGuitar,
   setQuantity,
   deleteGuitar,
+  setId,
 } = guitarData.actions;
