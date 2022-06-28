@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Guitar, NewReview, Comment, AppDispatch, State } from '../types/types';
-import { loadComments, loadGuitar, loadGuitars, sendComment } from './guitar-data';
+import { loadComments, loadGuitar, loadGuitars, sendComment, setIsDisconnect } from './guitar-data';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../const';
 import { AxiosInstance } from 'axios';
@@ -66,8 +66,8 @@ export const sendCommentAction = createAsyncThunk<void, NewReview, {
       await api.post<NewReview>(APIRoute.Comments, data);
       dispatch(sendComment(false));
     } catch (error) {
-      errorHandle(error);
       dispatch(sendComment(true));
+      errorHandle(error);
     }
   },
 );

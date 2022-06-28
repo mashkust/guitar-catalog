@@ -71,6 +71,12 @@ export const MONTH: string [] = [
   'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря',
 ];
 
+export enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
 export const COMMENT_CARDS_COUNT = 3;
 export const STARS_MAX = 5;
 export const COMMENT_CARDS_COUNT_STEP = 3;

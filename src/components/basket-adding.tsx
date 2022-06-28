@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
 import { buyGuitar } from '../store/guitar-data';
@@ -16,14 +17,18 @@ function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): J
     document.body.style.overflow = 'auto';
   };
 
+  const modalCloseHandler = () => {
+    setIsBookingModalOpened(false);
+    startScroll();
+  };
+
+  useEffect(() => () => modalCloseHandler(), []);
+
   return (
     <div className="modal is-active modal-for-ui-kit">
       <div className="modal__wrapper">
         <div className="modal__overlay"
-          onClick={() => {
-            setIsBookingModalOpened(false);
-            startScroll();
-          }}
+          onClick={ modalCloseHandler}
         >
         </div>
         <div className="modal__content">
@@ -39,8 +44,7 @@ function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): J
           <div className="modal__button-container">
             <button className="button button--red button--big modal__button modal__button--add"
               onClick={() => {
-                setIsBookingModalOpened(false);
-                startScroll();
+                modalCloseHandler();
                 dispatch(buyGuitar(guitar));
               }}
             >
@@ -48,10 +52,7 @@ function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): J
             </button>
           </div>
           <button className="modal__close-btn button-cross" type="button" aria-label="Закрыть"
-            onClick={() => {
-              setIsBookingModalOpened(false);
-              startScroll();
-            }}
+            onClick={ modalCloseHandler}
           >
             <span className="button-cross__icon"></span><span className="modal__close-btn-interactive-area"></span>
           </button>

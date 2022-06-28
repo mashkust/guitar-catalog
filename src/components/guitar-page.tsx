@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
@@ -15,7 +15,7 @@ import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
 import { pasrePrice, startScroll, stopScroll } from '../utils';
-import {setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
+import { setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
 
 type GuitarPageProps = {
   tab: boolean,
@@ -57,11 +57,11 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
 
   const mainRef = useRef<HTMLElement | null>(null);
 
-  const { guitar, comments, isSuccessModalOpened, isCommentModalOpened} = useAppSelector(({ DATA }) => DATA);
+  const { guitar, comments, isSuccessModalOpened, isCommentModalOpened } = useAppSelector(({ DATA }) => DATA);
   const { commentCardsCount } = useAppSelector(({ COMMENT }) => COMMENT);
 
 
-  document.onkeydown = function(evt) {
+  document.onkeydown = function (evt) {
     evt = evt || window.event;
     let isEscape = false;
     if ('key' in evt) {
@@ -76,13 +76,14 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
   };
 
   if (guitar) {
-    const { name, previewImg, price, rating} = guitar as Guitar;
+    const { name, previewImg, price, rating } = guitar as Guitar;
     const STARS = Math.ceil(rating);
     const NULL_STARS = STARS_MAX - STARS;
+
     return (
       <React.Fragment>
         <PageHeader />
-        <main ref={mainRef} className={isCommentModalOpened  ? 'page-content overflow-hidden' : 'page-content'} >
+        <main ref={mainRef} className={isCommentModalOpened ? 'page-content overflow-hidden' : 'page-content'} >
           <div className="container">
             <h1 className="page-content__title title title--bigger">{name}</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
@@ -116,7 +117,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                     ))
                   }
                   <p className="visually-hidden">Оценка {rating}</p>
-                  <p className="rate__count">{ comments && comments[0] ? comments.length : '0'}</p>
+                  <p className="rate__count">{comments && comments[0] ? comments.length : '0'}</p>
                 </div>
                 <GuitarTab tab={tab} guitar={guitar} />
               </div>
@@ -145,7 +146,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
               </button>
               {isCommentModalOpened && <AddComments guitar={guitar} />}
               {isSuccessModalOpened && <SuccessComments />}
-              { comments && Array.from(comments).slice(0, commentCardsCount).map((comment: Comment) => (
+              {comments && Array.from(comments).slice(0, commentCardsCount).map((comment: Comment) => (
                 <Comments someComment={comment} key={comment.id} />))}
               {comments && comments.length > commentCardsCount ? <ShowMore /> : ''}
               {comments?.length !== 0 ? <button style={{ zIndex: 10 }} className="button button--up button--red-border button--big reviews__up-button" onClick={onUpBtnClick}>Наверх</button> : ''}

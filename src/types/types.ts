@@ -24,8 +24,7 @@ export type GuitarData = {
   filteredPriceMax: number | null,
   filteredPriceMin: number | null,
   boughtGuitars: Guitar[],
-  quantity: number,
-  id: number | null,
+  isDisconnect:boolean,
 };
 
 export type Guitar = {

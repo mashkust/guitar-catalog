@@ -4,6 +4,7 @@ import { NameSpace } from '../const';
 import type { Comment } from './../types/types';
 import { sortByParams } from '../utils';
 import hashHistory from '../hash-history';
+import {toast} from 'react-toastify';
 const initialState: GuitarData = {
   guitars: [],
   guitar: null,
@@ -22,8 +23,7 @@ const initialState: GuitarData = {
   filteredPriceMin:null,
   filteredPriceMax:null,
   boughtGuitars: [],
-  quantity: 1,
-  id: null,
+  isDisconnect: true,
 };
 
 export const guitarData = createSlice({
@@ -131,15 +131,12 @@ export const guitarData = createSlice({
         }
       }
     },
-
     setTypesGroup: (state, action: { payload: GuitarTypes[] }) => {
       state.selectedTypes = action.payload;
     },
-
     setStringsGroup: (state, action: { payload: number[] }) => {
       state.selectedStrings = action.payload;
     },
-
     setSelectedStrings: (state, action: { payload: number | null }) => {
       const { selectedStrings } = state;
       const { payload } = action;
@@ -170,24 +167,38 @@ export const guitarData = createSlice({
       const { boughtGuitars } = state;
       const { payload } = action;
       boughtGuitars.push(payload);
+      console.log(payload.id);
+      const boughtGuitar = state.boughtGuitars.find((el) => el.id === payload.id);
+      if (boughtGuitar) {
+        console.log(boughtGuitar);
+      }
     },
     deleteGuitar: (state, action) => {
       const { boughtGuitars } = state;
       const { payload } = action;
       state.boughtGuitars = boughtGuitars.filter((el) => el.id !== payload.id);
     },
-    setId: (state, action) => {
-      state.id = action.payload;
-    },
-    setQuantity: (state, action) => {
-      if (action.payload > 0) {
-        state.quantity = action.payload;
-        const boughtGuitar = state.boughtGuitars.find((el) => el.id === state.id);
-        if (boughtGuitar) {
-          boughtGuitar.quantity = state.quantity ;}
+    setQuantity: (state, action: {payload : {id:number, quantity: 'inc' | 'decr'}}) => {
+      const {id, quantity} = action.payload;
+      const boughtGuitar = state.boughtGuitars.find((el) => el.id === id);
+      if (boughtGuitar) {
+        boughtGuitar.quantity = quantity === 'inc' ?  (boughtGuitar.quantity || 0) + 1 : (boughtGuitar.quantity || 0) - 1;
       }
-      else {
-        deleteGuitar(action.payload);
+      // if (action.payload > 0) {
+      //   state.quantity = action.payload;
+      //   const boughtGuitar = state.boughtGuitars.find((el) => el.id === state.id);
+      //   if (boughtGuitar) {
+      //     boughtGuitar.quantity = state.quantity ;}
+      // }
+      // else {
+      //   deleteGuitar(action.payload);
+      // }
+    },
+    setIsDisconnect: (state, action ) => {
+      state.isDisconnect = action.payload;
+      if (!action.payload) {
+        toast.error('Internet disconnected');
+        state.isDisconnect = true;
       }
     },
   },
@@ -214,5 +225,5 @@ export const {
   buyGuitar,
   setQuantity,
   deleteGuitar,
-  setId,
+  setIsDisconnect,
 } = guitarData.actions;

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { RATING_VALUES } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { sendCommentAction } from '../store/api-actions';
-import { sendComment, setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
+import { sendComment, setIsCommentModalOpened, setIsDisconnect, setIsSuccessModalOpened } from '../store/guitar-data';
 import type { Guitar } from '../types/types';
 import Pentoville from 'pentonville';
-
+import { toast} from 'react-toastify';
 
 type AddCommentsProps = {
   guitar: Guitar;
@@ -63,6 +63,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
             <h3 className="modal__product-name title title--medium-20 title--uppercase">{name}</h3>
             <form className="form-review" onSubmit={(evt: React.FormEvent<HTMLFormElement>) => {
               evt.preventDefault();
+              dispatch(setIsDisconnect(navigator.onLine));
               dispatch(sendComment(true));
               dispatch(sendCommentAction({
                 comment: text,
@@ -72,8 +73,10 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                 advantage: adv,
                 disadvantage: disadv,
               }));
-              dispatch(setIsCommentModalOpened(false));
-              onSuccessBtnClick();
+              if ( navigator.onLine ) {
+                dispatch(setIsCommentModalOpened(false));
+                onSuccessBtnClick();
+              }
             }} action="#"
             >
               <div className="form-review__wrapper">

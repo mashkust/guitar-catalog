@@ -75,7 +75,6 @@ function App(): JSX.Element {
       <LoadingScreen />
     );
   }
-
   return (
     <Routes>
       <Route

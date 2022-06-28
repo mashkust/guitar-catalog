@@ -25,7 +25,7 @@ function BasketPage(): JSX.Element {
             </li>
           </ul>
           <div className="cart">
-            {boughtGuitars.length!== 0 ? boughtGuitars.map((guitar: Guitar) => (
+            {boughtGuitars.length !== 0 ? boughtGuitars.map((guitar: Guitar) => (
               <BasketCard {...{ guitar }} key={guitar.id} />)) : ''}
             <div className="cart__footer">
               <div className="cart__coupon coupon">
@@ -34,7 +34,7 @@ function BasketPage(): JSX.Element {
                 <form className="coupon__form" id="coupon-form" method="post" action="/">
                   <div className="form-input coupon__input">
                     <label className="visually-hidden">Промокод</label>
-                    <input type="text" placeholder="Введите промокод" id="coupon" name="coupon"/>
+                    <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" />
                     <p className="form-input__message form-input__message--success">Промокод принят</p>
                   </div>
                   <button className="button button--big coupon__button">Применить</button>

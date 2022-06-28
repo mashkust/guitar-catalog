@@ -2,8 +2,9 @@ import GuitarCard from './guitar-card';
 import { Guitar } from '../types/types';
 import Pagination from './pagination';
 import FilterCard from './filter-card';
-import { setIsSortInc, setIsSorting } from '../store/guitar-data';
+import { setIsDisconnect, setIsSortInc, setIsSorting } from '../store/guitar-data';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { useEffect } from 'react';
 
 type CatalogCardProps = {
   guitars: Guitar[];
@@ -24,6 +25,9 @@ function CatalogCard({ guitars }: CatalogCardProps): JSX.Element {
   const onSortIncHandler = (bool : boolean) =>{
     dispatch(setIsSortInc(bool));
   };
+
+  useEffect(() =>  {dispatch(setIsDisconnect(navigator.onLine));
+  }, []);
 
   return (
     <div className="catalog">

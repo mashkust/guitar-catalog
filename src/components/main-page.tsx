@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 import { Guitar } from '../types/types';
 
 type MainProps = {
-  guitars:Guitar [];
+  guitars: Guitar[];
 };
 
-function MainPage({guitars}: MainProps): JSX.Element {
+function MainPage({ guitars }: MainProps): JSX.Element {
 
   return (
     <React.Fragment>
