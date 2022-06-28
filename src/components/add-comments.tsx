@@ -5,7 +5,6 @@ import { sendCommentAction } from '../store/api-actions';
 import { sendComment, setIsCommentModalOpened, setIsDisconnect, setIsSuccessModalOpened } from '../store/guitar-data';
 import type { Guitar } from '../types/types';
 import Pentoville from 'pentonville';
-import { toast} from 'react-toastify';
 
 type AddCommentsProps = {
   guitar: Guitar;
@@ -73,7 +72,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                 advantage: adv,
                 disadvantage: disadv,
               }));
-              if ( navigator.onLine ) {
+              if ( navigator.onLine) {
                 dispatch(setIsCommentModalOpened(false));
                 onSuccessBtnClick();
               }

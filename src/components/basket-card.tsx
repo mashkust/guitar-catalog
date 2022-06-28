@@ -13,7 +13,7 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
 
   return (
     <div className="cart-item">
-      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить" onClick={() => dispatch(deleteGuitar(guitar))}><span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
+      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить" onClick={() => dispatch(deleteGuitar(id))}><span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
       </button>
       <div className="cart-item__image"><img src="img/content/guitar-2.jpg" srcSet="img/content/guitar-2@2x.jpg 2x" width="55" height="130" alt="ЭлектроГитара Честер bass" />
       </div>

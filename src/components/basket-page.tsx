@@ -4,11 +4,13 @@ import PageFooter from './page-footer';
 import { AppRoute } from '../const';
 import { Link } from 'react-router-dom';
 import BasketCard from './basket-card';
-import { useAppSelector } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
+import { postOrdersAction } from '../store/api-actions';
 
 function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
+  const dispatch = useAppDispatch();
 
   return (
     <React.Fragment>
@@ -44,7 +46,15 @@ function BasketPage(): JSX.Element {
                 <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span><span className="cart__total-value">52 000 ₽</span></p>
                 <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span><span className="cart__total-value cart__total-value--bonus">- 3000 ₽</span></p>
                 <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span><span className="cart__total-value cart__total-value--payment">49 000 ₽</span></p>
-                <button className="button button--red button--big cart__order-button">Оформить заказ</button>
+                <button className="button button--red button--big cart__order-button"
+                  onClick={() => {
+                    dispatch(postOrdersAction({
+                      guitarsIds: boughtGuitars.map((guitar: Guitar) => guitar.id),
+                      coupon: null,
+                    }));
+                  }}
+                >Оформить заказ
+                </button>
               </div>
             </div>
           </div>

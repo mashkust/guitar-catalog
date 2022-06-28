@@ -167,32 +167,25 @@ export const guitarData = createSlice({
       const { boughtGuitars } = state;
       const { payload } = action;
       boughtGuitars.push(payload);
-      console.log(payload.id);
-      const boughtGuitar = state.boughtGuitars.find((el) => el.id === payload.id);
-      if (boughtGuitar) {
-        console.log(boughtGuitar);
-      }
+      // const boughtGuitar = state.boughtGuitars.find((el) => el.id === payload.id);
+      // if (boughtGuitar) {
+      //   boughtGuitar.quantity = (boughtGuitar.quantity || 0)  + 1 ;
+      // }
     },
     deleteGuitar: (state, action) => {
       const { boughtGuitars } = state;
       const { payload } = action;
-      state.boughtGuitars = boughtGuitars.filter((el) => el.id !== payload.id);
+      state.boughtGuitars = boughtGuitars.filter((el) => el.id !== payload);
     },
     setQuantity: (state, action: {payload : {id:number, quantity: 'inc' | 'decr'}}) => {
       const {id, quantity} = action.payload;
       const boughtGuitar = state.boughtGuitars.find((el) => el.id === id);
       if (boughtGuitar) {
         boughtGuitar.quantity = quantity === 'inc' ?  (boughtGuitar.quantity || 0) + 1 : (boughtGuitar.quantity || 0) - 1;
+        if (boughtGuitar.quantity < 1) {
+          state.boughtGuitars = state.boughtGuitars.filter((el) => el.id !== id);
+        }
       }
-      // if (action.payload > 0) {
-      //   state.quantity = action.payload;
-      //   const boughtGuitar = state.boughtGuitars.find((el) => el.id === state.id);
-      //   if (boughtGuitar) {
-      //     boughtGuitar.quantity = state.quantity ;}
-      // }
-      // else {
-      //   deleteGuitar(action.payload);
-      // }
     },
     setIsDisconnect: (state, action ) => {
       state.isDisconnect = action.payload;

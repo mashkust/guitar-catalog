@@ -15,8 +15,8 @@ export enum APIRoute {
     Guitars = '/guitars/?_limit=27',
     Comments = '/comments',
     Guitar = '/guitars/',
-    SortPrice = '/guitars?_sort=price',
-    SortRating = '/guitars?_sort=rating&_order=asc',
+    Orders = '/orders',
+    Coupon = '/coupons',
 }
 
 export enum NameSpace {

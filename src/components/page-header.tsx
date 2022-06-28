@@ -4,6 +4,7 @@ import { AppRoute, indexSelect } from '../const';
 import { useAppSelector } from '../hooks/hooks';
 
 function PageHeader(): JSX.Element {
+  const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
   const navigate = useNavigate();
   const [isSearch, setIsSearch] = useState<boolean>(false);
   const [text, setText] = useState<string>('');
@@ -75,7 +76,7 @@ function PageHeader(): JSX.Element {
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use href="#icon-basket"></use>
           </svg>
-          <span className="visually-hidden">Перейти в корзину</span><span className="header__cart-count"></span>
+          <span className="visually-hidden">Перейти в корзину</span> {boughtGuitars.length>0 ? <span className="header__cart-count">{boughtGuitars.length}</span> : ''}
         </Link>
       </div>
     </header>

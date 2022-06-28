@@ -47,6 +47,11 @@ export type SortByParamsProps = {
   isSortInc: boolean
 }
 
+export type NewOrders = {
+  guitarsIds: number [],
+  coupon: string | null,
+};
+
 export type NewReview = {
   guitarId: number,
   userName: string,

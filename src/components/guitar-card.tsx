@@ -4,7 +4,6 @@ import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
 import { useAppDispatch} from '../hooks/hooks';
 import { fetchCommentsAction } from '../store/api-actions';
-import { setIsDisconnect } from '../store/guitar-data';
 import type { Guitar} from '../types/types';
 import { pasrePrice, stopScroll } from '../utils';
 import BasketAdiing from './basket-adding';
