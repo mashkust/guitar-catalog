@@ -7,11 +7,13 @@ import BasketCard from './basket-card';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
 import { postOrdersAction } from '../store/api-actions';
+import { buyGuitar } from '../store/guitar-data';
 
 function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
   const dispatch = useAppDispatch();
-
+  // const oldBoughtGuitars = localStorage.getItem('BoughtGuitars');
+  // dispatch(buyGuitar(oldBoughtGuitars.))
   return (
     <React.Fragment>
       <PageHeader />

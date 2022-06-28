@@ -25,6 +25,8 @@ export type GuitarData = {
   filteredPriceMin: number | null,
   boughtGuitars: Guitar[],
   isDisconnect:boolean,
+  isSuccessBasketModal: boolean,
+  isBasketModalOpened: boolean,
 };
 
 export type Guitar = {

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { GuitarData, GuitarTypes, SortType } from '../types/types';
+import { Guitar, GuitarData, GuitarTypes, SortType } from '../types/types';
 import { NameSpace } from '../const';
 import type { Comment } from './../types/types';
 import { sortByParams } from '../utils';
@@ -24,6 +24,8 @@ const initialState: GuitarData = {
   filteredPriceMax:null,
   boughtGuitars: [],
   isDisconnect: true,
+  isSuccessBasketModal: false,
+  isBasketModalOpened: false,
 };
 
 export const guitarData = createSlice({
@@ -163,14 +165,23 @@ export const guitarData = createSlice({
     setFilteredPriceMax: (state, action) => {
       state.filteredPriceMax = action.payload;
     },
-    buyGuitar: (state, action) => {
+    buyGuitar: (state, action: {payload : Guitar}) => {
       const { boughtGuitars } = state;
       const { payload } = action;
-      boughtGuitars.push(payload);
-      // const boughtGuitar = state.boughtGuitars.find((el) => el.id === payload.id);
-      // if (boughtGuitar) {
-      //   boughtGuitar.quantity = (boughtGuitar.quantity || 0)  + 1 ;
-      // }
+      const boughtGuitar = state.boughtGuitars.find((el) => el.id === payload.id);
+      if (boughtGuitar) {
+        boughtGuitar.quantity = (boughtGuitar.quantity || 1) + 1 ;
+      }
+      else {
+        const newGuitar = {...payload};
+        newGuitar.quantity = 1;
+        boughtGuitars.push(newGuitar);
+        // if ( boughtGuitars.length > 0 ) {
+        //   const param = boughtGuitars.map((el, i, arr) => el.id + (i === arr.length - 1 ? '' : '&')).join('');
+        //   window.localStorage.setItem('boughtGuitars',String(param));
+        // }
+        // state.boughtGuitars.find((el) => el.id === payload.id).quantity = 1;
+      }
     },
     deleteGuitar: (state, action) => {
       const { boughtGuitars } = state;
@@ -181,7 +192,8 @@ export const guitarData = createSlice({
       const {id, quantity} = action.payload;
       const boughtGuitar = state.boughtGuitars.find((el) => el.id === id);
       if (boughtGuitar) {
-        boughtGuitar.quantity = quantity === 'inc' ?  (boughtGuitar.quantity || 0) + 1 : (boughtGuitar.quantity || 0) - 1;
+        boughtGuitar.quantity = quantity === 'inc' ?  (boughtGuitar.quantity || 1) + 1 : (boughtGuitar.quantity || 1) - 1;
+        window.localStorage.setItem('boughtGuitars', String(boughtGuitar.id));
         if (boughtGuitar.quantity < 1) {
           state.boughtGuitars = state.boughtGuitars.filter((el) => el.id !== id);
         }
@@ -193,6 +205,12 @@ export const guitarData = createSlice({
         toast.error('Internet disconnected');
         state.isDisconnect = true;
       }
+    },
+    setIsSuccessBasket: (state, action) => {
+      state.isSuccessBasketModal = action.payload;
+    },
+    setIsBasket: (state, action) => {
+      state.isBasketModalOpened = action.payload;
     },
   },
 });
