@@ -27,6 +27,7 @@ export type GuitarData = {
   isDisconnect:boolean,
   isSuccessBasketModal: boolean,
   isBasketModalOpened: boolean,
+  isGuitar: Guitar | null,
 };
 
 export type Guitar = {

@@ -5,6 +5,7 @@ import { sendCommentAction } from '../store/api-actions';
 import { sendComment, setIsCommentModalOpened, setIsDisconnect, setIsSuccessModalOpened } from '../store/guitar-data';
 import type { Guitar } from '../types/types';
 import Pentoville from 'pentonville';
+import { startScroll } from '../utils';
 
 type AddCommentsProps = {
   guitar: Guitar;
@@ -36,10 +37,6 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
 
   const ratingChangeHandler = (userRating: number) => {
     setRating(userRating);
-  };
-
-  const startScroll = () => {
-    document.body.style.overflow = 'auto';
   };
 
   const onSuccessBtnClick = () => {

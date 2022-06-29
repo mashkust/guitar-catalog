@@ -5,17 +5,25 @@ import PageFooter from './page-footer';
 import { AppRoute } from '../const';
 import { Link } from 'react-router-dom';
 import { Guitar } from '../types/types';
+import { useAppSelector } from '../hooks/hooks';
+import BasketAdiing from './basket-adding';
+import SuccessBasket from './success-basket';
 
 type MainProps = {
   guitars: Guitar[];
 };
 
 function MainPage({ guitars }: MainProps): JSX.Element {
+  const isBasketModalOpened = useAppSelector(({ DATA }) => DATA.isBasketModalOpened);
+  const isSuccessBasketModal = useAppSelector(({ DATA }) => DATA.isSuccessBasketModal);
+  const isGuitar= useAppSelector(({ DATA }) => DATA.isGuitar);
 
   return (
     <React.Fragment>
       <PageHeader />
       <main className="page-content ">
+        { document.location.hash.includes('page') ? isBasketModalOpened && <BasketAdiing guitar={isGuitar}/> : ''}
+        { document.location.hash.includes('page') ?  isSuccessBasketModal && <SuccessBasket /> : ''}
         <div className="container">
           <h1 className="page-content__title title title--bigger" >Каталог гитар</h1>
           <ul className="breadcrumbs page-content__breadcrumbs">

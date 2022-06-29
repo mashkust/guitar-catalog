@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef} from 'react';
 import type { MouseEvent } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
@@ -15,21 +15,25 @@ import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
 import { pasrePrice, startScroll, stopScroll } from '../utils';
-import { setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
+import { setIsBasket, setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
+import SuccessBasket from './success-basket';
 
 type GuitarPageProps = {
   tab: boolean,
 }
 
 function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
-  const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
+  const { guitar, comments, isSuccessModalOpened, isCommentModalOpened } = useAppSelector(({ DATA }) => DATA);
+  const { commentCardsCount } = useAppSelector(({ COMMENT }) => COMMENT);
+  const isBasketModalOpened = useAppSelector(({ DATA }) => DATA.isBasketModalOpened);
+  const isSuccessBasketModal = useAppSelector(({ DATA }) => DATA.isSuccessBasketModal);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, []);
 
   const onBookingBtnClick = () => {
-    setIsBookingModalOpened(true);
+    dispatch(setIsBasket(true));
   };
 
   const onCommentBtnClick = () => {
@@ -57,10 +61,6 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
 
   const mainRef = useRef<HTMLElement | null>(null);
 
-  const { guitar, comments, isSuccessModalOpened, isCommentModalOpened } = useAppSelector(({ DATA }) => DATA);
-  const { commentCardsCount } = useAppSelector(({ COMMENT }) => COMMENT);
-
-
   document.onkeydown = function (evt) {
     evt = evt || window.event;
     let isEscape = false;
@@ -69,7 +69,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
     }
     if (isEscape) {
       dispatch(setIsCommentModalOpened(false));
-      setIsBookingModalOpened(false);
+      dispatch(setIsBasket(false));
       dispatch(setIsSuccessModalOpened(false));
       startScroll();
     }
@@ -83,7 +83,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
     return (
       <React.Fragment>
         <PageHeader />
-        <main ref={mainRef} className={isCommentModalOpened ? 'page-content overflow-hidden' : 'page-content'} >
+        <main ref={mainRef} className='page-content'>
           <div className="container">
             <h1 className="page-content__title title title--bigger">{name}</h1>
             <ul className="breadcrumbs page-content__breadcrumbs">
@@ -133,7 +133,8 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
                   Добавить в корзину
                 </button>
               </div>
-              {isBookingModalOpened && <BasketAdiing guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
+              { document.location.hash.includes('guitars') ? isBasketModalOpened && <BasketAdiing guitar={guitar}/> : ''}
+              { document.location.hash.includes('guitars') ?  isSuccessBasketModal && <SuccessBasket /> : ''}
             </div>
             <section className="reviews">
               <h3 className="reviews__title title title--bigger">Отзывы</h3>

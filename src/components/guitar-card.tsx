@@ -4,9 +4,9 @@ import { generatePath, Link, useNavigate } from 'react-router-dom';
 import { AppRoute, STARS_MAX } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { fetchCommentsAction } from '../store/api-actions';
+import { setIsBasket, setIsGuitar } from '../store/guitar-data';
 import type { Guitar } from '../types/types';
 import { pasrePrice, stopScroll } from '../utils';
-import BasketAdiing from './basket-adding';
 
 type GuitarCardProps = {
   guitar: Guitar;
@@ -17,7 +17,6 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
 
   const [mount, setMount] = useState(false);
-  const [isBookingModalOpened, setIsBookingModalOpened] = useState<boolean>(false);
 
   const STARS = Math.ceil(rating);
   const NULL_STARS = STARS_MAX - STARS;
@@ -30,10 +29,13 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
     }
   }
 
-  useEffect(() => setMount(true), []);
+  useEffect(() => {
+    setMount(true);
+  }, []);
 
   const onBookingBtnClick = () => {
-    setIsBookingModalOpened(true);
+    dispatch(setIsBasket(true));
+    dispatch(setIsGuitar(guitar));
   };
 
   return (
@@ -80,7 +82,6 @@ function GuitarCard({ guitar }: GuitarCardProps): JSX.Element {
             }}
           >В Корзине
           </button>}
-        {isBookingModalOpened && <BasketAdiing guitar={guitar} setIsBookingModalOpened={setIsBookingModalOpened} />}
       </div>
     </div>
   );

@@ -1,24 +1,20 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
-import { buyGuitar } from '../store/guitar-data';
+import { buyGuitar, setIsBasket, setIsSuccessBasket} from '../store/guitar-data';
 import { Guitar } from '../types/types';
-import { pasrePrice } from '../utils';
+import { pasrePrice, startScroll} from '../utils';
 
 type BasketAdiingProps = {
-  setIsBookingModalOpened: React.Dispatch<React.SetStateAction<boolean>>,
   guitar: Guitar,
 }
 
-function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): JSX.Element {
+function BasketAdiing({ guitar }: BasketAdiingProps): JSX.Element {
   const { name, previewImg, price, vendorCode, type, stringCount } = guitar;
   const dispatch = useDispatch();
-  const startScroll = () => {
-    document.body.style.overflow = 'auto';
-  };
 
   const modalCloseHandler = () => {
-    setIsBookingModalOpened(false);
+    dispatch(setIsBasket(false));
     startScroll();
   };
 
@@ -44,8 +40,9 @@ function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): J
           <div className="modal__button-container">
             <button className="button button--red button--big modal__button modal__button--add"
               onClick={() => {
-                modalCloseHandler();
                 dispatch(buyGuitar(guitar));
+                dispatch(setIsBasket(false));
+                dispatch(setIsSuccessBasket(true));
               }}
             >
               Добавить в корзину
@@ -63,3 +60,5 @@ function BasketAdiing({ setIsBookingModalOpened, guitar }: BasketAdiingProps): J
 }
 
 export default BasketAdiing;
+
+
