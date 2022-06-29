@@ -49,7 +49,7 @@ function PageHeader(): JSX.Element {
                 <use href="#icon-search"></use>
               </svg><span className="visually-hidden">Начать поиск</span>
             </button>
-            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} tabIndex={indexSelect-1} />
+            <input className="form-search__input" id="search" type="text" autoComplete="off" placeholder="что вы ищите?" value={text} onChange={onInputChangeHandler} tabIndex={indexSelect - 1} />
             <label className="visually-hidden" htmlFor="search">Поиск</label>
           </form>
           <ul className={`form-search__select-list ${isSearch ? '' : 'hidden'}`}>
@@ -76,7 +76,13 @@ function PageHeader(): JSX.Element {
           <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
             <use href="#icon-basket"></use>
           </svg>
-          <span className="visually-hidden">Перейти в корзину</span> {boughtGuitars.length>0 ? <span className="header__cart-count">{boughtGuitars.length}</span> : ''}
+          <span className="visually-hidden">Перейти в корзину</span> {boughtGuitars.length > 0 ?
+            <span className="header__cart-count">
+              {boughtGuitars.reduce((sum, elem) => {
+                if (elem.quantity) { return sum + elem.quantity; }
+                else { return sum; }
+              }, 0)}
+            </span> : ''}
         </Link>
       </div>
     </header>
