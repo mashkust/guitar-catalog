@@ -73,7 +73,7 @@ function AddComments({ guitar }: AddCommentsProps): JSX.Element {
                 dispatch(setIsCommentModalOpened(false));
                 onSuccessBtnClick();
               }
-            }} action="#"
+            }}
             >
               <div className="form-review__wrapper">
                 <div className="form-review__name-wrapper">

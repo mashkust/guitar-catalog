@@ -17,7 +17,7 @@ function BasketPage(): JSX.Element {
   const isCoupon = useAppSelector(({ DATA }) => DATA.isCoupon);
   const dispatch = useAppDispatch();
 
-  const [coupon, setCoupon] = useState<string | null>(null);
+  const [coupon, setCoupon] = useState<string>('');
   const [isValidationCoupon, setIsCoupon] = useState<boolean>(false);
   // const oldBoughtGuitars = localStorage.getItem('BoughtGuitars');
   // dispatch(buyGuitar(oldBoughtGuitars.))
@@ -25,7 +25,7 @@ function BasketPage(): JSX.Element {
     <React.Fragment>
       <PageHeader />
       <main className="page-content ">
-        { isGuitar ? isBasketRemoval && <BasketRemoval guitar={isGuitar}/> : ''}
+        {isGuitar ? isBasketRemoval && <BasketRemoval guitar={isGuitar} /> : ''}
         <div className="container">
           <h1 className="page-content__title title title--bigger" >Корзина</h1>
           <ul className="breadcrumbs page-content__breadcrumbs page-content__breadcrumbs--on-cart-page">
@@ -43,19 +43,28 @@ function BasketPage(): JSX.Element {
               <div className="cart__coupon coupon">
                 <h2 className="title title--little coupon__title">Промокод на скидку</h2>
                 <p className="coupon__info">Введите свой промокод, если он у вас есть.</p>
-                <form className="coupon__form" id="coupon-form" method="post" action="/">
+                <form className="coupon__form" id="coupon-form"
+                  onSubmit={(evt: React.FormEvent<HTMLFormElement>) => {
+                    evt.preventDefault();
+                    dispatch(postCouponAction({
+                      coupon:'light-333',
+                    }));
+                  }}
+                >
                   <div className="form-input coupon__input">
                     <label className="visually-hidden">Промокод</label>
-                    <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" />
-                    <p className="form-input__message form-input__message--success">Промокод принят</p>
+                    <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" value={coupon}
+                      onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+                        setCoupon(evt.currentTarget.value);
+                        setIsCoupon(false);
+                      }}
+                    />
+                    <p className={isValidationCoupon ? 'form-input__message form-input__message--success' : 'form-input__message form-input__message--error'} > {isValidationCoupon ? 'Промокод принят' : 'Неверный промокод'}</p>
                   </div>
                   <button className="button button--big coupon__button"
                     onClick={() => {
-                      // dispatch(postCouponAction({
-                      //   coupon:'light-333',
-                      // }));
+                      setIsCoupon(true);
                     }}
-                    
                   >Применить
                   </button>
                 </form>

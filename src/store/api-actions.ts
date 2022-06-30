@@ -97,7 +97,10 @@ export const postCouponAction = createAsyncThunk<void, CouponPost, {
   async ({ coupon }, {extra: api }) => {
     try {
       const data = { coupon };
-      await api.post<CouponPost>(APIRoute.Coupon, data);
+      const result =  await api.post<CouponPost>(APIRoute.Coupon, data, {
+      });
+      if (result.status >= 200) {
+      }
     } catch (error) {
       errorHandle(error);
     }

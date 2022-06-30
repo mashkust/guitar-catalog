@@ -56,7 +56,7 @@ export type NewOrders = {
 };
 
 export type CouponPost = {
-  coupon: string,
+  coupon: CouponTypes,
 };
 
 export type NewReview = {

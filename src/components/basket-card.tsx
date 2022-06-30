@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
-import { setIsBasketRemoval, setIsGuitar, setQuantity } from '../store/guitar-data';
+import { setIsBasketRemoval, setIsGuitar, setQuantity, setQuantityText } from '../store/guitar-data';
 import { Guitar } from '../types/types';
 
 type BasketCardProps = {
@@ -37,7 +37,7 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
         </button>
         <input className="quantity__input" type="number" value={String(guitar.quantity)} id="2-count" name="2-count" min="1" max="99"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-            // dispatch(setQuantity(Number(evt.currentTarget.value)));
+            dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value)}));
           }}
         />
         <button className="quantity__button" aria-label="Увеличить количество" onClick={() => {
