@@ -28,6 +28,7 @@ const initialState: GuitarData = {
   isBasketModalOpened: false,
   isGuitar: null,
   isBasketRemoval: false,
+  isCoupon: null,
 };
 
 export const guitarData = createSlice({
@@ -193,6 +194,7 @@ export const guitarData = createSlice({
         window.localStorage.setItem('boughtGuitars', String(boughtGuitar.id));
         if (boughtGuitar.quantity < 1) {
           state.isBasketRemoval = true;
+          boughtGuitar.quantity = (boughtGuitar.quantity || 0) + 1;
         }
       }
     },
@@ -214,6 +216,9 @@ export const guitarData = createSlice({
     },
     setIsBasketRemoval: (state, action) => {
       state.isBasketRemoval = action.payload;
+    },
+    setIsCoupon: (state, action) => {
+      state.isCoupon = action.payload;
     },
   },
 });
@@ -244,4 +249,5 @@ export const {
   setIsSuccessBasket,
   setIsGuitar,
   setIsBasketRemoval,
+  setIsCoupon,
 } = guitarData.actions;

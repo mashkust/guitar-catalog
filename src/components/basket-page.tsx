@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PageHeader from './page-header';
 import PageFooter from './page-footer';
 import { AppRoute } from '../const';
@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import BasketCard from './basket-card';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
-import { postOrdersAction } from '../store/api-actions';
+import { postCouponAction, postOrdersAction } from '../store/api-actions';
 import { setIsDisconnect } from '../store/guitar-data';
 import BasketRemoval from './basket-removal';
 
@@ -14,7 +14,11 @@ function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
   const isGuitar = useAppSelector(({ DATA }) => DATA.isGuitar);
   const isBasketRemoval = useAppSelector(({ DATA }) => DATA.isBasketRemoval);
+  const isCoupon = useAppSelector(({ DATA }) => DATA.isCoupon);
   const dispatch = useAppDispatch();
+
+  const [coupon, setCoupon] = useState<string | null>(null);
+  const [isValidationCoupon, setIsCoupon] = useState<boolean>(false);
   // const oldBoughtGuitars = localStorage.getItem('BoughtGuitars');
   // dispatch(buyGuitar(oldBoughtGuitars.))
   return (
@@ -45,7 +49,15 @@ function BasketPage(): JSX.Element {
                     <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" />
                     <p className="form-input__message form-input__message--success">Промокод принят</p>
                   </div>
-                  <button className="button button--big coupon__button">Применить</button>
+                  <button className="button button--big coupon__button"
+                    onClick={() => {
+                      // dispatch(postCouponAction({
+                      //   coupon:'light-333',
+                      // }));
+                    }}
+                    
+                  >Применить
+                  </button>
                 </form>
               </div>
               <div className="cart__total-info">

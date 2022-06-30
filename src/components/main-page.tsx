@@ -8,6 +8,9 @@ import { Guitar } from '../types/types';
 import { useAppSelector } from '../hooks/hooks';
 import BasketAdiing from './basket-adding';
 import SuccessBasket from './success-basket';
+import { useDispatch } from 'react-redux';
+import { startScroll } from '../utils';
+import { setIsBasket, setIsSuccessBasket } from '../store/guitar-data';
 
 type MainProps = {
   guitars: Guitar[];
@@ -17,6 +20,21 @@ function MainPage({ guitars }: MainProps): JSX.Element {
   const isBasketModalOpened = useAppSelector(({ DATA }) => DATA.isBasketModalOpened);
   const isSuccessBasketModal = useAppSelector(({ DATA }) => DATA.isSuccessBasketModal);
   const isGuitar = useAppSelector(({ DATA }) => DATA.isGuitar);
+
+  const dispatch = useDispatch();
+
+  document.onkeydown = function (evt) {
+    evt = evt || window.event;
+    let isEscape = false;
+    if ('key' in evt) {
+      isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
+    }
+    if (isEscape) {
+      dispatch(setIsBasket(false));
+      dispatch(setIsSuccessBasket(false));
+      startScroll();
+    }
+  };
 
   return (
     <React.Fragment>

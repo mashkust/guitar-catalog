@@ -15,7 +15,7 @@ import ShowMore from './show-more';
 import AddComments from './add-comments';
 import SuccessComments from './success-comments';
 import { pasrePrice, startScroll, stopScroll } from '../utils';
-import { setIsBasket, setIsCommentModalOpened, setIsSuccessModalOpened } from '../store/guitar-data';
+import { setIsBasket, setIsCommentModalOpened, setIsSuccessBasket, setIsSuccessModalOpened } from '../store/guitar-data';
 import SuccessBasket from './success-basket';
 
 type GuitarPageProps = {
@@ -70,6 +70,7 @@ function GuitarPage({ tab }: GuitarPageProps): JSX.Element {
     if (isEscape) {
       dispatch(setIsCommentModalOpened(false));
       dispatch(setIsBasket(false));
+      dispatch(setIsSuccessBasket(false));
       dispatch(setIsSuccessModalOpened(false));
       startScroll();
     }

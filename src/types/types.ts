@@ -4,8 +4,6 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type SortType = 'price' | 'rating';
-
 export type GuitarData = {
   guitars: Guitar[],
   guitar: Guitar | null,
@@ -29,6 +27,7 @@ export type GuitarData = {
   isBasketModalOpened: boolean,
   isGuitar: Guitar | null,
   isBasketRemoval: boolean,
+  isCoupon: string | null,
 };
 
 export type Guitar = {
@@ -53,7 +52,11 @@ export type SortByParamsProps = {
 
 export type NewOrders = {
   guitarsIds: number [],
-  coupon: string | null,
+  coupon: CouponTypes | null,
+};
+
+export type CouponPost = {
+  coupon: string,
 };
 
 export type NewReview = {
@@ -94,5 +97,9 @@ export type Rating = {
 };
 
 export type GuitarTypes = 'electric' | 'ukulele' | 'acoustic';
+
+export type CouponTypes = 'light-333' | 'medium-444' | 'height-555' ;
+
+export type SortType = 'price' | 'rating';
 
 export type ErrorType = unknown;
