@@ -16,13 +16,13 @@ type MainProps = {
 function MainPage({ guitars }: MainProps): JSX.Element {
   const isBasketModalOpened = useAppSelector(({ DATA }) => DATA.isBasketModalOpened);
   const isSuccessBasketModal = useAppSelector(({ DATA }) => DATA.isSuccessBasketModal);
-  const isGuitar= useAppSelector(({ DATA }) => DATA.isGuitar);
+  const isGuitar = useAppSelector(({ DATA }) => DATA.isGuitar);
 
   return (
     <React.Fragment>
       <PageHeader />
       <main className="page-content ">
-        { document.location.hash.includes('page') ? isBasketModalOpened && <BasketAdiing guitar={isGuitar}/> : ''}
+        { (document.location.hash.includes('page') && isGuitar) ? isBasketModalOpened && <BasketAdiing guitar={isGuitar}/> : ''}
         { document.location.hash.includes('page') ?  isSuccessBasketModal && <SuccessBasket /> : ''}
         <div className="container">
           <h1 className="page-content__title title title--bigger" >Каталог гитар</h1>

@@ -7,10 +7,13 @@ import BasketCard from './basket-card';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
 import { postOrdersAction } from '../store/api-actions';
-import { buyGuitar } from '../store/guitar-data';
+import { setIsDisconnect } from '../store/guitar-data';
+import BasketRemoval from './basket-removal';
 
 function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
+  const isGuitar = useAppSelector(({ DATA }) => DATA.isGuitar);
+  const isBasketRemoval = useAppSelector(({ DATA }) => DATA.isBasketRemoval);
   const dispatch = useAppDispatch();
   // const oldBoughtGuitars = localStorage.getItem('BoughtGuitars');
   // dispatch(buyGuitar(oldBoughtGuitars.))
@@ -18,6 +21,7 @@ function BasketPage(): JSX.Element {
     <React.Fragment>
       <PageHeader />
       <main className="page-content ">
+        { isGuitar ? isBasketRemoval && <BasketRemoval guitar={isGuitar}/> : ''}
         <div className="container">
           <h1 className="page-content__title title title--bigger" >Корзина</h1>
           <ul className="breadcrumbs page-content__breadcrumbs page-content__breadcrumbs--on-cart-page">
@@ -45,15 +49,28 @@ function BasketPage(): JSX.Element {
                 </form>
               </div>
               <div className="cart__total-info">
-                <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span><span className="cart__total-value">52 000 ₽</span></p>
+                <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span>
+                  <span className="cart__total-value">{boughtGuitars.reduce((sum, elem) => {
+                    if (elem.quantity) { return sum + elem.price * elem.quantity; }
+                    else { return sum + elem.price; }
+                  }, 0)} ₽
+                  </span>
+                </p>
                 <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span><span className="cart__total-value cart__total-value--bonus">- 3000 ₽</span></p>
-                <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span><span className="cart__total-value cart__total-value--payment">49 000 ₽</span></p>
+                <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span>
+                  <span className="cart__total-value cart__total-value--payment">{boughtGuitars.reduce((sum, elem) => {
+                    if (elem.quantity) { return sum + elem.price * elem.quantity; }
+                    else { return sum + elem.price; }
+                  }, 0)} ₽
+                  </span>
+                </p>
                 <button className="button button--red button--big cart__order-button"
                   onClick={() => {
                     dispatch(postOrdersAction({
                       guitarsIds: boughtGuitars.map((guitar: Guitar) => guitar.id),
                       coupon: null,
                     }));
+                    dispatch((setIsDisconnect(navigator.onLine)));
                   }}
                 >Оформить заказ
                 </button>

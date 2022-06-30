@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
-import { deleteGuitar, setQuantity } from '../store/guitar-data';
+import { setIsBasketRemoval, setIsGuitar, setQuantity } from '../store/guitar-data';
 import { Guitar } from '../types/types';
 
 type BasketCardProps = {
@@ -8,14 +8,18 @@ type BasketCardProps = {
 }
 
 function BasketCard({ guitar }: BasketCardProps): JSX.Element {
-  const { id, name, vendorCode, type, stringCount, price } = guitar;
+  const { id, name, vendorCode, type, stringCount, price, previewImg } = guitar;
   const dispatch = useDispatch();
 
   return (
     <div className="cart-item">
-      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить" onClick={() => dispatch(deleteGuitar(id))}><span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
+      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить" onClick={() => {
+        dispatch(setIsBasketRemoval(true));
+        dispatch(setIsGuitar(guitar));}}
+      >
+        <span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
       </button>
-      <div className="cart-item__image"><img src="img/content/guitar-2.jpg" srcSet="img/content/guitar-2@2x.jpg 2x" width="55" height="130" alt="ЭлектроГитара Честер bass" />
+      <div className="cart-item__image"><img src={`img/content/${previewImg.length && previewImg.slice(0).substring(4)}`} srcSet={`img/content/${previewImg.length && previewImg.slice(0).substring(4, previewImg.length - 4)}@2x.jpg 2x`} width="55" height="130" alt={name} />
       </div>
       <div className="product-info cart-item__info">
         <p className="product-info__title">{name}</p>

@@ -20,13 +20,14 @@ const initialState: GuitarData = {
   selectedTypes: [],
   selectedStrings: [],
   filteredGuitarsLength: null,
-  filteredPriceMin:null,
-  filteredPriceMax:null,
+  filteredPriceMin: null,
+  filteredPriceMax: null,
   boughtGuitars: [],
   isDisconnect: true,
   isSuccessBasketModal: false,
   isBasketModalOpened: false,
   isGuitar: null,
+  isBasketRemoval: false,
 };
 
 export const guitarData = createSlice({
@@ -191,7 +192,7 @@ export const guitarData = createSlice({
         boughtGuitar.quantity = quantity === 'inc' ?  (boughtGuitar.quantity || 1) + 1 : (boughtGuitar.quantity || 1) - 1;
         window.localStorage.setItem('boughtGuitars', String(boughtGuitar.id));
         if (boughtGuitar.quantity < 1) {
-          state.boughtGuitars = state.boughtGuitars.filter((el) => el.id !== id);
+          state.isBasketRemoval = true;
         }
       }
     },
@@ -210,6 +211,9 @@ export const guitarData = createSlice({
     },
     setIsGuitar: (state, action) => {
       state.isGuitar = action.payload;
+    },
+    setIsBasketRemoval: (state, action) => {
+      state.isBasketRemoval = action.payload;
     },
   },
 });
@@ -239,4 +243,5 @@ export const {
   setIsBasket,
   setIsSuccessBasket,
   setIsGuitar,
+  setIsBasketRemoval,
 } = guitarData.actions;
