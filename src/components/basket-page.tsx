@@ -7,8 +7,9 @@ import BasketCard from './basket-card';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
 import { postCouponAction, postOrdersAction } from '../store/api-actions';
-import { setIsDisconnect } from '../store/guitar-data';
+import { setIsCoupon, setIsDisconnect } from '../store/guitar-data';
 import BasketRemoval from './basket-removal';
+import { CouponTypes } from '../types/types';
 
 function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
@@ -18,7 +19,7 @@ function BasketPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const [coupon, setCoupon] = useState<string>('');
-  const [isValidationCoupon, setIsCoupon] = useState<boolean>(false);
+  const [isValidationCoupon, setIsValidationCoupon] = useState<boolean>(false);
   // const oldBoughtGuitars = localStorage.getItem('BoughtGuitars');
   // dispatch(buyGuitar(oldBoughtGuitars.))
   return (
@@ -46,24 +47,32 @@ function BasketPage(): JSX.Element {
                 <form className="coupon__form" id="coupon-form"
                   onSubmit={(evt: React.FormEvent<HTMLFormElement>) => {
                     evt.preventDefault();
-                    dispatch(postCouponAction({
-                      coupon:'light-333',
-                    }));
+                    // if (typeof coupon === 'CouponTypes') {
+                      dispatch(postCouponAction({
+                        coupon: coupon,
+                      }));
+                    // }
                   }}
                 >
                   <div className="form-input coupon__input">
                     <label className="visually-hidden">Промокод</label>
                     <input type="text" placeholder="Введите промокод" id="coupon" name="coupon" value={coupon}
                       onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-                        setCoupon(evt.currentTarget.value);
-                        setIsCoupon(false);
+                        if (evt.currentTarget.value.includes(' ')) {
+                          setCoupon(evt.currentTarget.value.split(' ').join(''));
+
+                        }
+                        else {
+                          setCoupon(evt.currentTarget.value);
+                        }
+                        setIsValidationCoupon(false);
                       }}
                     />
                     <p className={isValidationCoupon ? 'form-input__message form-input__message--success' : 'form-input__message form-input__message--error'} > {isValidationCoupon ? 'Промокод принят' : 'Неверный промокод'}</p>
                   </div>
                   <button className="button button--big coupon__button"
                     onClick={() => {
-                      setIsCoupon(true);
+                      setIsValidationCoupon(true);
                     }}
                   >Применить
                   </button>

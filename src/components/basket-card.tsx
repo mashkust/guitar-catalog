@@ -35,7 +35,7 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
             <use xlinkHref="#icon-minus"></use>
           </svg>
         </button>
-        <input className="quantity__input" type="number" value={String(guitar.quantity)} id="2-count" name="2-count" min="1" max="99"
+        <input className="quantity__input" type="number" value={String(guitar.quantity)} id={`${id}$-count`} name={`${id}$-count`} min="1" max="99"
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
             dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value)}));
           }}
