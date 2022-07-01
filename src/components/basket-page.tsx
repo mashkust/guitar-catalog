@@ -1,27 +1,40 @@
 import React, { useState } from 'react';
 import PageHeader from './page-header';
 import PageFooter from './page-footer';
-import { AppRoute } from '../const';
+import { AppRoute, VALIDATION_COUPON } from '../const';
 import { Link } from 'react-router-dom';
 import BasketCard from './basket-card';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
 import { postCouponAction, postOrdersAction } from '../store/api-actions';
-import { setIsCoupon, setIsDisconnect } from '../store/guitar-data';
+import { setIsBasketRemoval, setIsCoupon, setIsDisconnect } from '../store/guitar-data';
 import BasketRemoval from './basket-removal';
 import { CouponTypes } from '../types/types';
+import { startScroll } from '../utils';
 
 function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
   const isGuitar = useAppSelector(({ DATA }) => DATA.isGuitar);
   const isBasketRemoval = useAppSelector(({ DATA }) => DATA.isBasketRemoval);
+  const isDiscount = useAppSelector(({ DATA }) => DATA.isDiscount);
   const isCoupon = useAppSelector(({ DATA }) => DATA.isCoupon);
   const dispatch = useAppDispatch();
 
   const [coupon, setCoupon] = useState<string>('');
   const [isValidationCoupon, setIsValidationCoupon] = useState<boolean>(false);
-  // const oldBoughtGuitars = localStorage.getItem('BoughtGuitars');
-  // dispatch(buyGuitar(oldBoughtGuitars.))
+
+  document.onkeydown = function (evt) {
+    evt = evt || window.event;
+    let isEscape = false;
+    if ('key' in evt) {
+      isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
+    }
+    if (isEscape) {
+      dispatch(setIsBasketRemoval(false));
+      startScroll();
+    }
+  };
+
   return (
     <React.Fragment>
       <PageHeader />
@@ -39,7 +52,7 @@ function BasketPage(): JSX.Element {
           </ul>
           <div className="cart">
             {boughtGuitars.length !== 0 ? boughtGuitars.map((guitar: Guitar) => (
-              <BasketCard {...{ guitar }} key={guitar.id} />)) : ''}
+              <BasketCard {...{ guitar }} key={guitar.id} />)) : 'Корзина пуста'}
             <div className="cart__footer">
               <div className="cart__coupon coupon">
                 <h2 className="title title--little coupon__title">Промокод на скидку</h2>
@@ -47,11 +60,15 @@ function BasketPage(): JSX.Element {
                 <form className="coupon__form" id="coupon-form"
                   onSubmit={(evt: React.FormEvent<HTMLFormElement>) => {
                     evt.preventDefault();
-                    // if (typeof coupon === 'CouponTypes') {
+                    if ( VALIDATION_COUPON.includes(coupon.toLowerCase() as CouponTypes)
+                    ) {
+                      dispatch(setIsCoupon(coupon.toLowerCase() as CouponTypes));
+                      dispatch((setIsDisconnect(navigator.onLine)));
                       dispatch(postCouponAction({
-                        coupon: coupon,
+                        coupon: coupon.toLowerCase() as CouponTypes,
                       }));
-                    // }
+                    }
+                    else {dispatch(setIsCoupon(null));}
                   }}
                 >
                   <div className="form-input coupon__input">
@@ -60,7 +77,6 @@ function BasketPage(): JSX.Element {
                       onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
                         if (evt.currentTarget.value.includes(' ')) {
                           setCoupon(evt.currentTarget.value.split(' ').join(''));
-
                         }
                         else {
                           setCoupon(evt.currentTarget.value);
@@ -68,7 +84,8 @@ function BasketPage(): JSX.Element {
                         setIsValidationCoupon(false);
                       }}
                     />
-                    <p className={isValidationCoupon ? 'form-input__message form-input__message--success' : 'form-input__message form-input__message--error'} > {isValidationCoupon ? 'Промокод принят' : 'Неверный промокод'}</p>
+                    {isValidationCoupon && isCoupon !== null ? <p className="form-input__message form-input__message--success"> Промокод принят</p> : ''}
+                    {isValidationCoupon && isCoupon === null ? <p className="form-input__message form-input__message--error"> Неверный промокод</p> : ''}
                   </div>
                   <button className="button button--big coupon__button"
                     onClick={() => {
@@ -86,11 +103,19 @@ function BasketPage(): JSX.Element {
                   }, 0)} ₽
                   </span>
                 </p>
-                <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span><span className="cart__total-value cart__total-value--bonus">- 3000 ₽</span></p>
+                <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span>
+                  <span className= {isDiscount !== 0 ? 'cart__total-value cart__total-value--bonus' : 'cart__total-value '}> {boughtGuitars.reduce((sum, elem) => {
+                    if (elem.quantity) {
+                      const summ = (sum + elem.price * elem.quantity) ;
+                      return summ;}
+                    else { return sum + elem.price; }
+                  }, 0)} ₽
+                  </span>
+                </p>
                 <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span>
                   <span className="cart__total-value cart__total-value--payment">{boughtGuitars.reduce((sum, elem) => {
-                    if (elem.quantity) { return sum + elem.price * elem.quantity; }
-                    else { return sum + elem.price; }
+                    if (elem.quantity) { return ((sum + elem.price * elem.quantity) * (1- 0.01 * isDiscount)); }
+                    else { return (sum + elem.price); }
                   }, 0)} ₽
                   </span>
                 </p>
@@ -98,10 +123,11 @@ function BasketPage(): JSX.Element {
                   onClick={() => {
                     dispatch(postOrdersAction({
                       guitarsIds: boughtGuitars.map((guitar: Guitar) => guitar.id),
-                      coupon: null,
+                      coupon: isCoupon,
                     }));
                     dispatch((setIsDisconnect(navigator.onLine)));
                   }}
+                  disabled = {boughtGuitars.length === 0}
                 >Оформить заказ
                 </button>
               </div>

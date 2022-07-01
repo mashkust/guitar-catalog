@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Guitar, NewReview, Comment, AppDispatch, State, NewOrders, CouponTypes, CouponPost } from '../types/types';
-import { loadComments, loadGuitar, loadGuitars, sendComment } from './guitar-data';
+import { loadComments, loadGuitar, loadGuitars, sendComment, setIsDiscount } from './guitar-data';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../const';
 import { AxiosInstance } from 'axios';
@@ -94,12 +94,13 @@ export const postCouponAction = createAsyncThunk<void, CouponPost, {
   extra: AxiosInstance
 }>(
   'data/postCoupon',
-  async ({ coupon }, {extra: api }) => {
+  async ({ coupon }, {dispatch, extra: api }) => {
     try {
       const data = { coupon };
       const result =  await api.post<CouponPost>(APIRoute.Coupon, data, {
       });
       if (result.status >= 200) {
+        dispatch(setIsDiscount(result.data));
       }
     } catch (error) {
       errorHandle(error);

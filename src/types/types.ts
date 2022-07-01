@@ -27,7 +27,8 @@ export type GuitarData = {
   isBasketModalOpened: boolean,
   isGuitar: Guitar | null,
   isBasketRemoval: boolean,
-  isCoupon: string | null,
+  isDiscount: number,
+  isCoupon: CouponTypes | null,
 };
 
 export type Guitar = {

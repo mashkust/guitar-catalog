@@ -1,4 +1,4 @@
-import { List, Rating, Tab, Types } from './types/types';
+import { CouponTypes, List, Rating, Tab, Types } from './types/types';
 
 export enum AppRoute {
     Page1 = '/page_1',
@@ -65,6 +65,12 @@ export const RATING_VALUES: Rating[] = [
   {'value': 3},
   {'value': 2},
   {'value': 1},
+];
+
+export const VALIDATION_COUPON: CouponTypes[] = [
+  'light-333',
+  'medium-444',
+  'height-555',
 ];
 
 export const MONTH: string [] = [

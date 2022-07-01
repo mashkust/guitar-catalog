@@ -28,6 +28,7 @@ const initialState: GuitarData = {
   isBasketModalOpened: false,
   isGuitar: null,
   isBasketRemoval: false,
+  isDiscount: 0,
   isCoupon: null,
 };
 
@@ -228,6 +229,9 @@ export const guitarData = createSlice({
     setIsBasketRemoval: (state, action) => {
       state.isBasketRemoval = action.payload;
     },
+    setIsDiscount: (state, action) => {
+      state.isDiscount = action.payload;
+    },
     setIsCoupon: (state, action) => {
       state.isCoupon = action.payload;
     },
@@ -260,6 +264,7 @@ export const {
   setIsSuccessBasket,
   setIsGuitar,
   setIsBasketRemoval,
-  setIsCoupon,
+  setIsDiscount,
   setQuantityText,
+  setIsCoupon,
 } = guitarData.actions;
