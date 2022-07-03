@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { TYPES } from '../const';
 import { setIsBasketRemoval, setIsGuitar, setQuantity, setQuantityText } from '../store/guitar-data';
 import { Guitar } from '../types/types';
-import { pasrePrice } from '../utils';
+import { inputProhibition, insertProhibition, pasrePrice } from '../utils';
 
 type BasketCardProps = {
   guitar: Guitar;
@@ -23,7 +23,8 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
     <div className="cart-item">
       <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить" onClick={() => {
         dispatch(setIsBasketRemoval(true));
-        dispatch(setIsGuitar(guitar));}}
+        dispatch(setIsGuitar(guitar));
+      }}
       >
         <span className="button-cross__icon"></span><span className="cart-item__close-button-interactive-area"></span>
       </button>
@@ -37,32 +38,50 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
       <div className="cart-item__price">{pasrePrice(price)} ₽</div>
       <div className="quantity cart-item__quantity">
         <button className="quantity__button" aria-label="Уменьшить количество" onClick={() => {
-          dispatch(setQuantity({id, quantity: 'decr'}));}}
+          dispatch(setQuantity({ id, quantity: 'decr' }));
+        }}
         >
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-minus"></use>
           </svg>
         </button>
-        <input className="quantity__input" type="number" value={String(guitar.quantity)} id={`${id}$-count`} name={`${id}$-count`} min="1" max="99"
+        <input className="quantity__input" type="number" value={String(guitar.quantity)} id={`${id}$-count`} name={`${id}$-count`} step="1" min="1" max="99"
+          onPaste={(evt) => inputProhibition(evt)}
+          onKeyPress={(evt) =>insertProhibition(evt)}
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-            // if (evt.currentTarget.value.includes('-') || evt.currentTarget.value.includes('e')) {
+            if (evt.currentTarget.value === ''  || evt.currentTarget.value === '0') {
+              evt.currentTarget.value = '1';
+            }
+            if (evt.currentTarget.value.length > 2) {
+              evt.currentTarget.value = evt.currentTarget.value.substring(0, evt.currentTarget.value.length - 1);
+            }
+            // console.log(evt.currentTarget.value);
+            // console.log(guitar.quantity);
+            // if (evt.currentTarget.value.includes('-')) {
             //   dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value.split('-').join(''))}));
-            //   dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value.split('e').join(''))}));
+            //   // console.log(guitar.quantity);
             // }
             // else {
-            dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value)}));
+            dispatch(setQuantityText({ id, quantity: Number(evt.currentTarget.value) }));
+            // }
+            // else if (evt.currentTarget.value.includes(',')) {
+            //   dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value.split(',').join(''))}));
             // }
           }}
+          // onBlur={(evt: React.ChangeEvent<HTMLInputElement>) => {
+          //   dispatch(setQuantityText({ id, quantity: Number(evt.currentTarget.value) }));
+          // }}
         />
         <button className="quantity__button" aria-label="Увеличить количество" onClick={() => {
-          dispatch(setQuantity({id, quantity: 'inc'}));}}
+          dispatch(setQuantity({ id, quantity: 'inc' }));
+        }}
         >
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-plus"></use>
           </svg>
         </button>
       </div>
-      <div className="cart-item__price-total">{price*(guitar.quantity || 0)} ₽</div>
+      <div className="cart-item__price-total">{price * (guitar.quantity || 0)} ₽</div>
     </div>
   );
 }

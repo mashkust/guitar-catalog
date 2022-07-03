@@ -3,6 +3,7 @@ import { AppRoute } from '../const';
 import hashHistory from '../hash-history';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { setMaxPrice, setMinPrice, setSelectedStrings, setSelectedTypes } from '../store/guitar-data';
+import { inputProhibition, insertProhibition } from '../utils';
 
 function FilterCard(): JSX.Element {
   const guitars = useAppSelector(({ DATA }) => DATA.guitars);
@@ -44,12 +45,8 @@ function FilterCard(): JSX.Element {
           <div className="form-input">
             <label className="visually-hidden">Минимальная цена</label>
             <input type="number" placeholder={String(min)} id="priceMin" name="от" min="0" value={minPrice || ''}
-              onKeyPress={(evt) => {
-                const { key } = evt;
-                if (key === '-' || key === '.' || key === 'e' || key === ',') {
-                  evt.preventDefault();
-                }
-              }}
+              onPaste={(evt) => inputProhibition(evt)}
+              onKeyPress={(evt) =>insertProhibition(evt)}
               onChange={(evt) => dispatch(setMinPrice(evt.currentTarget.value))}
               onBlur={() => {
                 if (Number(minPrice) < min ) {
@@ -70,12 +67,8 @@ function FilterCard(): JSX.Element {
           <div className="form-input">
             <label className="visually-hidden">Максимальная цена</label>
             <input type="number" placeholder={String(max)} id="priceMax" name="до" min="0" value={maxPrice || ''}
-              onKeyPress={(evt) => {
-                const { key } = evt;
-                if (key === '-' || key === '.' || key === 'e' || key === ',') {
-                  evt.preventDefault();
-                }
-              }}
+              onPaste={(evt) => inputProhibition(evt)}
+              onKeyPress={(evt) =>insertProhibition(evt)}
               onChange={(evt) => {
                 dispatch(setMaxPrice(evt.currentTarget.value));
               }}

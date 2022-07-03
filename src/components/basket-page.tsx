@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageHeader from './page-header';
 import PageFooter from './page-footer';
 import { AppRoute, VALIDATION_COUPON } from '../const';
@@ -7,7 +7,7 @@ import BasketCard from './basket-card';
 import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { Guitar } from '../types/types';
 import { postCouponAction, postOrdersAction } from '../store/api-actions';
-import { setIsBasketRemoval, setIsCoupon, setIsDisconnect } from '../store/guitar-data';
+import { setIsBasketRemoval, setIsCoupon, setIsDisconnect, setIsDiscount } from '../store/guitar-data';
 import BasketRemoval from './basket-removal';
 import { CouponTypes } from '../types/types';
 import { startScroll } from '../utils';
@@ -19,9 +19,9 @@ function BasketPage(): JSX.Element {
   const isDiscount = useAppSelector(({ DATA }) => DATA.isDiscount);
   const isCoupon = useAppSelector(({ DATA }) => DATA.isCoupon);
   const dispatch = useAppDispatch();
-
   const [coupon, setCoupon] = useState<string>('');
   const [isValidationCoupon, setIsValidationCoupon] = useState<boolean>(false);
+  const discount = isDiscount === null ? 0 : isDiscount;
 
   document.onkeydown = function (evt) {
     evt = evt || window.event;
@@ -68,7 +68,10 @@ function BasketPage(): JSX.Element {
                         coupon: coupon.toLowerCase() as CouponTypes,
                       }));
                     }
-                    else {dispatch(setIsCoupon(null));}
+                    else {
+                      dispatch(setIsCoupon(null));
+                      dispatch(setIsDiscount(null));
+                    }
                   }}
                 >
                   <div className="form-input coupon__input">
@@ -89,7 +92,9 @@ function BasketPage(): JSX.Element {
                   </div>
                   <button className="button button--big coupon__button"
                     onClick={() => {
-                      setIsValidationCoupon(true);
+                      if (coupon !== '') {
+                        setIsValidationCoupon(true);
+                      }
                     }}
                   >Применить
                   </button>
@@ -104,19 +109,19 @@ function BasketPage(): JSX.Element {
                   </span>
                 </p>
                 <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span>
-                  <span className= {isDiscount !== 0 ? 'cart__total-value cart__total-value--bonus' : 'cart__total-value '}> {boughtGuitars.reduce((sum, elem) => {
+                  <span className= {discount !== 0 ? 'cart__total-value cart__total-value--bonus' : 'cart__total-value '}> { Math.fround(-0.01 * discount * boughtGuitars.reduce((sum, elem) => {
                     if (elem.quantity) {
-                      const summ = (sum + elem.price * elem.quantity) ;
-                      return summ;}
+                      return sum + elem.price * elem.quantity ;
+                    }
                     else { return sum + elem.price; }
-                  }, 0)} ₽
+                  }, 0))} ₽
                   </span>
                 </p>
                 <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span>
-                  <span className="cart__total-value cart__total-value--payment">{boughtGuitars.reduce((sum, elem) => {
-                    if (elem.quantity) { return ((sum + elem.price * elem.quantity) * (1- 0.01 * isDiscount)); }
-                    else { return (sum + elem.price); }
-                  }, 0)} ₽
+                  <span className="cart__total-value cart__total-value--payment">{ Math.fround((1- 0.01 * discount) * boughtGuitars.reduce((sum, elem) => {
+                    if (elem.quantity) { return sum + elem.price * elem.quantity ; }
+                    else { return sum + elem.price; }
+                  }, 0))} ₽
                   </span>
                 </p>
                 <button className="button button--red button--big cart__order-button"
