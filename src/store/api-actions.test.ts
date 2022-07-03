@@ -1,8 +1,8 @@
 import { APIRoute } from '../const';
-import { fakeGuitars } from '../mock';
+import { fakeGuitar, fakeGuitars } from '../mock';
 import { createAPI } from '../services/api';
-import { fetchGuitarsAction } from './api-actions';
-import { loadGuitars } from './guitar-data';
+import { fetchCommentsAction, fetchGuitarAction, fetchGuitarsAction } from './api-actions';
+import { loadComments, loadGuitar, loadGuitars } from './guitar-data';
 import MockAdapter from 'axios-mock-adapter';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import thunk, { ThunkDispatch } from 'redux-thunk';
@@ -33,5 +33,33 @@ describe('Async actions', () => {
     const actions = store.getActions().map(({ type }) => type);
 
     expect(actions).toContain(loadGuitars.toString());
+  });
+
+  it('should dispatch Load_Guitar when GET /guitars/', async () => {
+    mockAPI
+      .onGet(`${APIRoute.Guitar}${1}`)
+      .reply(200, fakeGuitar);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchGuitarAction(1));
+
+    const actions = store.getActions().map(({ type }) => type);
+
+    expect(actions).toContain(loadGuitar.toString());
+  });
+
+  it('should dispatch Load_Comments when GET /comments', async () => {
+    mockAPI
+      .onGet(`${APIRoute.Guitar}${1}${APIRoute.Comments}`)
+      .reply(200, fakeGuitar);
+
+    const store = mockStore();
+
+    await store.dispatch(fetchCommentsAction(1));
+
+    const actions = store.getActions().map(({ type }) => type);
+
+    expect(actions).toContain(loadComments.toString());
   });
 });

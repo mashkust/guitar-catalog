@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import PageHeader from './page-header';
 import PageFooter from './page-footer';
 import { AppRoute, VALIDATION_COUPON } from '../const';

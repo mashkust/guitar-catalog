@@ -174,7 +174,7 @@ export const guitarData = createSlice({
       const { payload } = action;
       const boughtGuitar = state.boughtGuitars.find((el) => el.id === payload.id);
       if (boughtGuitar) {
-        boughtGuitar.quantity = (boughtGuitar.quantity || 1) + 1 ;
+        boughtGuitar.quantity = (boughtGuitar.quantity || 0) + 1;
       }
       else {
         const newGuitar = {...payload};

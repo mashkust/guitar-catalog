@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Guitar, NewReview, Comment, AppDispatch, State, NewOrders, CouponTypes, CouponPost } from '../types/types';
+import { Guitar, NewReview, Comment, AppDispatch, State, NewOrders, CouponPost } from '../types/types';
 import { loadComments, loadGuitar, loadGuitars, sendComment, setIsDiscount } from './guitar-data';
 import { errorHandle } from '../services/error-handle';
 import { APIRoute } from '../const';
