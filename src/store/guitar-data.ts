@@ -192,7 +192,6 @@ export const guitarData = createSlice({
       const boughtGuitar = state.boughtGuitars.find((el) => el.id === id);
       if (boughtGuitar) {
         boughtGuitar.quantity = quantity === 'inc' ?  (boughtGuitar.quantity || 1) + 1 : (boughtGuitar.quantity || 1) - 1;
-        // window.localStorage.setItem('boughtGuitars', String(boughtGuitar.id));
         if (boughtGuitar.quantity < 1) {
           state.isBasketRemoval = true;
           boughtGuitar.quantity = (boughtGuitar.quantity || 0) + 1;
@@ -204,10 +203,6 @@ export const guitarData = createSlice({
       const boughtGuitar = state.boughtGuitars.find((el) => el.id === id);
       if (boughtGuitar) {
         boughtGuitar.quantity = quantity;
-        if (boughtGuitar.quantity < 1) {
-          state.isBasketRemoval = true;
-          boughtGuitar.quantity = (boughtGuitar.quantity || 0) + 1;
-        }
       }
     },
     setIsDisconnect: (state, action ) => {

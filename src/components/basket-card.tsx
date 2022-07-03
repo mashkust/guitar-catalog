@@ -12,13 +12,6 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
   const { id, name, vendorCode, type, stringCount, price, previewImg } = guitar;
   const dispatch = useDispatch();
 
-  // const validationCaunt = ({count}: string) => {
-  //   if (  count.includes('0') || count.includes('1') || count.includes('2') || count.includes('3') || count.includes('4') || count.includes('5')
-  //   || count.includes('6') || count.includes('7') || count.includes('8') || count.includes('9')) {
-  //   }
-  //   return false;
-  // }
-
   return (
     <div className="cart-item">
       <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить" onClick={() => {
@@ -45,32 +38,20 @@ function BasketCard({ guitar }: BasketCardProps): JSX.Element {
             <use xlinkHref="#icon-minus"></use>
           </svg>
         </button>
-        <input className="quantity__input" type="number" value={String(guitar.quantity)} id={`${id}$-count`} name={`${id}$-count`} step="1" min="1" max="99"
+        <input className="quantity__input" type="number" value={guitar.quantity === 0 ? '' : String(guitar.quantity)} id={`${id}$-count`} name={`${id}$-count`} step="1" min="1" max="99"
           onPaste={(evt) => inputProhibition(evt)}
           onKeyPress={(evt) =>insertProhibition(evt)}
           onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
-            if (evt.currentTarget.value === ''  || evt.currentTarget.value === '0') {
-              evt.currentTarget.value = '1';
-            }
             if (evt.currentTarget.value.length > 2) {
               evt.currentTarget.value = evt.currentTarget.value.substring(0, evt.currentTarget.value.length - 1);
             }
-            // console.log(evt.currentTarget.value);
-            // console.log(guitar.quantity);
-            // if (evt.currentTarget.value.includes('-')) {
-            //   dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value.split('-').join(''))}));
-            //   // console.log(guitar.quantity);
-            // }
-            // else {
             dispatch(setQuantityText({ id, quantity: Number(evt.currentTarget.value) }));
-            // }
-            // else if (evt.currentTarget.value.includes(',')) {
-            //   dispatch(setQuantityText({id, quantity: Number(evt.currentTarget.value.split(',').join(''))}));
-            // }
           }}
-          // onBlur={(evt: React.ChangeEvent<HTMLInputElement>) => {
-          //   dispatch(setQuantityText({ id, quantity: Number(evt.currentTarget.value) }));
-          // }}
+          onBlur={() => {
+            if (guitar.quantity === 0) {
+              dispatch(setQuantityText({ id, quantity: 1 }));
+            }
+          }}
         />
         <button className="quantity__button" aria-label="Увеличить количество" onClick={() => {
           dispatch(setQuantity({ id, quantity: 'inc' }));
