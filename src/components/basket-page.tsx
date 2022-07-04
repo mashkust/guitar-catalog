@@ -10,7 +10,7 @@ import { postCouponAction, postOrdersAction } from '../store/api-actions';
 import { setIsBasketRemoval, setIsCoupon, setIsDisconnect, setIsDiscount } from '../store/guitar-data';
 import BasketRemoval from './basket-removal';
 import { CouponTypes } from '../types/types';
-import { startScroll } from '../utils';
+import { pasrePrice, startScroll } from '../utils';
 
 function BasketPage(): JSX.Element {
   const boughtGuitars = useAppSelector(({ DATA }) => DATA.boughtGuitars);
@@ -102,10 +102,10 @@ function BasketPage(): JSX.Element {
               </div>
               <div className="cart__total-info">
                 <p className="cart__total-item"><span className="cart__total-value-name">Всего:</span>
-                  <span className="cart__total-value">{boughtGuitars.reduce((sum, elem) => {
+                  <span className="cart__total-value">{pasrePrice(boughtGuitars.reduce((sum, elem) => {
                     if (elem.quantity) { return sum + elem.price * elem.quantity; }
                     else { return sum + elem.price; }
-                  }, 0)} ₽
+                  }, 0))} ₽
                   </span>
                 </p>
                 <p className="cart__total-item"><span className="cart__total-value-name">Скидка:</span>
@@ -118,10 +118,10 @@ function BasketPage(): JSX.Element {
                   </span>
                 </p>
                 <p className="cart__total-item"><span className="cart__total-value-name">К оплате:</span>
-                  <span className="cart__total-value cart__total-value--payment">{ Math.fround((1- 0.01 * discount) * boughtGuitars.reduce((sum, elem) => {
+                  <span className="cart__total-value cart__total-value--payment">{pasrePrice(Math.fround((1- 0.01 * discount) * boughtGuitars.reduce((sum, elem) => {
                     if (elem.quantity) { return sum + elem.price * elem.quantity ; }
                     else { return sum + elem.price; }
-                  }, 0))} ₽
+                  }, 0)))} ₽
                   </span>
                 </p>
                 <button className="button button--red button--big cart__order-button"

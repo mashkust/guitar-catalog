@@ -24,7 +24,7 @@ function BasketRemoval( {guitar}: BasketRemovalProps ): JSX.Element {
 
   return (
     <Pentoville>
-      <div className="modal is-active modal--success modal-for-ui-kit">
+      <div className="modal is-active modal-for-ui-kit">
         <div className="modal__wrapper">
           <div className="modal__overlay" data-close-modal
             onClick={() => {
