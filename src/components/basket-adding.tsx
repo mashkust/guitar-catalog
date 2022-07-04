@@ -45,7 +45,7 @@ function BasketAdiing({ guitar }: BasketAdiingProps): JSX.Element {
                   dispatch(buyGuitar(guitar));
                   dispatch(setIsBasket(false));
                   dispatch(setIsSuccessBasket(true));
-                }}
+                }} autoFocus
               >
                 Добавить в корзину
               </button>

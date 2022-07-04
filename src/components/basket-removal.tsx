@@ -46,7 +46,7 @@ function BasketRemoval( {guitar}: BasketRemovalProps ): JSX.Element {
               <button className="button button--small modal__button" onClick={() => {
                 modalCloseHandler();
                 dispatch(deleteGuitar(id));
-              }}
+              }} autoFocus
               >Удалить товар
               </button>
               <button className="button button--black-border button--small modal__button modal__button--right" onClick={() => {
